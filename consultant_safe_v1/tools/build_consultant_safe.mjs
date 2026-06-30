@@ -6,10 +6,12 @@ import { SpreadsheetFile, Workbook } from "@oai/artifact-tool";
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
-const releaseDir = path.resolve(__dirname, "..");
-const repoRoot = path.resolve(releaseDir, "..");
+const legacyReleaseDir = path.resolve(__dirname, "..");
+const repoRoot = path.resolve(legacyReleaseDir, "..");
+const releaseDir = path.join(repoRoot, "consultant_safe_v2");
 
 const SOURCE_VERSION = "2026-06-15";
+const RELEASE_NAME = "consultant_safe_v2";
 const METRIC_EBXS = new Set([
   "EBX-Q-007",
   "EBX-Q-011",
@@ -19,45 +21,48 @@ const METRIC_EBXS = new Set([
   "EBX-Q-027",
 ]);
 const EXPECTED_SIZES = ["대기업", "중견", "중소", "비상장"];
+const STYLE_KEYS = ["formal", "concise", "evidence-led", "narrative"];
 const SAFE_HEADERS = [
   "ebx",
   "area",
   "pillar",
   "item",
   "공개성",
-  "구조개요",
-  "빈칸초안",
+  "작성 소재/Content Slots",
   "작성지침",
-  "동종산업 예시",
-  "동종산업 재서술 예시",
+  "문체 옵션/Style Options",
+  "문장 패턴/Sentence Patterns",
+  "반복 방지/Anti-Repetition Rules",
+  "동종산업 범위 참고",
+  "동종산업 재서술 참고",
   "규모지침",
   "비고",
 ];
 
 const SCALE_GUIDANCE = {
   대기업: [
-    "대기업: mô tả đầy đủ governance, chính sách, phạm vi hợp nhất, KPI, mốc thời gian và bộ phận chịu trách nhiệm.",
-    "Ưu tiên nêu bằng chứng/nguồn công khai nếu có, đồng thời đối chiếu với dữ liệu nội bộ trước khi nộp reviewer.",
+    "대기업: describe governance, policy, consolidation scope, KPI, timeline, and accountable function in enough detail for reviewer traceability.",
+    "Use public evidence when available, then reconcile it with internal source documents before submission.",
   ],
   중견: [
-    "중견: mô tả chính sách và hoạt động trọng yếu, phạm vi áp dụng, owner phụ trách và 1-3 KPI đang theo dõi.",
-    "Nếu hệ thống chưa đầy đủ như doanh nghiệp lớn, nêu lộ trình chuẩn hóa và phần còn đang hoàn thiện.",
+    "중견: focus on material policy/activity, applicable scope, owner, and 1-3 KPIs currently tracked.",
+    "If the system is still being standardized, state the roadmap and what remains incomplete instead of overclaiming.",
   ],
   중소: [
-    "중소: có thể viết định tính gọn hơn; ưu tiên quy trình đang vận hành, người phụ trách, tình trạng phát sinh và bằng chứng nội bộ.",
-    "Nếu thiếu dữ liệu định lượng, ghi rõ \"미집계\" hoặc \"해당사항 없음\"; không tự ước lượng.",
+    "중소: a concise qualitative answer is acceptable; prioritize operating process, owner, current status, incidents, and internal evidence.",
+    "If quantitative data is unavailable, write 미집계 or 해당사항 없음; do not estimate.",
   ],
   비상장: [
-    "비상장: nhấn mạnh dữ liệu nội bộ và mức sẵn sàng cho due diligence; không giả định nghĩa vụ công bố đại chúng.",
-    "Nêu rõ phạm vi chưa công bố ra bên ngoài; metric chỉ dùng khi có nguồn nội bộ kiểm chứng được.",
+    "비상장: emphasize internal evidence and due-diligence readiness; do not assume public-company disclosure duties.",
+    "Clearly separate non-public internal scope from externally disclosed scope; use metrics only when internally verifiable.",
   ],
 };
 
 const METRIC_SCALE_GUIDANCE = {
-  대기업: "Dòng chỉ số: phải ghi phạm vi đo, kỳ đo, công thức hoặc nguồn hệ thống; không để trống và không biến \"chưa thống kê\" thành 0.",
-  중견: "Dòng chỉ số: ghi KPI hiện có và phạm vi theo dõi; nếu chưa đủ chuỗi số liệu, nêu rõ phần thiếu thay vì điền 0.",
-  중소: "Dòng chỉ số: nếu chưa thống kê, ghi \"미집계\" hoặc \"해당사항 없음\"; không để trống, không ước lượng và không điền 0 thay cho dữ liệu thiếu.",
-  비상장: "Dòng chỉ số: chỉ ghi số khi có chứng từ nội bộ; nếu dùng cho due diligence, ghi rõ nguồn và không điền 0 cho phần chưa thống kê.",
+  대기업: "Metric rows: include measurement scope, period, formula/source system, and owner; do not leave blank or convert untracked data into 0.",
+  중견: "Metric rows: state current KPI and tracking scope; if the series is incomplete, describe the missing part instead of entering 0.",
+  중소: "Metric rows: if not tracked, write 미집계 or 해당사항 없음; do not leave blank, estimate, or enter 0 for missing data.",
+  비상장: "Metric rows: only enter numbers supported by internal evidence; for due diligence, state source and never enter 0 for untracked data.",
 };
 
 async function exists(dir) {
@@ -147,36 +152,142 @@ function safeExample(value) {
 function safeReword(value) {
   const text = String(value ?? "");
   if (!text || text.startsWith("(모델 재서술 미채택") || text.startsWith("(동종 실제사례 미확보")) {
-    return "(Ví dụ chưa có — dùng 구조개요/작성지침 và điền theo dữ liệu nội bộ.)";
+    return "(Reference unavailable: use structure/guidance only and fill with internal company data.)";
   }
-  return maskNumerals(text.replace(/\(예시·실데이터 기반 재서술·수치 마스킹\)/g, "(ví dụ tham khảo, đã mask số)"));
+  return maskNumerals(text.replace(/\(예시·실데이터 기반 재서술·수치 마스킹\)/g, "(reference only, numbers masked)"));
 }
 
 function filePrefixFromMeta(meta) {
   return `${meta.sasb_sector}_${meta.sasb_name}_${meta.size}`;
 }
 
+function ebxNumber(item) {
+  const match = String(item.ebx ?? "").match(/(\d+)$/);
+  return match ? Number(match[1]) : 0;
+}
+
+function classifyItem(item) {
+  const text = `${item.ebx} ${item.pillar ?? ""} ${item.item ?? ""} ${item.description ?? ""}`;
+  if (METRIC_EBXS.has(item.ebx) || /현황|지표|성과|사고|고충|처리/.test(text)) return "metrics";
+  if (/전략|비전|목표|로드맵|중장기/.test(text)) return "strategy";
+  if (/거버넌스|조직|책임|의사결정|위원회|운영 체계/.test(text)) return "governance";
+  if (/리스크|침해|정보보안|개인정보|안전|환경/.test(text)) return "risk";
+  if (/정책|방침|관리|프로세스|교육|품질|윤리/.test(text)) return "policy";
+  return "general";
+}
+
+function extractPlaceholders(item) {
+  const draft = String(item["빈칸초안"] ?? "");
+  return [...new Set(draft.match(/\[[^\]]+\]/g) ?? [])];
+}
+
 function buildWarningNote(meta, item, topicFlags) {
   const notes = [];
   if (meta.mapping_confidence === "low" || meta.fallback_used) {
-    notes.push("⚠ Mapping confidence thấp/fallback: consultant cần xác nhận ngành trước khi nhập.");
+    notes.push("⚠ Mapping confidence low/fallback: consultant must confirm sector before filling.");
   }
   const topicFlag = topicFlags.get(`${meta.sasb_sector}|${item.ebx}`);
   if (topicFlag?.verdict === "borderline") {
-    notes.push("⚠ Review note: ví dụ ngành từng bị đánh dấu borderline; chỉ dùng cấu trúc, không xem là đáp án chuẩn.");
+    notes.push("⚠ Review note: industry reference was marked borderline; use only as structure, not as a model answer.");
   }
   if (topicFlag?.verdict === "미확보") {
-    notes.push("⚠ Review note: ví dụ thực tế chưa 확보; ưu tiên cấu trúc và dữ liệu nội bộ.");
+    notes.push("⚠ Review note: real example was unavailable; prioritize structure and internal evidence.");
   }
   return notes.join(" / ");
 }
 
 function buildGuidance(item) {
   const lines = Array.isArray(item["작성지침"]) ? [...item["작성지침"]] : [String(item["작성지침"] ?? "")];
+  lines.unshift("Do not write the final answer by copying one fixed sentence. Choose a style option, then compose from slots and verified evidence.");
   if (METRIC_EBXS.has(item.ebx)) {
-    lines.push("Nếu chưa thống kê chỉ số, ghi rõ \"미집계\" hoặc \"해당사항 없음\"; không ước lượng hoặc bịa số liệu.");
+    lines.push("If metric data is not tracked, write 미집계 or 해당사항 없음; do not estimate or invent figures.");
   }
   return bulletList(lines.filter(Boolean));
+}
+
+function buildContentSlots(item) {
+  const outline = Array.isArray(item["구조개요"]) ? item["구조개요"] : [String(item["구조개요"] ?? "")].filter(Boolean);
+  const placeholders = extractPlaceholders(item);
+  const lines = [
+    `Disclosure item: ${item.item}`,
+    ...outline.map((value, index) => `Required material ${index + 1}: ${value}`),
+    placeholders.length
+      ? `Company data slots to fill: ${placeholders.join(", ")}`
+      : "Company data slots to fill: internal fact, period, scope, owner, and evidence source.",
+    "Evidence slot: internal document/source name, reporting period, organizational boundary, responsible team/person.",
+  ];
+  if (METRIC_EBXS.has(item.ebx)) {
+    lines.push("Metric slot: value, unit, aggregation method, measurement period, and reason if 미집계/해당사항 없음.");
+  }
+  lines.push("Do not convert these slots into a final sentence until company-specific facts are supplied.");
+  return bulletList(lines);
+}
+
+function buildStyleOptions(meta, item) {
+  const kind = classifyItem(item);
+  const size = meta.size;
+  const detailBias = {
+    대기업: "full governance/KPI/evidence detail",
+    중견: "policy, owner, key KPI, and improvement roadmap",
+    중소: "short qualitative facts with owner and evidence",
+    비상장: "internal evidence and due-diligence readiness",
+  }[size] ?? "company-specific evidence";
+
+  const lines = [
+    `formal: ESG report tone; cover ${detailBias}; suitable when source evidence is complete.`,
+    "concise: 1-2 compact sentences; use when the company has limited evidence or the item only needs a factual status.",
+    "evidence-led: start with reporting period/source/scope, then explain the policy, activity, or metric; best for reviewer traceability.",
+    "narrative: start from business context or materiality, then connect to governance, action, and next step; best for strategy/policy items.",
+  ];
+  if (kind === "metrics") {
+    lines[2] = "evidence-led: start with period, boundary, unit, and source system, then state value/status; if unavailable, state 미집계/해당사항 없음.";
+  }
+  if (kind === "risk") {
+    lines[3] = "narrative: start from risk exposure/context, then explain control, monitoring, incident status, and improvement action.";
+  }
+  return bulletList(lines);
+}
+
+function buildSentencePatterns(item) {
+  const kind = classifyItem(item);
+  const tag = `${item.ebx} ${item.item}`;
+  const common = [
+    `Pattern A (${tag}): [기준연도/범위] 기준 [핵심 사실]을 먼저 제시하고 [근거/owner]로 연결한다.`,
+    `Pattern B (${tag}): [배경/중요성] -> [정책/프로세스] -> [실행/성과] 순서로 구성한다.`,
+    `Pattern C (${tag}): [담당 조직/책임자]를 주어로 시작하고 [활동] [주기] [개선 계획]을 이어간다.`,
+  ];
+  const byKind = {
+    metrics: `Pattern D (${tag}): [측정값/미집계 상태] -> [산식/단위] -> [집계 범위] -> [검증 근거] 순서로 쓴다.`,
+    strategy: `Pattern D (${tag}): [비전/목표] -> [중장기 과제] -> [로드맵] -> [성과 점검 방식] 순서로 쓴다.`,
+    governance: `Pattern D (${tag}): [의사결정 기구] -> [역할/R&R] -> [보고 주기] -> [최고책임자 관여] 순서로 쓴다.`,
+    risk: `Pattern D (${tag}): [식별된 리스크] -> [통제 활동] -> [모니터링/사고 현황] -> [후속 조치] 순서로 쓴다.`,
+    policy: `Pattern D (${tag}): [정책/방침] -> [적용 범위] -> [운영 절차] -> [교육/점검] 순서로 쓴다.`,
+    general: `Pattern D (${tag}): [현황] -> [운영 방식] -> [증빙] -> [개선 또는 다음 단계] 순서로 쓴다.`,
+  };
+  return bulletList([...common, byKind[kind]]);
+}
+
+function buildAntiRepeatRules(item) {
+  const orders = [
+    "evidence -> scope -> action -> owner",
+    "context -> policy -> activity -> evidence",
+    "owner -> process -> KPI/status -> next step",
+    "risk/materiality -> control -> monitoring -> result",
+  ];
+  const openers = [
+    "start with reporting period or source",
+    "start with responsible organization",
+    "start with materiality/context",
+    "start with current status or metric",
+  ];
+  const index = ebxNumber(item);
+  return bulletList([
+    `Preferred variation for this row: ${orders[index % orders.length]}; avoid using the same order as the previous item.`,
+    `Opening choice: ${openers[index % openers.length]}; do not start every answer with 회사는/당사는.`,
+    "Limit repeated endings such as 추진하고 있습니다, 관리하고 있습니다, 운영하고 있습니다 across nearby rows.",
+    "Change sentence length: mix one short factual sentence with one evidence/detail sentence when enough data exists.",
+    "Never copy 동종산업 references as wording; they are only topic/scope references.",
+  ]);
 }
 
 function buildScaleGuidance(meta, item) {
@@ -200,71 +311,66 @@ function buildScaleGuideSummary(size) {
 }
 
 async function writeMarkdownDocs(summary) {
-  const readme = `# Consultant-safe EBX-Q Template v1
+  const readme = `# Consultant-safe EBX-Q Template v2
 
-## Mục đích
-Bộ này dành cho consultant nhập liệu ESG định tính theo EBX-Q. Đây là bản an toàn được dựng từ source \`${SOURCE_VERSION}\`, đã loại cột J chứa dữ liệu thực tế của công ty cùng ngành và đã bổ sung hướng dẫn riêng theo 4 quy mô.
+## Purpose
+This release is for ESG qualitative input using EBX-Q. It keeps the consultant-safe data controls from v1, but removes the single fixed draft sentence as the main writing anchor. AI and consultants should compose from content slots, style options, sentence patterns, and anti-repetition rules.
 
-## Cách dùng nhanh
-1. Chọn workbook theo ngành và quy mô doanh nghiệp.
-2. Vào sheet \`EBX-Q 템플릿\`, dùng \`빈칸초안\` làm câu khung và điền mọi vị trí \`[ ]\` bằng dữ liệu nội bộ.
-3. Đọc \`작성지침\` và \`규모지침\` trước khi nhập; \`규모지침\` khác nhau cho \`대기업\`, \`중견\`, \`중소\`, \`비상장\`.
-4. Với chỉ số chưa thống kê, ghi \`미집계\` hoặc \`해당사항 없음\`; không để trống, không ước lượng, không điền \`0\` thay cho dữ liệu thiếu.
-5. Chỉ dùng \`동종산업 예시\` và \`동종산업 재서술 예시\` để tham khảo cấu trúc diễn đạt, không copy như dữ liệu của doanh nghiệp.
-6. Trước khi gửi reviewer, chạy checklist trong \`CHECKLIST.md\`.
+## Quick Use
+1. Choose the workbook by sector and company size.
+2. In sheet \`EBX-Q 템플릿\`, use \`작성 소재/Content Slots\` as the required facts to collect. Do not treat it as final prose.
+3. Pick one of the four \`문체 옵션/Style Options\`: formal, concise, evidence-led, or narrative.
+4. Use \`문장 패턴/Sentence Patterns\` only as a structural pattern. Do not copy the same opening or sentence order across all 27 items.
+5. Use \`동종산업 범위 참고\` and \`동종산업 재서술 참고\` only to understand topic scope, not as company facts or wording.
+6. For missing metric data, write \`미집계\` or \`해당사항 없음\`; never leave blank, estimate, or enter \`0\` for unavailable data.
+7. Before reviewer handoff, run the checklist in \`CHECKLIST.md\`.
 
-## Nội dung phát hành
-- 44 workbook consultant-safe, đủ 11 sector x 4 quy mô.
-- Cột thực dữ liệu \`동종 실제사례(완성문·회사명 마스킹·수치유지)\` đã bị loại.
-- Cột \`규모지침\` được sinh riêng theo từng quy mô và được QA chống trùng giữa 4 quy mô trong cùng sector.
-- Các workbook sector SV có cảnh báo mapping confidence thấp/fallback.
-- Các mục từng bị review borderline có cảnh báo để consultant dùng ví dụ thận trọng.
+## Release Contents
+- 44 consultant-safe v2 workbooks: 11 sectors x 4 company sizes.
+- The old \`빈칸초안\` answer-draft column is replaced by slots, style options, sentence patterns, and anti-repetition rules.
+- The real-data column from source remains excluded.
+- Scale-specific guidance remains enforced for 대기업, 중견, 중소, and 비상장.
+- QA now checks style-option coverage and duplicate sentence-pattern text within each workbook.
 
-## Thống kê build
+## Build Stats
 - Workbooks: ${summary.workbooks}
 - Source JSON: ${summary.sourceJson}
-- Scale guidance variants checked: ${summary.scaleGuidanceChecked}
+- Scale guidance sectors checked: ${summary.scaleGuidanceChecked}
 - QA fatal issues: ${summary.fatalIssues}
 - QA warnings: ${summary.warningIssues}
 `;
 
-  const checklist = `# Checklist Nhập Liệu Trước Khi Gửi Reviewer
+  const checklist = `# Checklist Before Reviewer Handoff
 
-## Checklist theo workbook
-- [ ] Chọn đúng ngành và quy mô doanh nghiệp.
-- [ ] Đọc dòng "Quy mô" trong sheet \`안내\` và cột \`규모지침\` trong sheet \`EBX-Q 템플릿\`.
-- [ ] Nếu workbook thuộc SV 서비스, đã xác nhận lại ngành/mapping với reviewer.
-- [ ] Không sửa các cột định danh: \`ebx\`, \`area\`, \`pillar\`, \`item\`.
-- [ ] Không thêm lại cột J hoặc nội dung \`실데이터 기반·복사금지\`.
+## Workbook-level
+- [ ] Correct sector and company size workbook selected.
+- [ ] \`작성 소재/Content Slots\` used as data requirements, not copied as final prose.
+- [ ] At least two different style options are used across the workbook where evidence allows.
+- [ ] The same opening, same sentence order, and repeated endings are not used across all 27 items.
+- [ ] Source facts come from internal evidence; no invented numbers, targets, certificates, organizations, or processes.
 
-## Checklist theo từng EBX-Q item
-- [ ] Tất cả \`[ ]\` trong câu dùng để nộp đã được điền bằng dữ liệu nội bộ hoặc đổi thành \`미집계/해당사항 없음\`.
-- [ ] Nội dung đã khớp quy mô: \`대기업\` đầy đủ governance/KPI; \`중견\` có chính sách, owner và KPI chính; \`중소\` có thể định tính gọn; \`비상장\` nhấn mạnh dữ liệu nội bộ/due diligence.
-- [ ] Không bịa số, mục tiêu, năm, tổ chức, chứng chỉ hoặc quy trình nếu không có nguồn nội bộ.
-- [ ] Với Q-007/Q-011/Q-015/Q-019/Q-023/Q-027, nếu không có thống kê thì ghi \`미집계\` hoặc \`해당사항 없음\`; không để trống hoặc điền \`0\` thay cho dữ liệu thiếu.
-- [ ] Ví dụ ngành chỉ được dùng để tham khảo cấu trúc, không copy thành câu trả lời.
-- [ ] Các dòng có cảnh báo trong \`비고\` đã được đọc và xử lý thận trọng.
+## EBX-Q item-level
+- [ ] Every required slot is either filled with verified company data or marked \`미집계/해당사항 없음\`.
+- [ ] Metric rows Q-007/Q-011/Q-015/Q-019/Q-023/Q-027 do not use \`0\` for missing data.
+- [ ] The chosen style option fits the available evidence: formal for complete evidence, concise for limited evidence, evidence-led for auditable data, narrative for strategy/policy context.
+- [ ] 동종산업 reference columns are used only for topic scope and are not copied as wording.
+- [ ] Rows with warnings in \`비고\` are reviewed carefully.
 
-## Checklist trước khi bàn giao
-- [ ] Một reviewer ESG đã đọc các mục có \`⚠\`.
-- [ ] Các số liệu đã đối chiếu với nguồn nội bộ.
-- [ ] Các tên tổ chức/chức danh/chứng chỉ đã đúng theo văn bản doanh nghiệp.
-- [ ] File đã lưu thành bản riêng cho khách hàng/doanh nghiệp, không ghi đè template gốc.
+## Final handoff
+- [ ] Reviewer checked all rows with \`⚠\`.
+- [ ] All figures and claims are traceable to internal source documents.
+- [ ] Company names, titles, certifications, and reporting periods match official internal records.
+- [ ] The filled workbook is saved as a customer/company copy, not over the template.
 `;
 
   const changelog = `# Version Log
 
-## consultant_safe_v1
+## ${RELEASE_NAME}
 - Source: \`ebx_template_review_44\`, version \`${SOURCE_VERSION}\`.
-- Created release package for consultant nhập liệu.
-- Removed public-facing real-data column: \`동종 실제사례(완성문·회사명 마스킹·수치유지)\`.
-- Renamed reworded example column to \`동종산업 재서술 예시\`.
-- Added concise Vietnamese guidance to \`안내\` sheets.
-- Added scale-specific \`규모지침\` for \`대기업\`, \`중견\`, \`중소\`, and \`비상장\`.
-- Added QA checks that fail when the 4 scale guidance variants are duplicated inside a sector.
-- Added warnings for SV fallback mapping and topic-review borderline/missing items.
-- Masked numeric sequences in consultant-facing example columns.
-- Added README, checklist, release index, and QA report.
+- Builds a new \`consultant_safe_v2\` release without overwriting \`consultant_safe_v1\`.
+- Replaced the single \`빈칸초안\` writing anchor with content slots, four style options, sentence patterns, and anti-repetition rules.
+- Kept consultant-safe controls: removed real-data source column, masked numbers in reference columns, and preserved metric missing-data safeguards.
+- Added QA checks for required style keys and duplicate sentence-pattern text within a workbook.
 `;
 
   await fs.writeFile(path.join(releaseDir, "README.md"), readme, "utf8");
@@ -274,19 +380,20 @@ Bộ này dành cho consultant nhập liệu ESG định tính theo EBX-Q. Đây
 
 function createGuideRows(meta, fileName) {
   const mappingText = meta.mapping_confidence === "low" || meta.fallback_used
-    ? `산업='${meta.industry}' / 주요산업='${meta.business}' → SASB ${meta.sasb_sector}(${meta.sasb_name}), confidence=low/fallback. Consultant phải xác nhận ngành trước khi nhập.`
-    : `산업='${meta.industry}' / 주요산업='${meta.business}' → SASB ${meta.sasb_sector}(${meta.sasb_name}), confidence=${meta.mapping_confidence}.`;
+    ? `산업='${meta.industry}' / 주요산업='${meta.business}' -> SASB ${meta.sasb_sector}(${meta.sasb_name}), confidence=low/fallback. Consultant must confirm sector before filling.`
+    : `산업='${meta.industry}' / 주요산업='${meta.business}' -> SASB ${meta.sasb_sector}(${meta.sasb_name}), confidence=${meta.mapping_confidence}.`;
 
   return [
-    [`Consultant-safe EBX-Q Template — ${filePrefixFromMeta(meta)}`, ""],
-    ["Nguồn", `Dựng từ ${fileName}; source version ${SOURCE_VERSION}. Source gốc không bị sửa.`],
-    ["Mục đích", "Workbook dành cho consultant nhập liệu ESG định tính. Đây là bản an toàn, không chứa cột J thực dữ liệu của công ty khác."],
-    ["Cách điền [ ]", "Điền bằng dữ liệu nội bộ có nguồn. Không bịa số liệu, mục tiêu, tổ chức, chứng chỉ hoặc quy trình."],
-    ["Khi thiếu dữ liệu", "Ghi rõ \"미집계\" nếu chưa thống kê hoặc \"해당사항 없음\" nếu không áp dụng. Không được lượng hoá."],
-    ["Ví dụ ngành", "Cột ví dụ chỉ dùng để tham khảo cấu trúc diễn đạt; không copy làm dữ liệu của doanh nghiệp."],
-    ["Mapping ngành", mappingText],
-    ["Quy mô", buildScaleGuideSummary(meta.size)],
-    ["Trước khi gửi reviewer", "Đọc CHECKLIST.md, kiểm tra các dòng có ⚠ trong cột 비고, và đối chiếu mọi số liệu với nguồn nội bộ."],
+    [`Consultant-safe EBX-Q Template v2 - ${filePrefixFromMeta(meta)}`, ""],
+    ["Source", `Built from ${fileName}; source version ${SOURCE_VERSION}. Source files are not modified.`],
+    ["Purpose", "Safe workbook for ESG qualitative input. V2 prevents same-style AI prose by using slots, style options, sentence patterns, and anti-repetition rules."],
+    ["How to fill slots", "Fill with verified internal facts. Do not invent figures, targets, organizations, certificates, or processes."],
+    ["Style selection", "Choose formal, concise, evidence-led, or narrative per item. Do not use one style for all 27 rows."],
+    ["Missing data", "Write 미집계 when not tracked or 해당사항 없음 when not applicable. Do not estimate or enter 0 for unavailable data."],
+    ["Industry references", "Reference columns show topic scope only. Do not copy as company facts or prose style."],
+    ["Sector mapping", mappingText],
+    ["Company size", buildScaleGuideSummary(meta.size)],
+    ["Before reviewer", "Read CHECKLIST.md, check all ⚠ notes, and reconcile every figure/claim with internal sources."],
   ];
 }
 
@@ -295,7 +402,7 @@ async function buildWorkbook(sourceDir, sourceFile, topicFlags) {
   const raw = await fs.readFile(sourcePath, "utf8");
   const data = JSON.parse(raw);
   const meta = data._meta;
-  const outName = sourceFile.replace(".json", "_consultant_safe.xlsx");
+  const outName = sourceFile.replace(".json", "_consultant_safe_v2.xlsx");
   const outPath = path.join(releaseDir, outName);
 
   const workbook = Workbook.create();
@@ -315,15 +422,29 @@ async function buildWorkbook(sourceDir, sourceFile, topicFlags) {
   };
   guide.getRange(`A1:B${guideRows.length}`).format.wrapText = true;
   guide.getRange(`A1:B${guideRows.length}`).format.verticalAlignment = "top";
-  guide.getRange("A1:A9").format.columnWidthPx = 170;
-  guide.getRange("B1:B9").format.columnWidthPx = 820;
+  guide.getRange(`A1:A${guideRows.length}`).format.columnWidthPx = 170;
+  guide.getRange(`B1:B${guideRows.length}`).format.columnWidthPx = 840;
   guide.freezePanes.freezeRows(1);
   guide.showGridLines = false;
 
   const scaleGuidanceByEbx = new Map();
+  const rowDiagnostics = [];
   const rows = data.items.map((item) => {
     const scaleGuidance = buildScaleGuidance(meta, item);
+    const contentSlots = buildContentSlots(item);
+    const styleOptions = buildStyleOptions(meta, item);
+    const sentencePatterns = buildSentencePatterns(item);
+    const antiRepeatRules = buildAntiRepeatRules(item);
     scaleGuidanceByEbx.set(item.ebx, scaleGuidance);
+    rowDiagnostics.push({
+      ebx: item.ebx,
+      legacyDraft: String(item["빈칸초안"] ?? ""),
+      contentSlots,
+      styleOptions,
+      sentencePatterns,
+      antiRepeatRules,
+    });
+
     const baseNote = String(item["비고"] ?? "");
     const warning = buildWarningNote(meta, item, topicFlags);
     const note = [baseNote, warning].filter(Boolean).join(" / ");
@@ -333,9 +454,11 @@ async function buildWorkbook(sourceDir, sourceFile, topicFlags) {
       item.pillar,
       item.item,
       item["공개성"],
-      bulletList(item["구조개요"]),
-      item["빈칸초안"] ?? "",
+      contentSlots,
       buildGuidance(item),
+      styleOptions,
+      sentencePatterns,
+      antiRepeatRules,
       safeExample(item["동종예시"]),
       safeReword(item["동종실제재서술"]),
       scaleGuidance,
@@ -345,27 +468,29 @@ async function buildWorkbook(sourceDir, sourceFile, topicFlags) {
 
   sheet.getRangeByIndexes(0, 0, 1, SAFE_HEADERS.length).values = [SAFE_HEADERS];
   sheet.getRangeByIndexes(1, 0, rows.length, SAFE_HEADERS.length).values = rows;
-  sheet.getRange("A1:L1").format = {
+  sheet.getRange("A1:N1").format = {
     fill: "#1F4E79",
     font: { bold: true, color: "#FFFFFF" },
   };
-  sheet.getRange("A1:L28").format.wrapText = true;
-  sheet.getRange("A1:L28").format.verticalAlignment = "top";
-  sheet.getRange("G1:H28").format.fill = "#FFF2CC";
-  sheet.getRange("I1:J28").format.fill = "#E2F0D9";
-  sheet.getRange("K1:L28").format.fill = "#FCE4D6";
+  sheet.getRange("A1:N28").format.wrapText = true;
+  sheet.getRange("A1:N28").format.verticalAlignment = "top";
+  sheet.getRange("F1:J28").format.fill = "#FFF2CC";
+  sheet.getRange("K1:L28").format.fill = "#E2F0D9";
+  sheet.getRange("M1:N28").format.fill = "#FCE4D6";
   sheet.getRange("A1:A28").format.columnWidthPx = 92;
   sheet.getRange("B1:B28").format.columnWidthPx = 72;
   sheet.getRange("C1:C28").format.columnWidthPx = 130;
   sheet.getRange("D1:D28").format.columnWidthPx = 220;
   sheet.getRange("E1:E28").format.columnWidthPx = 98;
-  sheet.getRange("F1:F28").format.columnWidthPx = 260;
-  sheet.getRange("G1:G28").format.columnWidthPx = 330;
-  sheet.getRange("H1:H28").format.columnWidthPx = 370;
-  sheet.getRange("I1:I28").format.columnWidthPx = 370;
-  sheet.getRange("J1:J28").format.columnWidthPx = 370;
-  sheet.getRange("K1:K28").format.columnWidthPx = 420;
-  sheet.getRange("L1:L28").format.columnWidthPx = 320;
+  sheet.getRange("F1:F28").format.columnWidthPx = 420;
+  sheet.getRange("G1:G28").format.columnWidthPx = 360;
+  sheet.getRange("H1:H28").format.columnWidthPx = 410;
+  sheet.getRange("I1:I28").format.columnWidthPx = 470;
+  sheet.getRange("J1:J28").format.columnWidthPx = 390;
+  sheet.getRange("K1:K28").format.columnWidthPx = 360;
+  sheet.getRange("L1:L28").format.columnWidthPx = 360;
+  sheet.getRange("M1:M28").format.columnWidthPx = 390;
+  sheet.getRange("N1:N28").format.columnWidthPx = 320;
   sheet.freezePanes.freezeRows(1);
   sheet.freezePanes.freezeColumns(4);
   sheet.showGridLines = false;
@@ -378,6 +503,7 @@ async function buildWorkbook(sourceDir, sourceFile, topicFlags) {
     sourceFile,
     meta,
     rowCount: rows.length,
+    rowDiagnostics,
     scaleGuidanceHash: hashText([...scaleGuidanceByEbx.entries()].map(([ebx, guidance]) => `${ebx}:${guidance}`).join("\n")),
     metricGuidance: scaleGuidanceByEbx.get("EBX-Q-007") ?? "",
   };
@@ -440,6 +566,7 @@ async function runQa(sourceDir, outputs) {
   const warnings = [];
   const seenFiles = new Set(outputs.map((output) => output.outName));
   if (seenFiles.size !== 44) fatal.push(`Expected 44 workbooks, found ${seenFiles.size}.`);
+  if (SAFE_HEADERS.includes("빈칸초안")) fatal.push("V2 headers must not include the old 빈칸초안 column.");
 
   for (const output of outputs) {
     const sourceData = JSON.parse(await fs.readFile(path.join(sourceDir, output.sourceFile), "utf8"));
@@ -455,11 +582,29 @@ async function runQa(sourceDir, outputs) {
     if (!EXPECTED_SIZES.includes(output.meta.size)) {
       fatal.push(`${output.outName}: unsupported size ${output.meta.size}.`);
     }
-    if (!output.metricGuidance.includes("0") || !/không để trống|không điền 0|thay vì điền 0|thay cho dữ liệu thiếu/.test(output.metricGuidance)) {
+    if (!output.metricGuidance.includes("0") || !/do not leave blank|do not enter 0|instead of entering 0|never enter 0/.test(output.metricGuidance)) {
       fatal.push(`${output.outName}: EBX-Q-007 metric scale guidance does not warn against blank/zero substitution.`);
     }
     if ((output.meta.mapping_confidence === "low" || output.meta.fallback_used) && output.meta.sasb_sector !== "SV") {
       warnings.push(`${output.outName}: low/fallback mapping outside SV.`);
+    }
+
+    const patternTexts = output.rowDiagnostics.map((row) => row.sentencePatterns);
+    const uniquePatternTexts = new Set(patternTexts);
+    if (uniquePatternTexts.size !== output.rowDiagnostics.length) {
+      fatal.push(`${output.outName}: duplicate sentence pattern text within workbook.`);
+    }
+    for (const row of output.rowDiagnostics) {
+      const missingStyles = STYLE_KEYS.filter((style) => !row.styleOptions.includes(`${style}:`));
+      if (missingStyles.length) {
+        fatal.push(`${output.outName} ${row.ebx}: missing style options ${missingStyles.join(", ")}.`);
+      }
+      if (row.legacyDraft && row.contentSlots.trim() === row.legacyDraft.trim()) {
+        fatal.push(`${output.outName} ${row.ebx}: content slots still equal old 빈칸초안 draft.`);
+      }
+      if (!row.contentSlots.includes("Required material") || !row.contentSlots.includes("Evidence slot")) {
+        fatal.push(`${output.outName} ${row.ebx}: content slots are incomplete.`);
+      }
     }
   }
 
@@ -490,7 +635,12 @@ async function runQa(sourceDir, outputs) {
   return {
     generatedAt: new Date().toISOString(),
     sourceVersion: SOURCE_VERSION,
+    releaseName: RELEASE_NAME,
     expectedHeaders: SAFE_HEADERS,
+    styleOptions: {
+      required: STYLE_KEYS,
+      checkedWorkbooks: outputs.length,
+    },
     scaleGuidance: {
       expectedSizes: EXPECTED_SIZES,
       checkedSectors: bySector.size,

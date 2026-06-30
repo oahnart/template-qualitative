@@ -1,0 +1,41 @@
+{
+  "generatedAt": "2026-06-30T08:11:03.155Z",
+  "sourceVersion": "2026-06-15",
+  "releaseName": "consultant_safe_v2",
+  "expectedHeaders": [
+    "ebx",
+    "area",
+    "pillar",
+    "item",
+    "공개성",
+    "작성 소재/Content Slots",
+    "작성지침",
+    "문체 옵션/Style Options",
+    "문장 패턴/Sentence Patterns",
+    "반복 방지/Anti-Repetition Rules",
+    "동종산업 범위 참고",
+    "동종산업 재서술 참고",
+    "규모지침",
+    "비고"
+  ],
+  "styleOptions": {
+    "required": [
+      "formal",
+      "concise",
+      "evidence-led",
+      "narrative"
+    ],
+    "checkedWorkbooks": 44
+  },
+  "scaleGuidance": {
+    "expectedSizes": [
+      "대기업",
+      "중견",
+      "중소",
+      "비상장"
+    ],
+    "checkedSectors": 11
+  },
+  "fatal": [],
+  "warnings": []
+}

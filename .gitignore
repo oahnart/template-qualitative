@@ -1,0 +1,40 @@
+# OS and editor noise
+.DS_Store
+Thumbs.db
+Desktop.ini
+*.swp
+*.swo
+
+# Office temporary/lock files
+~$*
+*.tmp
+
+# Logs and local runtime files
+*.log
+*.pid
+
+# Dependency and build caches
+node_modules/
+.npm/
+.pnpm-store/
+dist/
+build/
+.cache/
+.parcel-cache/
+
+# Python caches
+__pycache__/
+*.py[cod]
+.pytest_cache/
+.ruff_cache/
+.mypy_cache/
+.venv/
+venv/
+
+# Local environment/secrets
+.env
+.env.*
+!.env.example
+
+# Generated release archives
+*.zip
