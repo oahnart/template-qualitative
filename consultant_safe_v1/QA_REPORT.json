@@ -1,0 +1,29 @@
+{
+  "generatedAt": "2026-06-30T07:44:55.442Z",
+  "sourceVersion": "2026-06-15",
+  "expectedHeaders": [
+    "ebx",
+    "area",
+    "pillar",
+    "item",
+    "공개성",
+    "구조개요",
+    "빈칸초안",
+    "작성지침",
+    "동종산업 예시",
+    "동종산업 재서술 예시",
+    "규모지침",
+    "비고"
+  ],
+  "scaleGuidance": {
+    "expectedSizes": [
+      "대기업",
+      "중견",
+      "중소",
+      "비상장"
+    ],
+    "checkedSectors": 11
+  },
+  "fatal": [],
+  "warnings": []
+}

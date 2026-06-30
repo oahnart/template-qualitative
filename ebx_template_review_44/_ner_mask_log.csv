@@ -1,0 +1,661 @@
+﻿file_prefix,ebx,field,stage,spans
+CG_소비재_대기업,EBX-Q-004,J,ner,Mental Care | 심리경영프로그램
+CG_소비재_대기업,EBX-Q-006,J,ner,세이프 마스터 제도
+CG_소비재_대기업,EBX-Q-007,J,ner,HGSMS
+CG_소비재_대기업,EBX-Q-014,J,ner,QSS
+CG_소비재_대기업,EBX-Q-014,K,ner,QSS
+CG_소비재_대기업,EBX-Q-020,J,ner,연구센터
+CG_소비재_대기업,EBX-Q-021,J,ner,이천사업장 | 오송본사 | CSO
+CG_소비재_대기업,EBX-Q-023,J,ner,파워플래너
+CG_소비재_대기업,EBX-Q-024,J,ner,클린라인(Clean Line)
+CG_소비재_대기업,EBX-Q-024,K,ner,클린라인(Clean Line)
+CG_소비재_대기업,EBX-Q-026,J,ner,CA | CL | CM
+CG_소비재_비상장,EBX-Q-004,J,ner,Mental Care | 심리경영프로그램
+CG_소비재_비상장,EBX-Q-006,J,ner,세이프 마스터 제도
+CG_소비재_비상장,EBX-Q-007,J,ner,HGSMS
+CG_소비재_비상장,EBX-Q-014,J,ner,QSS
+CG_소비재_비상장,EBX-Q-014,K,ner,QSS
+CG_소비재_비상장,EBX-Q-020,J,ner,연구센터
+CG_소비재_비상장,EBX-Q-021,J,ner,이천사업장 | 오송본사 | CSO
+CG_소비재_비상장,EBX-Q-023,J,ner,파워플래너
+CG_소비재_비상장,EBX-Q-024,J,ner,클린라인(Clean Line)
+CG_소비재_비상장,EBX-Q-024,K,ner,클린라인(Clean Line)
+CG_소비재_비상장,EBX-Q-026,J,ner,CA | CL | CM
+CG_소비재_중견,EBX-Q-004,J,ner,Mental Care | 심리경영프로그램
+CG_소비재_중견,EBX-Q-006,J,ner,세이프 마스터 제도
+CG_소비재_중견,EBX-Q-007,J,ner,HGSMS
+CG_소비재_중견,EBX-Q-014,J,ner,QSS
+CG_소비재_중견,EBX-Q-014,K,ner,QSS
+CG_소비재_중견,EBX-Q-020,J,ner,연구센터
+CG_소비재_중견,EBX-Q-021,J,ner,이천사업장 | 오송본사 | CSO
+CG_소비재_중견,EBX-Q-023,J,ner,파워플래너
+CG_소비재_중견,EBX-Q-024,J,ner,클린라인(Clean Line)
+CG_소비재_중견,EBX-Q-024,K,ner,클린라인(Clean Line)
+CG_소비재_중견,EBX-Q-026,J,ner,CA | CL | CM
+CG_소비재_중소,EBX-Q-004,J,ner,Mental Care | 심리경영프로그램
+CG_소비재_중소,EBX-Q-006,J,ner,세이프 마스터 제도
+CG_소비재_중소,EBX-Q-007,J,ner,HGSMS
+CG_소비재_중소,EBX-Q-014,J,ner,QSS
+CG_소비재_중소,EBX-Q-014,K,ner,QSS
+CG_소비재_중소,EBX-Q-020,J,ner,연구센터
+CG_소비재_중소,EBX-Q-021,J,ner,이천사업장 | 오송본사 | CSO
+CG_소비재_중소,EBX-Q-023,J,ner,파워플래너
+CG_소비재_중소,EBX-Q-024,J,ner,클린라인(Clean Line)
+CG_소비재_중소,EBX-Q-024,K,ner,클린라인(Clean Line)
+CG_소비재_중소,EBX-Q-026,J,ner,CA | CL | CM
+EM_추출·광물가공_대기업,EBX-Q-001,J,ner,Change and Innovation with ESG 2030 | Green Value for All
+EM_추출·광물가공_대기업,EBX-Q-004,J,ner,SMART Safety Eye | 안전사고 예방 TOP 진단 | 안전지킴이 | 안전경영팀
+EM_추출·광물가공_대기업,EBX-Q-004,K,ner,SMART Safety Eye | 안전사고 예방 TOP 진단 | 안전지킴이
+EM_추출·광물가공_대기업,EBX-Q-005,J,ner,안전패트롤
+EM_추출·광물가공_대기업,EBX-Q-007,J,ner,통합 나눔경영
+EM_추출·광물가공_대기업,EBX-Q-009,J,ner,선제적 고충 처리 제도 | 투명경영
+EM_추출·광물가공_대기업,EBX-Q-012,J,ner,충청북도
+EM_추출·광물가공_대기업,EBX-Q-013,J,ner,시멘트 | 레미탈 | 슬래그 | 레미콘
+EM_추출·광물가공_대기업,EBX-Q-016,J,ner,정보기획팀
+EM_추출·광물가공_대기업,EBX-Q-019,J,ner,스마트러닝
+EM_추출·광물가공_대기업,EBX-Q-020,J,ner,사원 Zero
+EM_추출·광물가공_대기업,EBX-Q-021,J,ner,석회석 광산 | 단양지역 | 기업시민
+EM_추출·광물가공_대기업,EBX-Q-021,K,ner,석회석 광산 | 단양지역 | 기업시민
+EM_추출·광물가공_대기업,EBX-Q-024,J,ner,책임감 있는 기업
+EM_추출·광물가공_비상장,EBX-Q-001,J,ner,Change and Innovation with ESG 2030 | Green Value for All
+EM_추출·광물가공_비상장,EBX-Q-004,J,ner,SMART Safety Eye | 안전사고 예방 TOP 진단 | 안전지킴이 | 안전경영팀
+EM_추출·광물가공_비상장,EBX-Q-004,K,ner,SMART Safety Eye | 안전사고 예방 TOP 진단 | 안전지킴이
+EM_추출·광물가공_비상장,EBX-Q-005,J,ner,안전패트롤
+EM_추출·광물가공_비상장,EBX-Q-007,J,ner,통합 나눔경영
+EM_추출·광물가공_비상장,EBX-Q-009,J,ner,선제적 고충 처리 제도 | 투명경영
+EM_추출·광물가공_비상장,EBX-Q-012,J,ner,충청북도
+EM_추출·광물가공_비상장,EBX-Q-013,J,ner,시멘트 | 레미탈 | 슬래그 | 레미콘
+EM_추출·광물가공_비상장,EBX-Q-016,J,ner,정보기획팀
+EM_추출·광물가공_비상장,EBX-Q-019,J,ner,스마트러닝
+EM_추출·광물가공_비상장,EBX-Q-020,J,ner,사원 Zero
+EM_추출·광물가공_비상장,EBX-Q-021,J,ner,석회석 광산 | 단양지역 | 기업시민
+EM_추출·광물가공_비상장,EBX-Q-021,K,ner,석회석 광산 | 단양지역 | 기업시민
+EM_추출·광물가공_비상장,EBX-Q-024,J,ner,책임감 있는 기업
+EM_추출·광물가공_중견,EBX-Q-001,J,ner,Change and Innovation with ESG 2030 | Green Value for All
+EM_추출·광물가공_중견,EBX-Q-004,J,ner,SMART Safety Eye | 안전사고 예방 TOP 진단 | 안전지킴이 | 안전경영팀
+EM_추출·광물가공_중견,EBX-Q-004,K,ner,SMART Safety Eye | 안전사고 예방 TOP 진단 | 안전지킴이
+EM_추출·광물가공_중견,EBX-Q-005,J,ner,안전패트롤
+EM_추출·광물가공_중견,EBX-Q-007,J,ner,통합 나눔경영
+EM_추출·광물가공_중견,EBX-Q-009,J,ner,선제적 고충 처리 제도 | 투명경영
+EM_추출·광물가공_중견,EBX-Q-012,J,ner,충청북도
+EM_추출·광물가공_중견,EBX-Q-013,J,ner,시멘트 | 레미탈 | 슬래그 | 레미콘
+EM_추출·광물가공_중견,EBX-Q-016,J,ner,정보기획팀
+EM_추출·광물가공_중견,EBX-Q-019,J,ner,스마트러닝
+EM_추출·광물가공_중견,EBX-Q-020,J,ner,사원 Zero
+EM_추출·광물가공_중견,EBX-Q-021,J,ner,석회석 광산 | 단양지역 | 기업시민
+EM_추출·광물가공_중견,EBX-Q-021,K,ner,석회석 광산 | 단양지역 | 기업시민
+EM_추출·광물가공_중견,EBX-Q-024,J,ner,책임감 있는 기업
+EM_추출·광물가공_중소,EBX-Q-001,J,ner,Change and Innovation with ESG 2030 | Green Value for All
+EM_추출·광물가공_중소,EBX-Q-004,J,ner,SMART Safety Eye | 안전사고 예방 TOP 진단 | 안전지킴이 | 안전경영팀
+EM_추출·광물가공_중소,EBX-Q-004,K,ner,SMART Safety Eye | 안전사고 예방 TOP 진단 | 안전지킴이
+EM_추출·광물가공_중소,EBX-Q-005,J,ner,안전패트롤
+EM_추출·광물가공_중소,EBX-Q-007,J,ner,통합 나눔경영
+EM_추출·광물가공_중소,EBX-Q-009,J,ner,선제적 고충 처리 제도 | 투명경영
+EM_추출·광물가공_중소,EBX-Q-012,J,ner,충청북도
+EM_추출·광물가공_중소,EBX-Q-013,J,ner,시멘트 | 레미탈 | 슬래그 | 레미콘
+EM_추출·광물가공_중소,EBX-Q-016,J,ner,정보기획팀
+EM_추출·광물가공_중소,EBX-Q-019,J,ner,스마트러닝
+EM_추출·광물가공_중소,EBX-Q-020,J,ner,사원 Zero
+EM_추출·광물가공_중소,EBX-Q-021,J,ner,석회석 광산 | 단양지역 | 기업시민
+EM_추출·광물가공_중소,EBX-Q-021,K,ner,석회석 광산 | 단양지역 | 기업시민
+EM_추출·광물가공_중소,EBX-Q-024,J,ner,책임감 있는 기업
+FB_식음료_대기업,EBX-Q-003,J,ner,기술연구센터 | EHS팀 | ESG팀
+FB_식음료_대기업,EBX-Q-004,J,ner,제조안전본부 | 안전체험관
+FB_식음료_대기업,EBX-Q-004,K,ner,제조안전본부 | 안전체험관
+FB_식음료_대기업,EBX-Q-012,J,ner,품질경영실
+FB_식음료_대기업,EBX-Q-016,J,ner,ESG PERFORMANCE 혁신본부장
+FB_식음료_대기업,EBX-Q-017,J,ner,디지털 전략 팀
+FB_식음료_대기업,EBX-Q-021,J,ner,안전환경실
+FB_식음료_대기업,EBX-Q-021,K,ner,안전환경실
+FB_식음료_대기업,EBX-Q-026,J,ner,윤리감사팀
+FB_식음료_비상장,EBX-Q-003,J,ner,기술연구센터 | EHS팀 | ESG팀
+FB_식음료_비상장,EBX-Q-004,J,ner,제조안전본부 | 안전체험관
+FB_식음료_비상장,EBX-Q-004,K,ner,제조안전본부 | 안전체험관
+FB_식음료_비상장,EBX-Q-012,J,ner,품질경영실
+FB_식음료_비상장,EBX-Q-016,J,ner,ESG PERFORMANCE 혁신본부장
+FB_식음료_비상장,EBX-Q-017,J,ner,디지털 전략 팀
+FB_식음료_비상장,EBX-Q-021,J,ner,안전환경실
+FB_식음료_비상장,EBX-Q-021,K,ner,안전환경실
+FB_식음료_비상장,EBX-Q-026,J,ner,윤리감사팀
+FB_식음료_중견,EBX-Q-003,J,ner,기술연구센터 | EHS팀 | ESG팀
+FB_식음료_중견,EBX-Q-004,J,ner,제조안전본부 | 안전체험관
+FB_식음료_중견,EBX-Q-004,K,ner,제조안전본부 | 안전체험관
+FB_식음료_중견,EBX-Q-012,J,ner,품질경영실
+FB_식음료_중견,EBX-Q-016,J,ner,ESG PERFORMANCE 혁신본부장
+FB_식음료_중견,EBX-Q-017,J,ner,디지털 전략 팀
+FB_식음료_중견,EBX-Q-021,J,ner,안전환경실
+FB_식음료_중견,EBX-Q-021,K,ner,안전환경실
+FB_식음료_중견,EBX-Q-026,J,ner,윤리감사팀
+FB_식음료_중소,EBX-Q-003,J,ner,기술연구센터 | EHS팀 | ESG팀
+FB_식음료_중소,EBX-Q-004,J,ner,제조안전본부 | 안전체험관
+FB_식음료_중소,EBX-Q-004,K,ner,제조안전본부 | 안전체험관
+FB_식음료_중소,EBX-Q-012,J,ner,품질경영실
+FB_식음료_중소,EBX-Q-016,J,ner,ESG PERFORMANCE 혁신본부장
+FB_식음료_중소,EBX-Q-017,J,ner,디지털 전략 팀
+FB_식음료_중소,EBX-Q-021,J,ner,안전환경실
+FB_식음료_중소,EBX-Q-021,K,ner,안전환경실
+FB_식음료_중소,EBX-Q-026,J,ner,윤리감사팀
+FN_금융_대기업,EBX-Q-001,J,ner,Big Step for Tomorrow
+FN_금융_대기업,EBX-Q-002,J,ner,Towards Sustainable Future | 녹색경영
+FN_금융_대기업,EBX-Q-005,J,ner,ESG팀 안전보건파트
+FN_금융_대기업,EBX-Q-016,J,ner,그룹 보안 3대 행동원칙
+FN_금융_대기업,EBX-Q-017,J,ner,정보보호 상시평가
+FN_금융_비상장,EBX-Q-001,J,ner,Big Step for Tomorrow
+FN_금융_비상장,EBX-Q-002,J,ner,Towards Sustainable Future | 녹색경영
+FN_금융_비상장,EBX-Q-005,J,ner,ESG팀 안전보건파트
+FN_금융_비상장,EBX-Q-016,J,ner,그룹 보안 3대 행동원칙
+FN_금융_비상장,EBX-Q-017,J,ner,정보보호 상시평가
+FN_금융_중견,EBX-Q-001,J,ner,Big Step for Tomorrow
+FN_금융_중견,EBX-Q-002,J,ner,Towards Sustainable Future | 녹색경영
+FN_금융_중견,EBX-Q-005,J,ner,ESG팀 안전보건파트
+FN_금융_중견,EBX-Q-016,J,ner,그룹 보안 3대 행동원칙
+FN_금융_중견,EBX-Q-017,J,ner,정보보호 상시평가
+FN_금융_중소,EBX-Q-001,J,ner,Big Step for Tomorrow
+FN_금융_중소,EBX-Q-002,J,ner,Towards Sustainable Future | 녹색경영
+FN_금융_중소,EBX-Q-005,J,ner,ESG팀 안전보건파트
+FN_금융_중소,EBX-Q-016,J,ner,그룹 보안 3대 행동원칙
+FN_금융_중소,EBX-Q-017,J,ner,정보보호 상시평가
+HC_헬스케어_대기업,EBX-Q-004,J,ner,안전경영기획팀 | 제품안전정책팀 | 안전관리팀 | CSEO
+HC_헬스케어_대기업,EBX-Q-012,J,ner,QMS 시스템
+HC_헬스케어_대기업,EBX-Q-016,J,ner,정보보안 운영위원회 | CSO
+HC_헬스케어_대기업,EBX-Q-019,J,ner,정보보안의 날
+HC_헬스케어_대기업,EBX-Q-019,K,ner,정보보안의 날
+HC_헬스케어_대기업,EBX-Q-024,J,ner,Compliance Letter
+HC_헬스케어_비상장,EBX-Q-004,J,ner,안전경영기획팀 | 제품안전정책팀 | 안전관리팀 | CSEO
+HC_헬스케어_비상장,EBX-Q-012,J,ner,QMS 시스템
+HC_헬스케어_비상장,EBX-Q-016,J,ner,정보보안 운영위원회 | CSO
+HC_헬스케어_비상장,EBX-Q-019,J,ner,정보보안의 날
+HC_헬스케어_비상장,EBX-Q-019,K,ner,정보보안의 날
+HC_헬스케어_비상장,EBX-Q-024,J,ner,Compliance Letter
+HC_헬스케어_중견,EBX-Q-004,J,ner,안전경영기획팀 | 제품안전정책팀 | 안전관리팀 | CSEO
+HC_헬스케어_중견,EBX-Q-012,J,ner,QMS 시스템
+HC_헬스케어_중견,EBX-Q-016,J,ner,정보보안 운영위원회 | CSO
+HC_헬스케어_중견,EBX-Q-019,J,ner,정보보안의 날
+HC_헬스케어_중견,EBX-Q-019,K,ner,정보보안의 날
+HC_헬스케어_중견,EBX-Q-024,J,ner,Compliance Letter
+HC_헬스케어_중소,EBX-Q-004,J,ner,안전경영기획팀 | 제품안전정책팀 | 안전관리팀 | CSEO
+HC_헬스케어_중소,EBX-Q-012,J,ner,QMS 시스템
+HC_헬스케어_중소,EBX-Q-016,J,ner,정보보안 운영위원회 | CSO
+HC_헬스케어_중소,EBX-Q-019,J,ner,정보보안의 날
+HC_헬스케어_중소,EBX-Q-019,K,ner,정보보안의 날
+HC_헬스케어_중소,EBX-Q-024,J,ner,Compliance Letter
+IF_인프라_대기업,EBX-Q-001,J,ner,Sustainable Challenge 2030 | 3 Promise | EPDM
+IF_인프라_대기업,EBX-Q-003,J,ner,ESG 실무협의회 | 환경보건경영팀
+IF_인프라_대기업,EBX-Q-004,J,ner,안전환경안전경영실
+IF_인프라_대기업,EBX-Q-004,K,ner,안전환경안전경영실
+IF_인프라_대기업,EBX-Q-005,J,ner,점포운영팀 | 안전파트 | SO기획
+IF_인프라_대기업,EBX-Q-005,K,ner,점포운영팀 | 안전파트 | SO기획
+IF_인프라_대기업,EBX-Q-006,J,ner,MDT 점검
+IF_인프라_대기업,EBX-Q-008,J,ner,음나누기
+IF_인프라_대기업,EBX-Q-009,J,ner,CEO Letter
+IF_인프라_대기업,EBX-Q-015,J,ner,Gate 활동 | FRS
+IF_인프라_대기업,EBX-Q-015,K,ner,Gate 활동 | FRS
+IF_인프라_대기업,EBX-Q-021,J,ner,EHS 위원회 | EHS 팀 | 바이오 | 제약 | 건강
+IF_인프라_대기업,EBX-Q-027,J,ner,내부신고 제도 운영규정 | 사이버신문고
+IF_인프라_비상장,EBX-Q-001,J,ner,Sustainable Challenge 2030 | 3 Promise | EPDM
+IF_인프라_비상장,EBX-Q-003,J,ner,ESG 실무협의회 | 환경보건경영팀
+IF_인프라_비상장,EBX-Q-004,J,ner,안전환경안전경영실
+IF_인프라_비상장,EBX-Q-004,K,ner,안전환경안전경영실
+IF_인프라_비상장,EBX-Q-005,J,ner,점포운영팀 | 안전파트 | SO기획
+IF_인프라_비상장,EBX-Q-005,K,ner,점포운영팀 | 안전파트 | SO기획
+IF_인프라_비상장,EBX-Q-006,J,ner,MDT 점검
+IF_인프라_비상장,EBX-Q-008,J,ner,음나누기
+IF_인프라_비상장,EBX-Q-009,J,ner,CEO Letter
+IF_인프라_비상장,EBX-Q-015,J,ner,Gate 활동 | FRS
+IF_인프라_비상장,EBX-Q-015,K,ner,Gate 활동 | FRS
+IF_인프라_비상장,EBX-Q-021,J,ner,EHS 위원회 | EHS 팀 | 바이오 | 제약 | 건강
+IF_인프라_비상장,EBX-Q-027,J,ner,내부신고 제도 운영규정 | 사이버신문고
+IF_인프라_중견,EBX-Q-001,J,ner,Sustainable Challenge 2030 | 3 Promise | EPDM
+IF_인프라_중견,EBX-Q-003,J,ner,ESG 실무협의회 | 환경보건경영팀
+IF_인프라_중견,EBX-Q-004,J,ner,안전환경안전경영실
+IF_인프라_중견,EBX-Q-004,K,ner,안전환경안전경영실
+IF_인프라_중견,EBX-Q-005,J,ner,점포운영팀 | 안전파트 | SO기획
+IF_인프라_중견,EBX-Q-005,K,ner,점포운영팀 | 안전파트 | SO기획
+IF_인프라_중견,EBX-Q-006,J,ner,MDT 점검
+IF_인프라_중견,EBX-Q-008,J,ner,음나누기
+IF_인프라_중견,EBX-Q-009,J,ner,CEO Letter
+IF_인프라_중견,EBX-Q-015,J,ner,Gate 활동 | FRS
+IF_인프라_중견,EBX-Q-015,K,ner,Gate 활동 | FRS
+IF_인프라_중견,EBX-Q-021,J,ner,EHS 위원회 | EHS 팀 | 바이오 | 제약 | 건강
+IF_인프라_중견,EBX-Q-027,J,ner,내부신고 제도 운영규정 | 사이버신문고
+IF_인프라_중소,EBX-Q-001,J,ner,Sustainable Challenge 2030 | 3 Promise | EPDM
+IF_인프라_중소,EBX-Q-003,J,ner,ESG 실무협의회 | 환경보건경영팀
+IF_인프라_중소,EBX-Q-004,J,ner,안전환경안전경영실
+IF_인프라_중소,EBX-Q-004,K,ner,안전환경안전경영실
+IF_인프라_중소,EBX-Q-005,J,ner,점포운영팀 | 안전파트 | SO기획
+IF_인프라_중소,EBX-Q-005,K,ner,점포운영팀 | 안전파트 | SO기획
+IF_인프라_중소,EBX-Q-006,J,ner,MDT 점검
+IF_인프라_중소,EBX-Q-008,J,ner,음나누기
+IF_인프라_중소,EBX-Q-009,J,ner,CEO Letter
+IF_인프라_중소,EBX-Q-015,J,ner,Gate 활동 | FRS
+IF_인프라_중소,EBX-Q-015,K,ner,Gate 활동 | FRS
+IF_인프라_중소,EBX-Q-021,J,ner,EHS 위원회 | EHS 팀 | 바이오 | 제약 | 건강
+IF_인프라_중소,EBX-Q-027,J,ner,내부신고 제도 운영규정 | 사이버신문고
+RR_재생자원·대체에너지_대기업,EBX-Q-001,J,ner,Green Together | Life Together | ESG 자기주도연구회 | ESG추진협의회 | B/U
+RR_재생자원·대체에너지_대기업,EBX-Q-005,J,ner,CSO
+RR_재생자원·대체에너지_대기업,EBX-Q-009,J,ner,P-GWP
+RR_재생자원·대체에너지_대기업,EBX-Q-009,K,ner,P-GWP
+RR_재생자원·대체에너지_대기업,EBX-Q-011,J,ner,ESG경영위원회 | ESG기획실 | 정보보호본부 | 준법감시부
+RR_재생자원·대체에너지_대기업,EBX-Q-012,J,ner,M10 585W급의 고출력 국내산 양면모듈
+RR_재생자원·대체에너지_대기업,EBX-Q-013,J,ner,미래기술연구 TF | 모멘텀 부문 | PMS
+RR_재생자원·대체에너지_대기업,EBX-Q-013,K,ner,PMS
+RR_재생자원·대체에너지_대기업,EBX-Q-014,J,ner,제품 안전성 관리 규정 | 기술 연구원 | 안심품질진단
+RR_재생자원·대체에너지_대기업,EBX-Q-016,J,ner,베트남 하이즈엉 | 베트남 하이퐁 | 드림스쿨 | 호치민
+RR_재생자원·대체에너지_대기업,EBX-Q-016,K,ner,드림스쿨
+RR_재생자원·대체에너지_대기업,EBX-Q-017,J,ner,전사 통합 리스크 관리 체계 | 정보 보안센터
+RR_재생자원·대체에너지_대기업,EBX-Q-018,J,ner,죽전IDC
+RR_재생자원·대체에너지_대기업,EBX-Q-018,K,ner,죽전IDC
+RR_재생자원·대체에너지_대기업,EBX-Q-021,J,ner,CSO(Chief Safety & Environment Officer) | 환경경영 모듈 | CSO
+RR_재생자원·대체에너지_대기업,EBX-Q-021,K,ner,CSO
+RR_재생자원·대체에너지_대기업,EBX-Q-027,J,ner,사이버신고센터 | BG장
+RR_재생자원·대체에너지_비상장,EBX-Q-001,J,ner,Green Together | Life Together | ESG 자기주도연구회 | ESG추진협의회 | B/U
+RR_재생자원·대체에너지_비상장,EBX-Q-005,J,ner,CSO
+RR_재생자원·대체에너지_비상장,EBX-Q-009,J,ner,P-GWP
+RR_재생자원·대체에너지_비상장,EBX-Q-009,K,ner,P-GWP
+RR_재생자원·대체에너지_비상장,EBX-Q-011,J,ner,ESG경영위원회 | ESG기획실 | 정보보호본부 | 준법감시부
+RR_재생자원·대체에너지_비상장,EBX-Q-012,J,ner,M10 585W급의 고출력 국내산 양면모듈
+RR_재생자원·대체에너지_비상장,EBX-Q-013,J,ner,미래기술연구 TF | 모멘텀 부문 | PMS
+RR_재생자원·대체에너지_비상장,EBX-Q-013,K,ner,PMS
+RR_재생자원·대체에너지_비상장,EBX-Q-014,J,ner,제품 안전성 관리 규정 | 기술 연구원 | 안심품질진단
+RR_재생자원·대체에너지_비상장,EBX-Q-016,J,ner,베트남 하이즈엉 | 베트남 하이퐁 | 드림스쿨 | 호치민
+RR_재생자원·대체에너지_비상장,EBX-Q-016,K,ner,드림스쿨
+RR_재생자원·대체에너지_비상장,EBX-Q-017,J,ner,전사 통합 리스크 관리 체계 | 정보 보안센터
+RR_재생자원·대체에너지_비상장,EBX-Q-018,J,ner,죽전IDC
+RR_재생자원·대체에너지_비상장,EBX-Q-018,K,ner,죽전IDC
+RR_재생자원·대체에너지_비상장,EBX-Q-021,J,ner,CSO(Chief Safety & Environment Officer) | 환경경영 모듈 | CSO
+RR_재생자원·대체에너지_비상장,EBX-Q-021,K,ner,CSO
+RR_재생자원·대체에너지_비상장,EBX-Q-027,J,ner,사이버신고센터 | BG장
+RR_재생자원·대체에너지_중견,EBX-Q-001,J,ner,Green Together | Life Together | ESG 자기주도연구회 | ESG추진협의회 | B/U
+RR_재생자원·대체에너지_중견,EBX-Q-005,J,ner,CSO
+RR_재생자원·대체에너지_중견,EBX-Q-009,J,ner,P-GWP
+RR_재생자원·대체에너지_중견,EBX-Q-009,K,ner,P-GWP
+RR_재생자원·대체에너지_중견,EBX-Q-011,J,ner,ESG경영위원회 | ESG기획실 | 정보보호본부 | 준법감시부
+RR_재생자원·대체에너지_중견,EBX-Q-012,J,ner,M10 585W급의 고출력 국내산 양면모듈
+RR_재생자원·대체에너지_중견,EBX-Q-013,J,ner,미래기술연구 TF | 모멘텀 부문 | PMS
+RR_재생자원·대체에너지_중견,EBX-Q-013,K,ner,PMS
+RR_재생자원·대체에너지_중견,EBX-Q-014,J,ner,제품 안전성 관리 규정 | 기술 연구원 | 안심품질진단
+RR_재생자원·대체에너지_중견,EBX-Q-016,J,ner,베트남 하이즈엉 | 베트남 하이퐁 | 드림스쿨 | 호치민
+RR_재생자원·대체에너지_중견,EBX-Q-016,K,ner,드림스쿨
+RR_재생자원·대체에너지_중견,EBX-Q-017,J,ner,전사 통합 리스크 관리 체계 | 정보 보안센터
+RR_재생자원·대체에너지_중견,EBX-Q-018,J,ner,죽전IDC
+RR_재생자원·대체에너지_중견,EBX-Q-018,K,ner,죽전IDC
+RR_재생자원·대체에너지_중견,EBX-Q-021,J,ner,CSO(Chief Safety & Environment Officer) | 환경경영 모듈 | CSO
+RR_재생자원·대체에너지_중견,EBX-Q-021,K,ner,CSO
+RR_재생자원·대체에너지_중견,EBX-Q-027,J,ner,사이버신고센터 | BG장
+RR_재생자원·대체에너지_중소,EBX-Q-001,J,ner,Green Together | Life Together | ESG 자기주도연구회 | ESG추진협의회 | B/U
+RR_재생자원·대체에너지_중소,EBX-Q-005,J,ner,CSO
+RR_재생자원·대체에너지_중소,EBX-Q-009,J,ner,P-GWP
+RR_재생자원·대체에너지_중소,EBX-Q-009,K,ner,P-GWP
+RR_재생자원·대체에너지_중소,EBX-Q-011,J,ner,ESG경영위원회 | ESG기획실 | 정보보호본부 | 준법감시부
+RR_재생자원·대체에너지_중소,EBX-Q-012,J,ner,M10 585W급의 고출력 국내산 양면모듈
+RR_재생자원·대체에너지_중소,EBX-Q-013,J,ner,미래기술연구 TF | 모멘텀 부문 | PMS
+RR_재생자원·대체에너지_중소,EBX-Q-013,K,ner,PMS
+RR_재생자원·대체에너지_중소,EBX-Q-014,J,ner,제품 안전성 관리 규정 | 기술 연구원 | 안심품질진단
+RR_재생자원·대체에너지_중소,EBX-Q-016,J,ner,베트남 하이즈엉 | 베트남 하이퐁 | 드림스쿨 | 호치민
+RR_재생자원·대체에너지_중소,EBX-Q-016,K,ner,드림스쿨
+RR_재생자원·대체에너지_중소,EBX-Q-017,J,ner,전사 통합 리스크 관리 체계 | 정보 보안센터
+RR_재생자원·대체에너지_중소,EBX-Q-018,J,ner,죽전IDC
+RR_재생자원·대체에너지_중소,EBX-Q-018,K,ner,죽전IDC
+RR_재생자원·대체에너지_중소,EBX-Q-021,J,ner,CSO(Chief Safety & Environment Officer) | 환경경영 모듈 | CSO
+RR_재생자원·대체에너지_중소,EBX-Q-021,K,ner,CSO
+RR_재생자원·대체에너지_중소,EBX-Q-027,J,ner,사이버신고센터 | BG장
+RT_자원가공·제조_대기업,EBX-Q-004,J,ner,CSO
+RT_자원가공·제조_대기업,EBX-Q-004,K,ner,CSO
+RT_자원가공·제조_대기업,EBX-Q-005,J,ner,SHE팀 | SHE
+RT_자원가공·제조_대기업,EBX-Q-007,J,ner,Safety Golden Rules
+RT_자원가공·제조_대기업,EBX-Q-007,K,ner,컨설라이언스
+RT_자원가공·제조_대기업,EBX-Q-013,J,ner,"Quality Product, Quality Process, Quality People | ONE AND ONLY | 3QP"
+RT_자원가공·제조_대기업,EBX-Q-015,J,ner,파트너사 행동규범
+RT_자원가공·제조_대기업,EBX-Q-015,K,ner,파트너사 행동규범
+RT_자원가공·제조_대기업,EBX-Q-016,J,ner,정보보호사무국
+RT_자원가공·제조_대기업,EBX-Q-016,K,ner,정보보호사무국
+RT_자원가공·제조_대기업,EBX-Q-018,J,ner,보안의 날 | ISDS
+RT_자원가공·제조_대기업,EBX-Q-021,J,ner,CSEO
+RT_자원가공·제조_대기업,EBX-Q-021,K,ner,CSEO
+RT_자원가공·제조_대기업,EBX-Q-024,J,ner,휘슬
+RT_자원가공·제조_대기업,EBX-Q-025,J,ner,Compliance팀 | 경영진단팀
+RT_자원가공·제조_대기업,EBX-Q-025,K,ner,Compliance팀 | 경영진단팀
+RT_자원가공·제조_대기업,EBX-Q-027,J,ner,베트남
+RT_자원가공·제조_대기업,EBX-Q-027,K,ner,베트남
+RT_자원가공·제조_비상장,EBX-Q-004,J,ner,CSO
+RT_자원가공·제조_비상장,EBX-Q-004,K,ner,CSO
+RT_자원가공·제조_비상장,EBX-Q-005,J,ner,SHE팀 | SHE
+RT_자원가공·제조_비상장,EBX-Q-007,J,ner,Safety Golden Rules
+RT_자원가공·제조_비상장,EBX-Q-007,K,ner,컨설라이언스
+RT_자원가공·제조_비상장,EBX-Q-013,J,ner,"Quality Product, Quality Process, Quality People | ONE AND ONLY | 3QP"
+RT_자원가공·제조_비상장,EBX-Q-015,J,ner,파트너사 행동규범
+RT_자원가공·제조_비상장,EBX-Q-015,K,ner,파트너사 행동규범
+RT_자원가공·제조_비상장,EBX-Q-016,J,ner,정보보호사무국
+RT_자원가공·제조_비상장,EBX-Q-016,K,ner,정보보호사무국
+RT_자원가공·제조_비상장,EBX-Q-018,J,ner,보안의 날 | ISDS
+RT_자원가공·제조_비상장,EBX-Q-021,J,ner,CSEO
+RT_자원가공·제조_비상장,EBX-Q-021,K,ner,CSEO
+RT_자원가공·제조_비상장,EBX-Q-024,J,ner,휘슬
+RT_자원가공·제조_비상장,EBX-Q-025,J,ner,Compliance팀 | 경영진단팀
+RT_자원가공·제조_비상장,EBX-Q-025,K,ner,Compliance팀 | 경영진단팀
+RT_자원가공·제조_비상장,EBX-Q-027,J,ner,베트남
+RT_자원가공·제조_비상장,EBX-Q-027,K,ner,베트남
+RT_자원가공·제조_중견,EBX-Q-004,J,ner,CSO
+RT_자원가공·제조_중견,EBX-Q-004,K,ner,CSO
+RT_자원가공·제조_중견,EBX-Q-005,J,ner,SHE팀 | SHE
+RT_자원가공·제조_중견,EBX-Q-007,J,ner,Safety Golden Rules
+RT_자원가공·제조_중견,EBX-Q-007,K,ner,컨설라이언스
+RT_자원가공·제조_중견,EBX-Q-013,J,ner,"Quality Product, Quality Process, Quality People | ONE AND ONLY | 3QP"
+RT_자원가공·제조_중견,EBX-Q-015,J,ner,파트너사 행동규범
+RT_자원가공·제조_중견,EBX-Q-015,K,ner,파트너사 행동규범
+RT_자원가공·제조_중견,EBX-Q-016,J,ner,정보보호사무국
+RT_자원가공·제조_중견,EBX-Q-016,K,ner,정보보호사무국
+RT_자원가공·제조_중견,EBX-Q-018,J,ner,보안의 날 | ISDS
+RT_자원가공·제조_중견,EBX-Q-021,J,ner,CSEO
+RT_자원가공·제조_중견,EBX-Q-021,K,ner,CSEO
+RT_자원가공·제조_중견,EBX-Q-024,J,ner,휘슬
+RT_자원가공·제조_중견,EBX-Q-025,J,ner,Compliance팀 | 경영진단팀
+RT_자원가공·제조_중견,EBX-Q-025,K,ner,Compliance팀 | 경영진단팀
+RT_자원가공·제조_중견,EBX-Q-027,J,ner,베트남
+RT_자원가공·제조_중견,EBX-Q-027,K,ner,베트남
+RT_자원가공·제조_중소,EBX-Q-004,J,ner,CSO
+RT_자원가공·제조_중소,EBX-Q-004,K,ner,CSO
+RT_자원가공·제조_중소,EBX-Q-005,J,ner,SHE팀 | SHE
+RT_자원가공·제조_중소,EBX-Q-007,J,ner,Safety Golden Rules
+RT_자원가공·제조_중소,EBX-Q-007,K,ner,컨설라이언스
+RT_자원가공·제조_중소,EBX-Q-013,J,ner,"Quality Product, Quality Process, Quality People | ONE AND ONLY | 3QP"
+RT_자원가공·제조_중소,EBX-Q-015,J,ner,파트너사 행동규범
+RT_자원가공·제조_중소,EBX-Q-015,K,ner,파트너사 행동규범
+RT_자원가공·제조_중소,EBX-Q-016,J,ner,정보보호사무국
+RT_자원가공·제조_중소,EBX-Q-016,K,ner,정보보호사무국
+RT_자원가공·제조_중소,EBX-Q-018,J,ner,보안의 날 | ISDS
+RT_자원가공·제조_중소,EBX-Q-021,J,ner,CSEO
+RT_자원가공·제조_중소,EBX-Q-021,K,ner,CSEO
+RT_자원가공·제조_중소,EBX-Q-024,J,ner,휘슬
+RT_자원가공·제조_중소,EBX-Q-025,J,ner,Compliance팀 | 경영진단팀
+RT_자원가공·제조_중소,EBX-Q-025,K,ner,Compliance팀 | 경영진단팀
+RT_자원가공·제조_중소,EBX-Q-027,J,ner,베트남
+RT_자원가공·제조_중소,EBX-Q-027,K,ner,베트남
+SV_서비스_대기업,EBX-Q-001,J,ner,즐거운 삶과 더 나은 세상을 만드는 행복쉼터 | 2030 중장기 경영전략
+SV_서비스_대기업,EBX-Q-004,J,ner,Sustainability Core Value | 안전경영 책임계획 | 안전경영위원회
+SV_서비스_대기업,EBX-Q-006,J,ner,안전점검의 날
+SV_서비스_대기업,EBX-Q-008,J,ner,정도경영
+SV_서비스_대기업,EBX-Q-008,K,ner,정도경영
+SV_서비스_대기업,EBX-Q-012,J,ner,품질 혁신부문
+SV_서비스_대기업,EBX-Q-012,K,ner,품질 혁신부문
+SV_서비스_대기업,EBX-Q-013,J,ner,ESG 추진협의체
+SV_서비스_대기업,EBX-Q-017,J,ner,중국법인
+SV_서비스_대기업,EBX-Q-017,K,ner,IT팀
+SV_서비스_대기업,EBX-Q-021,J,ner,그린경영
+SV_서비스_대기업,EBX-Q-021,K,ner,그린경영
+SV_서비스_대기업,EBX-Q-022,J,ner,액티브그린플랫폼팀 | 제주 오피스
+SV_서비스_대기업,EBX-Q-023,J,ner,Profit Share | 부평자동화센터 | ZBB
+SV_서비스_대기업,EBX-Q-023,K,ner,Profit Share | 부평자동화센터 | ZBB
+SV_서비스_대기업,EBX-Q-024,J,ner,Focus Issue
+SV_서비스_대기업,EBX-Q-026,J,ner,정도경영위원회
+SV_서비스_비상장,EBX-Q-001,J,ner,즐거운 삶과 더 나은 세상을 만드는 행복쉼터 | 2030 중장기 경영전략
+SV_서비스_비상장,EBX-Q-004,J,ner,Sustainability Core Value | 안전경영 책임계획 | 안전경영위원회
+SV_서비스_비상장,EBX-Q-006,J,ner,안전점검의 날
+SV_서비스_비상장,EBX-Q-008,J,ner,정도경영
+SV_서비스_비상장,EBX-Q-008,K,ner,정도경영
+SV_서비스_비상장,EBX-Q-012,J,ner,품질 혁신부문
+SV_서비스_비상장,EBX-Q-012,K,ner,품질 혁신부문
+SV_서비스_비상장,EBX-Q-013,J,ner,ESG 추진협의체
+SV_서비스_비상장,EBX-Q-017,J,ner,중국법인
+SV_서비스_비상장,EBX-Q-017,K,ner,IT팀
+SV_서비스_비상장,EBX-Q-021,J,ner,그린경영
+SV_서비스_비상장,EBX-Q-021,K,ner,그린경영
+SV_서비스_비상장,EBX-Q-022,J,ner,액티브그린플랫폼팀 | 제주 오피스
+SV_서비스_비상장,EBX-Q-023,J,ner,Profit Share | 부평자동화센터 | ZBB
+SV_서비스_비상장,EBX-Q-023,K,ner,Profit Share | 부평자동화센터 | ZBB
+SV_서비스_비상장,EBX-Q-024,J,ner,Focus Issue
+SV_서비스_비상장,EBX-Q-026,J,ner,정도경영위원회
+SV_서비스_중견,EBX-Q-001,J,ner,즐거운 삶과 더 나은 세상을 만드는 행복쉼터 | 2030 중장기 경영전략
+SV_서비스_중견,EBX-Q-004,J,ner,Sustainability Core Value | 안전경영 책임계획 | 안전경영위원회
+SV_서비스_중견,EBX-Q-006,J,ner,안전점검의 날
+SV_서비스_중견,EBX-Q-008,J,ner,정도경영
+SV_서비스_중견,EBX-Q-008,K,ner,정도경영
+SV_서비스_중견,EBX-Q-012,J,ner,품질 혁신부문
+SV_서비스_중견,EBX-Q-012,K,ner,품질 혁신부문
+SV_서비스_중견,EBX-Q-013,J,ner,ESG 추진협의체
+SV_서비스_중견,EBX-Q-017,J,ner,중국법인
+SV_서비스_중견,EBX-Q-017,K,ner,IT팀
+SV_서비스_중견,EBX-Q-021,J,ner,그린경영
+SV_서비스_중견,EBX-Q-021,K,ner,그린경영
+SV_서비스_중견,EBX-Q-022,J,ner,액티브그린플랫폼팀 | 제주 오피스
+SV_서비스_중견,EBX-Q-023,J,ner,Profit Share | 부평자동화센터 | ZBB
+SV_서비스_중견,EBX-Q-023,K,ner,Profit Share | 부평자동화센터 | ZBB
+SV_서비스_중견,EBX-Q-024,J,ner,Focus Issue
+SV_서비스_중견,EBX-Q-026,J,ner,정도경영위원회
+SV_서비스_중소,EBX-Q-001,J,ner,즐거운 삶과 더 나은 세상을 만드는 행복쉼터 | 2030 중장기 경영전략
+SV_서비스_중소,EBX-Q-004,J,ner,Sustainability Core Value | 안전경영 책임계획 | 안전경영위원회
+SV_서비스_중소,EBX-Q-006,J,ner,안전점검의 날
+SV_서비스_중소,EBX-Q-008,J,ner,정도경영
+SV_서비스_중소,EBX-Q-008,K,ner,정도경영
+SV_서비스_중소,EBX-Q-012,J,ner,품질 혁신부문
+SV_서비스_중소,EBX-Q-012,K,ner,품질 혁신부문
+SV_서비스_중소,EBX-Q-013,J,ner,ESG 추진협의체
+SV_서비스_중소,EBX-Q-017,J,ner,중국법인
+SV_서비스_중소,EBX-Q-017,K,ner,IT팀
+SV_서비스_중소,EBX-Q-021,J,ner,그린경영
+SV_서비스_중소,EBX-Q-021,K,ner,그린경영
+SV_서비스_중소,EBX-Q-022,J,ner,액티브그린플랫폼팀 | 제주 오피스
+SV_서비스_중소,EBX-Q-023,J,ner,Profit Share | 부평자동화센터 | ZBB
+SV_서비스_중소,EBX-Q-023,K,ner,Profit Share | 부평자동화센터 | ZBB
+SV_서비스_중소,EBX-Q-024,J,ner,Focus Issue
+SV_서비스_중소,EBX-Q-026,J,ner,정도경영위원회
+TC_기술·통신_대기업,EBX-Q-001,J,ner,디지털 혁신으로 고객의 성장을 견인
+TC_기술·통신_대기업,EBX-Q-002,J,ner,Sustainable Mobility Solutions Provider
+TC_기술·통신_대기업,EBX-Q-004,J,ner,제품 안전정책팀 | 안전경영기획팀 | 책임안전경영 | SH
+TC_기술·통신_대기업,EBX-Q-006,J,ner,CSO
+TC_기술·통신_대기업,EBX-Q-009,J,ner,People팀
+TC_기술·통신_대기업,EBX-Q-009,K,ner,People팀
+TC_기술·통신_대기업,EBX-Q-011,J,ner,하도급 분쟁 조정 | 마음톡톡 | 신문고
+TC_기술·통신_대기업,EBX-Q-012,J,ner,MDS BU
+TC_기술·통신_대기업,EBX-Q-014,J,ner,고객만족처리전
+TC_기술·통신_대기업,EBX-Q-015,J,ner,고객만족처리전
+TC_기술·통신_대기업,EBX-Q-017,J,ner,정보보호센터
+TC_기술·통신_대기업,EBX-Q-019,J,ner,전장부품 사업
+TC_기술·통신_대기업,EBX-Q-020,J,ner,2045 탄소중립
+TC_기술·통신_대기업,EBX-Q-021,J,ner,"Higher Safety, Higher Life"
+TC_기술·통신_대기업,EBX-Q-024,J,ner,청렴실천규정
+TC_기술·통신_비상장,EBX-Q-001,J,ner,디지털 혁신으로 고객의 성장을 견인
+TC_기술·통신_비상장,EBX-Q-002,J,ner,Sustainable Mobility Solutions Provider
+TC_기술·통신_비상장,EBX-Q-004,J,ner,제품 안전정책팀 | 안전경영기획팀 | 책임안전경영 | SH
+TC_기술·통신_비상장,EBX-Q-006,J,ner,CSO
+TC_기술·통신_비상장,EBX-Q-009,J,ner,People팀
+TC_기술·통신_비상장,EBX-Q-009,K,ner,People팀
+TC_기술·통신_비상장,EBX-Q-011,J,ner,하도급 분쟁 조정 | 마음톡톡 | 신문고
+TC_기술·통신_비상장,EBX-Q-012,J,ner,MDS BU
+TC_기술·통신_비상장,EBX-Q-014,J,ner,고객만족처리전
+TC_기술·통신_비상장,EBX-Q-015,J,ner,고객만족처리전
+TC_기술·통신_비상장,EBX-Q-017,J,ner,정보보호센터
+TC_기술·통신_비상장,EBX-Q-019,J,ner,전장부품 사업
+TC_기술·통신_비상장,EBX-Q-020,J,ner,2045 탄소중립
+TC_기술·통신_비상장,EBX-Q-021,J,ner,"Higher Safety, Higher Life"
+TC_기술·통신_비상장,EBX-Q-024,J,ner,청렴실천규정
+TC_기술·통신_중견,EBX-Q-001,J,ner,디지털 혁신으로 고객의 성장을 견인
+TC_기술·통신_중견,EBX-Q-002,J,ner,Sustainable Mobility Solutions Provider
+TC_기술·통신_중견,EBX-Q-004,J,ner,제품 안전정책팀 | 안전경영기획팀 | 책임안전경영 | SH
+TC_기술·통신_중견,EBX-Q-006,J,ner,CSO
+TC_기술·통신_중견,EBX-Q-009,J,ner,People팀
+TC_기술·통신_중견,EBX-Q-009,K,ner,People팀
+TC_기술·통신_중견,EBX-Q-011,J,ner,하도급 분쟁 조정 | 마음톡톡 | 신문고
+TC_기술·통신_중견,EBX-Q-012,J,ner,MDS BU
+TC_기술·통신_중견,EBX-Q-014,J,ner,고객만족처리전
+TC_기술·통신_중견,EBX-Q-015,J,ner,고객만족처리전
+TC_기술·통신_중견,EBX-Q-017,J,ner,정보보호센터
+TC_기술·통신_중견,EBX-Q-019,J,ner,전장부품 사업
+TC_기술·통신_중견,EBX-Q-020,J,ner,2045 탄소중립
+TC_기술·통신_중견,EBX-Q-021,J,ner,"Higher Safety, Higher Life"
+TC_기술·통신_중견,EBX-Q-024,J,ner,청렴실천규정
+TC_기술·통신_중소,EBX-Q-001,J,ner,디지털 혁신으로 고객의 성장을 견인
+TC_기술·통신_중소,EBX-Q-002,J,ner,Sustainable Mobility Solutions Provider
+TC_기술·통신_중소,EBX-Q-004,J,ner,제품 안전정책팀 | 안전경영기획팀 | 책임안전경영 | SH
+TC_기술·통신_중소,EBX-Q-006,J,ner,CSO
+TC_기술·통신_중소,EBX-Q-009,J,ner,People팀
+TC_기술·통신_중소,EBX-Q-009,K,ner,People팀
+TC_기술·통신_중소,EBX-Q-011,J,ner,하도급 분쟁 조정 | 마음톡톡 | 신문고
+TC_기술·통신_중소,EBX-Q-012,J,ner,MDS BU
+TC_기술·통신_중소,EBX-Q-014,J,ner,고객만족처리전
+TC_기술·통신_중소,EBX-Q-015,J,ner,고객만족처리전
+TC_기술·통신_중소,EBX-Q-017,J,ner,정보보호센터
+TC_기술·통신_중소,EBX-Q-019,J,ner,전장부품 사업
+TC_기술·통신_중소,EBX-Q-020,J,ner,2045 탄소중립
+TC_기술·통신_중소,EBX-Q-021,J,ner,"Higher Safety, Higher Life"
+TC_기술·통신_중소,EBX-Q-024,J,ner,청렴실천규정
+TR_운송_대기업,EBX-Q-001,J,ner,정도경영위원회 | 브랜드전략팀
+TR_운송_대기업,EBX-Q-001,K,ner,정도경영위원회 | 브랜드전략팀
+TR_운송_대기업,EBX-Q-002,J,ner,정도경영
+TR_운송_대기업,EBX-Q-002,K,ner,정도경영
+TR_운송_대기업,EBX-Q-003,J,ner,스트라이더
+TR_운송_대기업,EBX-Q-003,K,ner,스트라이더
+TR_운송_대기업,EBX-Q-005,J,ner,안전보건 환경실 | CSEO | 통회
+TR_운송_대기업,EBX-Q-005,K,ner,CSEO
+TR_운송_대기업,EBX-Q-014,J,ner,RSMS
+TR_운송_대기업,EBX-Q-020,J,ner,정도경영위원회
+TR_운송_대기업,EBX-Q-021,J,ner,CSO(최고안전책임자)
+TR_운송_대기업,EBX-Q-021,K,ner,CSO
+TR_운송_대기업,EBX-Q-024,J,ner,행동강령(COC) | BIS 서밋
+TR_운송_대기업,EBX-Q-024,K,ner,BIS 서밋
+TR_운송_비상장,EBX-Q-001,J,ner,정도경영위원회 | 브랜드전략팀
+TR_운송_비상장,EBX-Q-001,K,ner,정도경영위원회 | 브랜드전략팀
+TR_운송_비상장,EBX-Q-002,J,ner,정도경영
+TR_운송_비상장,EBX-Q-002,K,ner,정도경영
+TR_운송_비상장,EBX-Q-003,J,ner,스트라이더
+TR_운송_비상장,EBX-Q-003,K,ner,스트라이더
+TR_운송_비상장,EBX-Q-005,J,ner,안전보건 환경실 | CSEO | 통회
+TR_운송_비상장,EBX-Q-005,K,ner,CSEO
+TR_운송_비상장,EBX-Q-014,J,ner,RSMS
+TR_운송_비상장,EBX-Q-020,J,ner,정도경영위원회
+TR_운송_비상장,EBX-Q-021,J,ner,CSO(최고안전책임자)
+TR_운송_비상장,EBX-Q-021,K,ner,CSO
+TR_운송_비상장,EBX-Q-024,J,ner,행동강령(COC) | BIS 서밋
+TR_운송_비상장,EBX-Q-024,K,ner,BIS 서밋
+TR_운송_중견,EBX-Q-001,J,ner,정도경영위원회 | 브랜드전략팀
+TR_운송_중견,EBX-Q-001,K,ner,정도경영위원회 | 브랜드전략팀
+TR_운송_중견,EBX-Q-002,J,ner,정도경영
+TR_운송_중견,EBX-Q-002,K,ner,정도경영
+TR_운송_중견,EBX-Q-003,J,ner,스트라이더
+TR_운송_중견,EBX-Q-003,K,ner,스트라이더
+TR_운송_중견,EBX-Q-005,J,ner,안전보건 환경실 | CSEO | 통회
+TR_운송_중견,EBX-Q-005,K,ner,CSEO
+TR_운송_중견,EBX-Q-014,J,ner,RSMS
+TR_운송_중견,EBX-Q-020,J,ner,정도경영위원회
+TR_운송_중견,EBX-Q-021,J,ner,CSO(최고안전책임자)
+TR_운송_중견,EBX-Q-021,K,ner,CSO
+TR_운송_중견,EBX-Q-024,J,ner,행동강령(COC) | BIS 서밋
+TR_운송_중견,EBX-Q-024,K,ner,BIS 서밋
+TR_운송_중소,EBX-Q-001,J,ner,정도경영위원회 | 브랜드전략팀
+TR_운송_중소,EBX-Q-001,K,ner,정도경영위원회 | 브랜드전략팀
+TR_운송_중소,EBX-Q-002,J,ner,정도경영
+TR_운송_중소,EBX-Q-002,K,ner,정도경영
+TR_운송_중소,EBX-Q-003,J,ner,스트라이더
+TR_운송_중소,EBX-Q-003,K,ner,스트라이더
+TR_운송_중소,EBX-Q-005,J,ner,안전보건 환경실 | CSEO | 통회
+TR_운송_중소,EBX-Q-005,K,ner,CSEO
+TR_운송_중소,EBX-Q-014,J,ner,RSMS
+TR_운송_중소,EBX-Q-020,J,ner,정도경영위원회
+TR_운송_중소,EBX-Q-021,J,ner,CSO(최고안전책임자)
+TR_운송_중소,EBX-Q-021,K,ner,CSO
+TR_운송_중소,EBX-Q-024,J,ner,행동강령(COC) | BIS 서밋
+TR_운송_중소,EBX-Q-024,K,ner,BIS 서밋
+EM_추출·광물가공_대기업,EBX-Q-004,K,consistency,안전경영팀
+EM_추출·광물가공_대기업,EBX-Q-009,K,consistency,선제적 고충 처리 제도
+EM_추출·광물가공_대기업,EBX-Q-012,J,consistency,시멘트
+EM_추출·광물가공_대기업,EBX-Q-016,K,consistency,정보기획팀
+EM_추출·광물가공_대기업,EBX-Q-020,J,consistency,시멘트
+EM_추출·광물가공_대기업,EBX-Q-021,J,consistency,시멘트
+EM_추출·광물가공_대기업,EBX-Q-021,K,consistency,시멘트
+EM_추출·광물가공_비상장,EBX-Q-004,K,consistency,안전경영팀
+EM_추출·광물가공_비상장,EBX-Q-009,K,consistency,선제적 고충 처리 제도
+EM_추출·광물가공_비상장,EBX-Q-012,J,consistency,시멘트
+EM_추출·광물가공_비상장,EBX-Q-016,K,consistency,정보기획팀
+EM_추출·광물가공_비상장,EBX-Q-020,J,consistency,시멘트
+EM_추출·광물가공_비상장,EBX-Q-021,J,consistency,시멘트
+EM_추출·광물가공_비상장,EBX-Q-021,K,consistency,시멘트
+EM_추출·광물가공_중견,EBX-Q-004,K,consistency,안전경영팀
+EM_추출·광물가공_중견,EBX-Q-009,K,consistency,선제적 고충 처리 제도
+EM_추출·광물가공_중견,EBX-Q-012,J,consistency,시멘트
+EM_추출·광물가공_중견,EBX-Q-016,K,consistency,정보기획팀
+EM_추출·광물가공_중견,EBX-Q-020,J,consistency,시멘트
+EM_추출·광물가공_중견,EBX-Q-021,J,consistency,시멘트
+EM_추출·광물가공_중견,EBX-Q-021,K,consistency,시멘트
+EM_추출·광물가공_중소,EBX-Q-004,K,consistency,안전경영팀
+EM_추출·광물가공_중소,EBX-Q-009,K,consistency,선제적 고충 처리 제도
+EM_추출·광물가공_중소,EBX-Q-012,J,consistency,시멘트
+EM_추출·광물가공_중소,EBX-Q-016,K,consistency,정보기획팀
+EM_추출·광물가공_중소,EBX-Q-020,J,consistency,시멘트
+EM_추출·광물가공_중소,EBX-Q-021,J,consistency,시멘트
+EM_추출·광물가공_중소,EBX-Q-021,K,consistency,시멘트
+FB_식음료_대기업,EBX-Q-026,K,consistency,윤리감사팀
+FB_식음료_비상장,EBX-Q-026,K,consistency,윤리감사팀
+FB_식음료_중견,EBX-Q-026,K,consistency,윤리감사팀
+FB_식음료_중소,EBX-Q-026,K,consistency,윤리감사팀
+FN_금융_대기업,EBX-Q-005,K,consistency,ESG팀 안전보건파트
+FN_금융_비상장,EBX-Q-005,K,consistency,ESG팀 안전보건파트
+FN_금융_중견,EBX-Q-005,K,consistency,ESG팀 안전보건파트
+FN_금융_중소,EBX-Q-005,K,consistency,ESG팀 안전보건파트
+HC_헬스케어_대기업,EBX-Q-012,K,consistency,QMS 시스템
+HC_헬스케어_비상장,EBX-Q-012,K,consistency,QMS 시스템
+HC_헬스케어_중견,EBX-Q-012,K,consistency,QMS 시스템
+HC_헬스케어_중소,EBX-Q-012,K,consistency,QMS 시스템
+IF_인프라_대기업,EBX-Q-004,J,consistency,건강
+IF_인프라_대기업,EBX-Q-004,K,consistency,건강
+IF_인프라_대기업,EBX-Q-008,J,consistency,건강
+IF_인프라_대기업,EBX-Q-013,J,consistency,건강
+IF_인프라_대기업,EBX-Q-018,J,consistency,생활보안점검
+IF_인프라_대기업,EBX-Q-018,K,consistency,생활보안점검
+IF_인프라_대기업,EBX-Q-027,J,consistency,제약
+IF_인프라_대기업,EBX-Q-027,K,consistency,내부신고 제도 운영규정
+IF_인프라_비상장,EBX-Q-004,J,consistency,건강
+IF_인프라_비상장,EBX-Q-004,K,consistency,건강
+IF_인프라_비상장,EBX-Q-008,J,consistency,건강
+IF_인프라_비상장,EBX-Q-013,J,consistency,건강
+IF_인프라_비상장,EBX-Q-018,J,consistency,생활보안점검
+IF_인프라_비상장,EBX-Q-018,K,consistency,생활보안점검
+IF_인프라_비상장,EBX-Q-027,J,consistency,제약
+IF_인프라_비상장,EBX-Q-027,K,consistency,내부신고 제도 운영규정
+IF_인프라_중견,EBX-Q-004,J,consistency,건강
+IF_인프라_중견,EBX-Q-004,K,consistency,건강
+IF_인프라_중견,EBX-Q-008,J,consistency,건강
+IF_인프라_중견,EBX-Q-013,J,consistency,건강
+IF_인프라_중견,EBX-Q-018,J,consistency,생활보안점검
+IF_인프라_중견,EBX-Q-018,K,consistency,생활보안점검
+IF_인프라_중견,EBX-Q-027,J,consistency,제약
+IF_인프라_중견,EBX-Q-027,K,consistency,내부신고 제도 운영규정
+IF_인프라_중소,EBX-Q-004,J,consistency,건강
+IF_인프라_중소,EBX-Q-004,K,consistency,건강
+IF_인프라_중소,EBX-Q-008,J,consistency,건강
+IF_인프라_중소,EBX-Q-013,J,consistency,건강
+IF_인프라_중소,EBX-Q-018,J,consistency,생활보안점검
+IF_인프라_중소,EBX-Q-018,K,consistency,생활보안점검
+IF_인프라_중소,EBX-Q-027,J,consistency,제약
+IF_인프라_중소,EBX-Q-027,K,consistency,내부신고 제도 운영규정
+RR_재생자원·대체에너지_대기업,EBX-Q-014,K,consistency,제품 안전성 관리 규정
+RR_재생자원·대체에너지_대기업,EBX-Q-016,J,consistency,베트남
+RR_재생자원·대체에너지_비상장,EBX-Q-014,K,consistency,제품 안전성 관리 규정
+RR_재생자원·대체에너지_비상장,EBX-Q-016,J,consistency,베트남
+RR_재생자원·대체에너지_중견,EBX-Q-014,K,consistency,제품 안전성 관리 규정
+RR_재생자원·대체에너지_중견,EBX-Q-016,J,consistency,베트남
+RR_재생자원·대체에너지_중소,EBX-Q-014,K,consistency,제품 안전성 관리 규정
+RR_재생자원·대체에너지_중소,EBX-Q-016,J,consistency,베트남
+RT_자원가공·제조_대기업,EBX-Q-001,J,consistency,기술과 제품으로 더 나은 오늘을 만들고 지속가능한 내일로 나아가
+RT_자원가공·제조_비상장,EBX-Q-001,J,consistency,기술과 제품으로 더 나은 오늘을 만들고 지속가능한 내일로 나아가
+RT_자원가공·제조_중견,EBX-Q-001,J,consistency,기술과 제품으로 더 나은 오늘을 만들고 지속가능한 내일로 나아가
+RT_자원가공·제조_중소,EBX-Q-001,J,consistency,기술과 제품으로 더 나은 오늘을 만들고 지속가능한 내일로 나아가
+SV_서비스_대기업,EBX-Q-004,K,consistency,안전경영위원회
+SV_서비스_대기업,EBX-Q-006,K,consistency,안전점검의 날
+SV_서비스_대기업,EBX-Q-017,J,consistency,IT팀
+SV_서비스_비상장,EBX-Q-004,K,consistency,안전경영위원회
+SV_서비스_비상장,EBX-Q-006,K,consistency,안전점검의 날
+SV_서비스_비상장,EBX-Q-017,J,consistency,IT팀
+SV_서비스_중견,EBX-Q-004,K,consistency,안전경영위원회
+SV_서비스_중견,EBX-Q-006,K,consistency,안전점검의 날
+SV_서비스_중견,EBX-Q-017,J,consistency,IT팀
+SV_서비스_중소,EBX-Q-004,K,consistency,안전경영위원회
+SV_서비스_중소,EBX-Q-006,K,consistency,안전점검의 날
+SV_서비스_중소,EBX-Q-017,J,consistency,IT팀
+TC_기술·통신_대기업,EBX-Q-004,K,consistency,책임안전경영
+TC_기술·통신_대기업,EBX-Q-014,K,consistency,고객만족처리전
+TC_기술·통신_비상장,EBX-Q-004,K,consistency,책임안전경영
+TC_기술·통신_비상장,EBX-Q-014,K,consistency,고객만족처리전
+TC_기술·통신_중견,EBX-Q-004,K,consistency,책임안전경영
+TC_기술·통신_중견,EBX-Q-014,K,consistency,고객만족처리전
+TC_기술·통신_중소,EBX-Q-004,K,consistency,책임안전경영
+TC_기술·통신_중소,EBX-Q-014,K,consistency,고객만족처리전
