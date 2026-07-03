@@ -13,7 +13,7 @@ const DEFAULT_CONFIG = {
   companyName: "Samsung_Electronics_2025",
   dataDir: path.join(repoRoot, "company_esg_data", "samsung_electronics_2025"),
   outputDir: path.join(repoRoot, "final_template", "output", "samsung_electronics_2025"),
-  templateDir: path.join(repoRoot, "final_template", "template_qualitative"),
+  templateDir: path.join(repoRoot, "consultant_safe_v4"),
   sector: "TC",
   size: "대기업",
   language: "KO",
@@ -123,7 +123,7 @@ async function findTemplate(config) {
     .filter((file) => file.includes(`_${config.sector}_`) && file.includes(`_${config.size}_`))
     .sort();
   if (!candidates.length) {
-    throw new Error(`No v4 template found in ${config.templateDir} for sector=${config.sector}, size=${config.size}. Run scripts/build_consultant_safe_v4.mjs first.`);
+    throw new Error(`No v4 template found in ${config.templateDir} for sector=${config.sector}, size=${config.size}. Run scripts/build_consultant_safe_v4.mjs first, or pass --template-dir explicitly.`);
   }
   return path.join(config.templateDir, candidates[0]);
 }

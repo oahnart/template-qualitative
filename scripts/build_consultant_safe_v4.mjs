@@ -8,7 +8,6 @@ const __dirname = path.dirname(__filename);
 const repoRoot = path.resolve(__dirname, "..");
 const sourceDir = path.join(repoRoot, "consultant_safe_v3");
 const releaseDir = path.join(repoRoot, "consultant_safe_v4");
-const finalTemplateDir = path.join(repoRoot, "final_template", "template_qualitative");
 
 const RELEASE_NAME = "consultant_safe_v4";
 const SOURCE_RELEASE = "consultant_safe_v3";
@@ -63,29 +62,37 @@ function v4TemplateEnhancements(row, idx) {
   return [
     buildFieldPath(row, idx),
     [
-      "Use ESG report-ready Korean prose.",
-      "Cover the relevant content slots before adding optional context.",
-      "Prefer 4-6 sentences when evidence is sufficient; keep partial rows factual and bounded.",
-      "Do not include source/page/reviewer/audit-trace wording in Final Answer.",
+      "ROW-LEVEL OUTPUT RULES:",
+      "1. Use ESG report-ready Korean prose, not reviewer/audit instructions.",
+      "2. Cover the relevant content slots before adding optional context.",
+      "3. Prefer 4-6 substantive sentences when evidence is sufficient; keep partial rows factual and bounded.",
+      "4. Do not include source/page/PDF/reviewer/audit-trace wording in Final Answer.",
+      "5. Do not include template/meta instructions such as estimation rules, reviewer guidance, or final wording guidance.",
       `Content Slots: ${contentSlots}`,
     ].join("\n"),
     [
-      "Final Answer may use company facts and supported figures only.",
-      "Remove source names, source pages, PDF references, citation language, and reviewer follow-up wording.",
-      "Do not invent figures, targets, organizations, certifications, incidents, or processes.",
+      "FINAL ANSWER GUARDRAILS:",
+      "1. Use company facts and supported figures only.",
+      "2. Remove source names, source pages, PDF references, citation language, and reviewer follow-up wording.",
+      "3. Do not invent figures, targets, organizations, certifications, incidents, or processes.",
+      "4. Keep source/page/RAG trace only in metadata columns, never in Final Answer.",
+      "5. Avoid raw OCR fragments or report headers; Final Answer should read like polished ESG report text.",
       `Style Options: ${styleOptions}`,
       `Sentence Patterns: ${sentencePatterns}`,
       `Anti-Repetition: ${antiRepetition}`,
     ].join("\n"),
     [
-      "SUFFICIENT: write a complete report paragraph with scope, governance/process, activity, and KPI or limitation where relevant.",
-      "PARTIAL: disclose supported facts only and phrase missing data as a disclosure limitation, not as an audit note.",
+      "COVERAGE HANDLING:",
+      "SUFFICIENT: write a complete ESG report paragraph with scope, governance/process, activity, and KPI or business limitation where relevant.",
+      "PARTIAL: disclose supported facts only and phrase missing data as a business disclosure limitation, not as an audit note.",
       "NO DATA: state that the company has not disclosed or has not yet managed the item, without source tracing.",
     ].join("\n"),
     [
-      "When quantitative support exists, include period, unit, boundary, and trend if available.",
-      "When quantitative support is unavailable, do not convert blanks, dashes, or missing values to zero.",
-      "Keep metrics inside the report prose, not as source evidence notes.",
+      "METRIC HANDLING:",
+      "1. When quantitative support exists, include period, unit, boundary, and trend if available.",
+      "2. When quantitative support is unavailable, do not convert blanks, dashes, or missing values to zero.",
+      "3. Keep metrics inside the report prose, not as source evidence notes.",
+      "4. Do not write the rule itself in Final Answer; apply it silently.",
     ].join("\n"),
   ];
 }
@@ -100,8 +107,18 @@ This release keeps the consultant-safe controls from v3, then adds field-path, s
 - Builds a new \`${RELEASE_NAME}\` release without overwriting \`${SOURCE_RELEASE}\`.
 - Adds \`Field Path\`, \`Final Answer Requirements\`, \`Report-Ready Guardrails\`, \`Coverage Handling\`, and \`Metric Handling\` to every template workbook.
 - Requires company output \`Field\` to use \`area / pillar / item\`.
-- Requires \`Style Template Applied\` to describe content slots, style options, sentence patterns, anti-repetition guidance, coverage treatment, and metric handling.
+- Requires \`Style Template Applied\` to describe the selected style option, selected sentence pattern, applied content slots, anti-repetition guidance, coverage treatment, and metric handling.
 - Requires \`Final Answer\` to remove source names, page citations, PDF references, reviewer notes, and audit-trace wording.
+
+## Rule Placement
+- Template columns hold row-level generation rules used by downstream output: \`Field Path\`, \`Final Answer Requirements\`, \`Report-Ready Guardrails\`, \`Coverage Handling\`, and \`Metric Handling\`.
+- \`README.md\` documents the release purpose, generated artifacts, and where QA lives.
+- \`CHECKLIST.md\` is a manual handoff checklist. It is not executable; automated checks live in the build/fill scripts.
+- The build writes release workbooks only to \`consultant_safe_v4/\`; it does not create or refresh \`final_template/template_qualitative/\`.
+
+## Handoff QA
+Before handing off a generated company workbook, review \`CHECKLIST.md\`.
+Use the template columns as the source of row-level output rules, then use the checklist as the final human-readable review layer.
 
 ## Build Stats
 - Source workbooks: ${summary.sourceWorkbooks}
@@ -119,8 +136,10 @@ This release keeps the consultant-safe controls from v3, then adds field-path, s
 - [ ] Output header \`Area\` has been replaced by \`Field\`.
 - [ ] Output header \`Writing Style Template\` has been replaced by \`Style Template Applied\`.
 - [ ] Each \`Field\` value uses \`area / pillar / item\`.
-- [ ] \`Style Template Applied\` includes Content Slots, Style Options, Sentence Patterns, anti-repetition guidance, coverage treatment, and metric handling.
+- [ ] \`Style Template Applied\` shows the selected Style Option and selected Sentence Pattern, not every available option/pattern.
+- [ ] \`Style Template Applied\` includes applied Content Slots, anti-repetition guidance, coverage treatment, and metric handling.
 - [ ] \`Final Answer\` has no source names, page citations, PDF references, reviewer notes, or audit-trace wording.
+- [ ] \`Final Answer\` has no template/meta instructions such as estimation rules, reviewer guidance, or "final wording" guidance.
 - [ ] For SUFFICIENT rows, final answers are normally 4-6 Korean sentences.
 - [ ] For PARTIAL rows, final answers explain disclosed facts and disclosure limitations without reviewer/source wording.
 - [ ] For qualitative+quantitative rows, include supported figures or clearly explain why figures are not used.
@@ -146,7 +165,6 @@ async function buildWorkbook(sourceFile) {
   const inputPath = path.join(sourceDir, sourceFile);
   const outName = sourceFile.replace("_consultant_safe_v3.xlsx", "_consultant_safe_v4.xlsx");
   const outPath = path.join(releaseDir, outName);
-  const finalOutPath = path.join(finalTemplateDir, outName);
 
   const workbook = await SpreadsheetFile.importXlsx(await FileBlob.load(inputPath));
   const guide = workbook.worksheets.getItem("안내");
@@ -202,15 +220,12 @@ async function buildWorkbook(sourceFile) {
 
   const exported = await SpreadsheetFile.exportXlsx(workbook);
   await exported.save(outPath);
-  await exported.save(finalOutPath);
   await cleanupInspectSidecar(outPath);
-  await cleanupInspectSidecar(finalOutPath);
-  return { sourceFile, outName, outPath, finalOutPath };
+  return { sourceFile, outName, outPath };
 }
 
 async function main() {
   await ensureDir(releaseDir);
-  await ensureDir(finalTemplateDir);
 
   const sourceFiles = (await fs.readdir(sourceDir))
     .filter((file) => file.endsWith("_consultant_safe_v3.xlsx"))
@@ -238,7 +253,6 @@ async function main() {
     sourceRelease: SOURCE_RELEASE,
     sourceWorkbooks: sourceFiles.length,
     v4Workbooks: outputs.length,
-    finalTemplateDir,
     fatal,
     warnings,
   };
