@@ -1,0 +1,28 @@
+﻿ebx,question_title,coverage_status,source_pages,evidence_type,gap_or_note
+EBX-Q-001,Tầm nhìn ESG và chiến lược trung dài hạn,SUFFICIENT,5;8;11;35,qualitative+quantitative,"Rechecked PDF: enough evidence to answer ESG vision/strategy using company purpose, material-topic strategy, governance and targets. The report does not use one single heading called ""ESG vision"", but it provides the substance."
+EBX-Q-002,Cơ cấu quản trị ESG và hệ thống ra quyết định,SUFFICIENT,6,qualitative,
+EBX-Q-003,Hệ thống nhận diện và quản lý rủi ro ESG,SUFFICIENT,7;8;82;83,qualitative,
+EBX-Q-004,Chính sách và mục tiêu an toàn sức khỏe nghề nghiệp,SUFFICIENT,43;65,qualitative+quantitative,
+EBX-Q-005,Tổ chức và trách nhiệm quản lý an toàn sức khỏe,SUFFICIENT,43,qualitative,
+EBX-Q-006,Nhận diện rủi ro an toàn công nghiệp và hoạt động phòng ngừa,SUFFICIENT,43;44;50,qualitative,
+EBX-Q-007,Tình hình tai nạn lao động và chỉ số hiệu quả an toàn,SUFFICIENT,65,qualitative+quantitative,
+EBX-Q-008,Chính sách và mục tiêu quản trị nhân quyền,SUFFICIENT,8;35;36;37,qualitative,"Rechecked PDF: previous extraction missed p.35 and p.37, so this question is now sufficient for policy, governance, due-diligence and target/direction disclosure."
+EBX-Q-009,Hệ thống quản lý lao động và nhân quyền,SUFFICIENT,8;36;38,qualitative,
+EBX-Q-010,Nhận diện và ứng phó rủi ro nhân quyền,SUFFICIENT,38,qualitative,
+EBX-Q-011,Khiếu nại nhân quyền và tình hình xử lý,SUFFICIENT,37;39,qualitative+quantitative,"Rechecked PDF: previous extraction missed the dedicated grievance page. Sufficient, though the report provides 2024 performance rather than a 3-year grievance table."
+EBX-Q-012,Chính sách quản lý an toàn sản phẩm và chất lượng,SUFFICIENT,55;56,qualitative,
+EBX-Q-013,Tổ chức và trách nhiệm quản lý chất lượng,SUFFICIENT,55,qualitative,
+EBX-Q-014,Quản lý rủi ro chất lượng và an toàn sản phẩm,SUFFICIENT,55;56,qualitative,
+EBX-Q-015,Sự cố liên quan đến an toàn sản phẩm và chất lượng,PARTIAL,55;56;57;63,qualitative+quantitative,"Still PARTIAL after full recheck: PDF explains product quality/safety governance, PL prevention/response, VOC and service channels, but does not disclose a 3-year product safety incident/recall count table."
+EBX-Q-016,Chính sách bảo mật thông tin và bảo vệ dữ liệu cá nhân,SUFFICIENT,53;54,qualitative,
+EBX-Q-017,Tổ chức quản lý bảo vệ thông tin,SUFFICIENT,53,qualitative,
+EBX-Q-018,Quản lý rủi ro bảo mật thông tin và dữ liệu cá nhân,SUFFICIENT,53;54,qualitative,
+EBX-Q-019,Tình hình xâm phạm dữ liệu cá nhân và sự cố bảo mật thông tin,PARTIAL,53;54;63;85,qualitative+quantitative,"Still PARTIAL after full recheck: PDF provides privacy/security governance, certifications, breach response process and government request data, but no explicit personal-data breach count or cybersecurity incident count."
+EBX-Q-020,Chính sách và mục tiêu quản lý môi trường,SUFFICIENT,8;11;21,qualitative,
+EBX-Q-021,Tổ chức và trách nhiệm quản lý môi trường,SUFFICIENT,6;11;21,qualitative,
+EBX-Q-022,Quản lý tác động và rủi ro môi trường,SUFFICIENT,8;12;16;18;22;27;29;32,qualitative,
+EBX-Q-023,Chỉ số hiệu quả môi trường và tình hình sự cố môi trường,SUFFICIENT,68;69;70;74,qualitative+quantitative,
+EBX-Q-024,Chính sách và mục tiêu đạo đức kinh doanh,SUFFICIENT,59,qualitative,
+EBX-Q-025,Tổ chức và hệ thống vận hành đạo đức kinh doanh,SUFFICIENT,59;60,qualitative,
+EBX-Q-026,Quản lý rủi ro đạo đức và tuân thủ,SUFFICIENT,59;60,qualitative,
+EBX-Q-027,Tình hình vi phạm đạo đức và vụ việc liên quan đến tuân thủ,PARTIAL,60;63;80;85,qualitative+quantitative,"Still PARTIAL after full recheck: ESG PDF includes ethics/compliance process and report counts, but does not itself provide a full 3-year sanctions/lawsuits/fines/disciplinary-action table. GRI/SASB index references annual report pages 453-459 for some legal/fine items outside this ESG PDF."

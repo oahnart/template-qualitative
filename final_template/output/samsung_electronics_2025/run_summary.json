@@ -1,0 +1,13 @@
+{
+  "outputDir": "F:\\MY_PROJECT\\template-qualitative\\final_template\\output\\samsung_electronics_2025",
+  "quantitative": {
+    "output": "F:\\MY_PROJECT\\template-qualitative\\final_template\\output\\samsung_electronics_2025\\Samsung_Electronics_2025_ESG_정량_filled.xlsx",
+    "mapped_rows_written": 31,
+    "formula_errors": "{\"kind\":\"notice\",\"message\":\"Cell search matched 0 entries.\"}"
+  },
+  "qualitative": {
+    "output": "F:\\MY_PROJECT\\template-qualitative\\final_template\\output\\samsung_electronics_2025\\Samsung_Electronics_2025_EBX_Q_qualitative_with_final_KO.xlsx",
+    "ebx_rows_written": 27,
+    "formula_errors": "{\"kind\":\"notice\",\"message\":\"Cell search matched 0 entries.\"}"
+  }
+}
