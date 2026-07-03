@@ -1,0 +1,28 @@
+{
+  "company": "LG Electronics",
+  "report": "2024-2025 LG Electronics Sustainability Report",
+  "source_pdf": "esg_report/20250630_20250630000364_LG전자.pdf",
+  "template_used": "ebx_template_review_44_vi/EBX_Q_템플릿_TC_기술·통신_대기업.json",
+  "created_date": "2026-07-03",
+  "reporting_period": "2024 report with 2022-2024 comparative ESG data",
+  "output_files": [
+    "data_dinh_luong.csv",
+    "data_dinh_tinh.csv",
+    "data_dinh_tinh.md",
+    "ebx_27_coverage_report.csv",
+    "metadata.json"
+  ],
+  "qualitative_language": "Original Korean PDF evidence, with Korean / English EBX question titles and English notes.",
+  "coverage_status_counts": {
+    "PARTIAL": 1,
+    "SUFFICIENT": 26
+  },
+  "qualitative_rows_total": 27,
+  "quantitative_rows_total": 207,
+  "remaining_partial_questions": [
+    "EBX-Q-015"
+  ],
+  "notes": "Quantitative rows are manually curated from clearly extractable ESG Data pages 131-153 and selected target/metric pages. Qualitative evidence preserves original Korean PDF text excerpts.",
+  "qualitative_title_language": "Korean / English",
+  "last_language_fix": "2026-07-03"
+}

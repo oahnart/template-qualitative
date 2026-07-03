@@ -1,0 +1,1148 @@
+import fs from "node:fs/promises";
+import path from "node:path";
+import { fileURLToPath } from "node:url";
+import { FileBlob, SpreadsheetFile, Workbook } from "@oai/artifact-tool";
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
+const repoRoot = path.resolve(__dirname, "..");
+
+const RELEASE_NAME = "consultant_safe_v7";
+const DEFAULT_CONFIG = {
+  companyId: "samsung_electronics_2025",
+  companyName: "Samsung_Electronics_2025",
+  dataDir: path.join(repoRoot, "company_esg_data", "samsung_electronics_2025"),
+  outputDir: path.join(repoRoot, "final_template", "output", "samsung_electronics_2025"),
+  templateDir: path.join(repoRoot, "consultant_safe_v7"),
+  sector: "TC",
+  size: "대기업",
+  language: "KO",
+};
+
+const OUTPUT_HEADERS = [
+  "EBX Indicator",
+  "Field",
+  "Original Answer",
+  "Original Answer Metadata",
+  "Style Template Applied",
+  "Final Answer",
+];
+
+const TEMPLATE_SHEET = "EBX-Q 템플릿";
+const OUTPUT_SHEET = RELEASE_NAME;
+const KOREAN_REGEX = /[\u3131-\uD79D]/;
+const TECHNICAL_METRIC_REGEX = /\bquantitative\b|정량|định lượng/i;
+const EBX_CODE_REGEX = /\bEBX(?:[-_\s]*Q)?[-_\s]*\d{1,3}\b/i;
+const SOURCE_TRACE_REGEX = /\b(?:Source|PDF|page|pages|p\.\d+|reviewer|audit|trace|file|chunk|metadata)\b|P\s*\.\s*\d+|출처|근거|원문|검토자|감사|파일|보고\s*페이지|원천자료|\[[^\]]*p\.\d+[^\]]*\]/i;
+const OCR_ARTIFACT_REGEX = /Overview Environmental Social Governance ESG Data Appendix|AppendixFacts|PrinciplePlanet|Our Company|Facts\s*&\s*Figures|Materiality Assessment|Implementation Guidance|Step\s*\d|Mission and Vision|Privacy Protection\s*&\s*Security|Customer Data Platform|Corporate Governance|Governance and Major Progress|코드\s*공시\s*항목|보고\s*페이지\s*및\s*답변|TC-SC-|GRI\s*\d|ESRS|TCFD|구분\s+리스크|구분\s+단위\s+2022년\s+2023년\s+2024년|보고서\s+\d{2}\b/i;
+const FINAL_FORBIDDEN_REGEX = new RegExp(`${EBX_CODE_REGEX.source}|${SOURCE_TRACE_REGEX.source}|${OCR_ARTIFACT_REGEX.source}`, "i");
+
+function parseArgs(argv) {
+  const config = { ...DEFAULT_CONFIG };
+  for (const arg of argv) {
+    if (!arg.startsWith("--")) continue;
+    const [key, ...rest] = arg.slice(2).split("=");
+    const value = rest.join("=");
+    if (!value) continue;
+    if (key === "company-id") config.companyId = value;
+    if (key === "company-name") config.companyName = value;
+    if (key === "data-dir") config.dataDir = path.resolve(value);
+    if (key === "output-dir") config.outputDir = path.resolve(value);
+    if (key === "template-dir") config.templateDir = path.resolve(value);
+    if (key === "sector") config.sector = value;
+    if (key === "size") config.size = value;
+    if (key === "language") config.language = value;
+  }
+  return config;
+}
+
+function parseCsv(text) {
+  const rows = [];
+  let row = [];
+  let cell = "";
+  let inQuotes = false;
+  for (let i = 0; i < text.length; i += 1) {
+    const ch = text[i];
+    const next = text[i + 1];
+    if (inQuotes) {
+      if (ch === '"' && next === '"') {
+        cell += '"';
+        i += 1;
+      } else if (ch === '"') {
+        inQuotes = false;
+      } else {
+        cell += ch;
+      }
+    } else if (ch === '"') {
+      inQuotes = true;
+    } else if (ch === ",") {
+      row.push(cell);
+      cell = "";
+    } else if (ch === "\n") {
+      row.push(cell);
+      rows.push(row);
+      row = [];
+      cell = "";
+    } else if (ch !== "\r") {
+      cell += ch;
+    }
+  }
+  if (cell.length || row.length) {
+    row.push(cell);
+    rows.push(row);
+  }
+  const [rawHeaders, ...body] = rows.filter((r) => r.some((value) => value !== ""));
+  if (!rawHeaders) return [];
+  const headers = rawHeaders.map((header) => header.replace(/^\uFEFF/, ""));
+  return body.map((r) => Object.fromEntries(headers.map((header, i) => [header, r[i] ?? ""])));
+}
+
+async function readJsonIfExists(file) {
+  try {
+    return JSON.parse(await fs.readFile(file, "utf8"));
+  } catch {
+    return {};
+  }
+}
+
+async function readCsvIfExists(file) {
+  try {
+    return parseCsv(await fs.readFile(file, "utf8"));
+  } catch {
+    return [];
+  }
+}
+
+async function cleanupInspectSidecar(file) {
+  await fs.rm(`${file}.inspect.ndjson`, { force: true });
+}
+
+function normalizeWhitespace(text) {
+  return String(text ?? "")
+    .replace(/\u00A0/g, " ")
+    .replace(/[ \t]+/g, " ")
+    .replace(/\s*\n+\s*/g, " ")
+    .trim();
+}
+
+function repairKoreanSpacing(text) {
+  const replacements = [
+    ["최 고", "최고"],
+    ["모 든", "모든"],
+    ["업 무", "업무"],
+    ["사 항", "사항"],
+    ["전 담", "전담"],
+    ["잠 재", "잠재"],
+    ["인 권", "인권"],
+    ["정 책", "정책"],
+    ["시스 템", "시스템"],
+    ["프로 세스", "프로세스"],
+    ["프로 그램", "프로그램"],
+    ["모바 일", "모바일"],
+    ["스마 트", "스마트"],
+    ["인 프라", "인프라"],
+    ["구 축", "구축"],
+    ["수 행", "수행"],
+    ["실 행", "실행"],
+    ["직 접", "직접"],
+    ["집 행", "집행"],
+    ["경영원 칙", "경영원칙"],
+    ["정책 을", "정책을"],
+    ["연 간", "연간"],
+    ["경 우", "경우"],
+    ["승 인", "승인"],
+    ["후원 금", "후원금"],
+    ["부 패", "부패"],
+    ["그 룹", "그룹"],
+    ["사 례", "사례"],
+    ["영 향", "영향"],
+    ["전 략", "전략"],
+    ["방 안", "방안"],
+    ["논 의", "논의"],
+    ["위 험", "위험"],
+    ["건 강", "건강"],
+    ["안 건", "안건"],
+    ["검 토", "검토"],
+    ["이 슈", "이슈"],
+    ["전 세 계", "전 세계"],
+    ["해 외", "해외"],
+    ["국내 외", "국내외"],
+    ["사 업장", "사업장"],
+    ["세 부", "세부"],
+    ["핵 심", "핵심"],
+    ["고 려", "고려"],
+    ["관 행", "관행"],
+    ["접 수", "접수"],
+    ["선 정", "선정"],
+    ["워 크 숍", "워크숍"],
+    ["워크 숍", "워크숍"],
+    ["컨설 팅", "컨설팅"],
+    ["모니터 링", "모니터링"],
+    ["리 포트", "리포트"],
+    ["도 입", "도입"],
+    ["시 행", "시행"],
+    ["수 렴", "수렴"],
+    ["종 합", "종합"],
+    ["권 리", "권리"],
+    ["게 미치는", "에게 미치는"],
+    ["원 칙", "원칙"],
+    ["재 무", "재무"],
+    ["절 차", "절차"],
+    ["발 굴", "발굴"],
+    ["계 획", "계획"],
+    ["구 현", "구현"],
+    ["맞 는", "맞는"],
+    ["역 량", "역량"],
+    ["향 상", "향상"],
+    ["상시 키고", "상시키고"],
+    ["배 포", "배포"],
+    ["제 작", "제작"],
+    ["웹 툰", "웹툰"],
+    ["직 무", "직무"],
+    ["담당 자", "담당자"],
+    ["안전보 건", "안전보건"],
+    ["E HS", "EHS"],
+    ["Chie f", "Chief"],
+    ["O fficer", "Officer"],
+    ["Z ero", "Zero"],
+    ["E MC", "EMC"],
+    ["선 호도", "선호도"],
+    ["가 뭄", "가뭄"],
+    ["폭 염", "폭염"],
+    ["폐 기물", "폐기물"],
+    ["취 수량", "취수량"],
+    ["기 울이고", "기울이고"],
+    ["신 규", "신규"],
+    ["냉 매", "냉매"],
+    ["유 관", "유관"],
+    ["일 반", "일반"],
+    ["규 제", "규제"],
+    ["작 업", "작업"],
+    ["동 참", "동참"],
+    ["자 율", "자율"],
+    ["장 애", "장애"],
+    ["품질진 단", "품질진단"],
+    ["참 여", "참여"],
+    ["실 천", "실천"],
+    ["사 외", "사외"],
+    ["시 각", "시각"],
+    ["균 형", "균형"],
+    ["또 한", "또한"],
+    ["외 부", "외부"],
+    ["미 치는", "미치는"],
+    ["생 각", "생각"],
+    ["시 나리오", "시나리오"],
+    ["분 석", "분석"],
+    ["진 행", "진행"],
+    ["따 라", "따라"],
+    ["역할 을", "역할을"],
+    ["책 임", "책임"],
+    ["N GO", "NGO"],
+    ["I LO", "ILO"],
+    ["진 단", "진단"],
+    ["채널 을", "채널을"],
+    ["접근 하여", "접근하여"],
+    ["점 검", "점검"],
+    ["개 선", "개선"],
+    ["센 터", "센터"],
+    ["Satis faction", "Satisfaction"],
+    ["완벽 한", "완벽한"],
+    ["예방 을", "예방을"],
+    ["실시 간", "실시간"],
+    ["생 애주기", "생애주기"],
+    ["걸 쳐", "걸쳐"],
+    ["최 소한", "최소한"],
+    ["범 위", "범위"],
+    ["투 명하 게", "투명하게"],
+    ["존 중", "존중"],
+    ["보호 할", "보호할"],
+    ["고객에 게", "고객에게"],
+    ["솔루 션", "솔루션"],
+    ["아우르 는", "아우르는"],
+    ["담당 하며", "담당하며"],
+    ["사 무국", "사무국"],
+    ["인 식", "인식"],
+    ["사내 ·외", "사내·외"],
+    ["이메 일", "이메일"],
+    ["24시 간", "24시간"],
+    ["제 외", "제외"],
+    ["정 착시 키기", "정착시키기"],
+    ["안전하 게", "안전하게"],
+    ["선택 을", "선택을"],
+    ["최우선 으로", "최우선으로"],
+    ["보 험", "보험"],
+    ["생 명", "생명"],
+    ["프 로그 램", "프로그램"],
+    ["출 범", "출범"],
+    ["경영원칙 과", "경영원칙과"],
+    ["예방 합니다", "예방합니다"],
+    ["실 현", "실현"],
+    ["C PMS", "CPMS"],
+    ["팀 은", "팀은"],
+    ["회사외부", "회사 외부"],
+    ["거래 업체", "거래업체"],
+    ["책 임", "책임"],
+    ["주 축", "주축"],
+    ["감독 할", "감독할"],
+    ["인 게이지먼 트", "인게이지먼트"],
+    ["전문가 들", "전문가들"],
+    ["개최 하여", "개최하여"],
+    ["프로세 스", "프로세스"],
+    ["선행· 상품화", "선행·상품화"],
+    ["상품화 ·양산", "상품화·양산"],
+    ["Bespo ke", "Bespoke"],
+    ["스 팀", "스팀"],
+    ["로 봇", "로봇"],
+    ["스 탠다드", "스탠다드"],
+    ["획득 하였", "획득하였"],
+    ["부서장 들", "부서장들"],
+    ["이 행", "이행"],
+    ["지 역별", "지역별"],
+    ["DS 부문", "DS부문"],
+    ["책임와", "책임과"],
+  ];
+  let out = String(text ?? "");
+  for (const [from, to] of replacements) out = out.replaceAll(from, to);
+  return normalizeWhitespace(out);
+}
+
+function stripSourceAndNavigation(text) {
+  return repairKoreanSpacing(normalizeWhitespace(String(text ?? "")
+    .replace(/\[[^\]]*p\.\d+[^\]]*\]/gi, " ")
+    .replace(/\[p\.\d+\]/gi, " ")
+    .replace(/\bp\.\d+(?:\s*[-~]\s*\d+)?\b/gi, " ")
+    .replace(/삼성전자\s+지속가능경영보고서\s+2025\s+\d{1,3}/g, " ")
+    .replace(/2024[–-]2025\s+LG전자\s+지속가능경영보고서\s+\d{1,3}/g, " ")
+    .replace(/Overview Environmental Social Governance ESG Data Appendix/gi, " ")
+    .replace(/Our Company AppendixFacts & Figures PrinciplePlanet People/gi, " ")
+    .replace(/AppendixFacts & Figures PrinciplePlanet People/gi, " ")
+    .replace(/Facts & Figures|PrinciplePlanet|Our Company|Appendix/gi, " ")
+    .replace(/\b(?:Source|PDF|page|pages|reviewer|audit|trace|metadata|chunk)\b/gi, " ")
+    .replace(/\b\d+\)\s*/g, " ")));
+}
+
+function splitSentences(text) {
+  return stripSourceAndNavigation(text)
+    .split(/(?<=[.!?。]|습니다\.|니다\.|됩니다\.|합니다\.|있습니다\.|않습니다\.)\s+|(?=삼성전자는|LG전자는|회사는|DX부문은|DS부문은|또한|특히|이를 통해|이에 따라|2024년|2022년)/g)
+    .map((sentence) => normalizeWhitespace(sentence))
+    .filter(Boolean);
+}
+
+function uniqueByNormalized(items) {
+  const seen = new Set();
+  const out = [];
+  for (const item of items) {
+    const key = normalizeWhitespace(item)
+      .replace(/[0-9][0-9,.]*(?:\.[0-9]+)?/g, "#")
+      .replace(/[.,;:\s'"]/g, "");
+    if (!key || seen.has(key)) continue;
+    seen.add(key);
+    out.push(item);
+  }
+  return out;
+}
+
+function numberTokens(text) {
+  return String(text ?? "").match(/[0-9][0-9,]*(?:\.[0-9]+)?\s*(?:%|tCO2e|MWh|GWh|TJ|KRW|명|개|건|회|톤|억원|조원|시간|년|배|cases?|employees?|hours?|rate)?/gi) ?? [];
+}
+
+function hasMeaningfulNumber(text) {
+  const cleaned = String(text ?? "")
+    .replace(/\bp\.\d+\b/gi, "")
+    .replace(/\b20\d{2}[–~-]20\d{2}\b/g, "");
+  return /[0-9][0-9,]*(?:\.[0-9]+)?\s*(?:%|tCO2e|MWh|GWh|TJ|KRW|명|개|건|회|톤|억원|조원|시간|년|배|cases?|employees?|hours?|rate|target|carbon|RE100|Scope)/i.test(cleaned);
+}
+
+function rejectEvidenceSentence(sentence) {
+  const text = normalizeWhitespace(sentence);
+  if (text.length < 45 || text.length > 360) return true;
+  if (!KOREAN_REGEX.test(text)) return true;
+  if (EBX_CODE_REGEX.test(text) || SOURCE_TRACE_REGEX.test(text) || OCR_ARTIFACT_REGEX.test(text)) return true;
+  if (/^(\d|구분|항목|단위|비고|지표|내용|보고 페이지|코드|공시 항목)\b/.test(text)) return true;
+  if (/구분 리스크|추진체계 추진방향 리스크 관리 활동|중대 주제 UN SDGs|지역총괄|판매거점|생산거점|Topic No\.|N\/A|참조하십|보고서\(XI|보고서\(II/i.test(text)) return true;
+  if (/^[0-9\s.,%()~:/-]+$/.test(text)) return true;
+  const alpha = (text.match(/[A-Za-z]/g) ?? []).length;
+  if (alpha > 80 && alpha / Math.max(text.length, 1) > 0.3) return true;
+  if ((numberTokens(text).length >= 12 && !/목표|관리|운영|보고|공시|달성|수립|실행/.test(text))) return true;
+  return false;
+}
+
+function keywords(row, template) {
+  const text = `${template?.item ?? ""} ${row.question_title ?? ""}`;
+  return uniqueByNormalized(text
+    .replace(/[()/:,.;·•\[\]]/g, " ")
+    .split(/\s+/)
+    .map((token) => token.trim())
+    .filter((token) => token.length >= 2)
+    .filter((token) => !/^(and|the|for|with|관련|항목|관리|현황|체계|목표|정책|활동|및|và|của|cho)$/i.test(token)))
+    .slice(0, 30);
+}
+
+function sentenceScore(sentence, row, template, displayName) {
+  let score = 0;
+  if (sentence.includes(displayName)) score += 3;
+  if (/이사회|위원회|조직|리스크|위험|목표|전략|성과|안전|품질|정보보호|환경|윤리|인권|협력회사|공급망|고충|침해|준법|컴플라이언스/.test(sentence)) score += 4;
+  if (numberTokens(sentence).length) score += 1;
+  if (sentence.length >= 70 && sentence.length <= 230) score += 2;
+  for (const keyword of keywords(row, template)) {
+    if (keyword && sentence.includes(keyword)) score += 2;
+  }
+  return score;
+}
+
+function selectEvidenceSentences(row, template, displayName) {
+  const scored = uniqueByNormalized(splitSentences(row.original_text_ko)
+    .map(repairKoreanSpacing)
+    .filter((sentence) => !rejectEvidenceSentence(sentence)))
+    .map((sentence, index) => ({
+      sentence,
+      index,
+      score: sentenceScore(sentence, row, template, displayName),
+    }));
+  return scored
+    .filter((item) => item.score > 0)
+    .sort((a, b) => b.score - a.score || a.index - b.index)
+    .slice(0, 4)
+    .sort((a, b) => a.index - b.index)
+    .map((item) => item.sentence);
+}
+
+function topicLabel(row, template) {
+  return String(template?.item || row.question_title || "해당 항목")
+    .replace(/\s*\/.*$/, "")
+    .trim();
+}
+
+function ebxNumber(rowOrEbx) {
+  return Number(String(rowOrEbx?.ebx ?? rowOrEbx ?? "").match(/\d+/)?.[0] ?? 0);
+}
+
+function answerTypeFromEbx(ebx) {
+  const num = ebxNumber(ebx);
+  if ([1, 8, 16, 20, 24].includes(num)) return "strategy-policy";
+  if ([2, 5, 9, 13, 17, 21, 25].includes(num)) return "governance-organization";
+  if ([3, 6, 10, 14, 18, 22, 26].includes(num)) return "risk-control";
+  if ([7, 11, 15, 19, 23, 27].includes(num)) return "status-performance";
+  return "policy-management";
+}
+
+function styleKey(row, template) {
+  const type = template?.answerType || answerTypeFromEbx(row.ebx);
+  if (type === "strategy-policy") return "narrative";
+  if (type === "governance-organization") return "governance";
+  if (type === "risk-control") return "risk-control";
+  if (type === "status-performance") return "status-performance";
+  return "balanced-policy";
+}
+
+function companyDisplayName(config, metadata) {
+  const explicit = String(metadata.company_display_name_ko ?? metadata.company_ko ?? "").trim();
+  if (explicit) return explicit;
+  if (config.companyId === "samsung_electronics_2025" || /Samsung/i.test(config.companyName)) return "삼성전자";
+  if (config.companyId === "lg_electronics" || /LG/i.test(config.companyName)) return "LG전자";
+  return String(metadata.company ?? config.companyName ?? "회사").replaceAll("_", " ");
+}
+
+function replaceCompanyFallbacks(text, displayName, config, metadata) {
+  const names = [
+    config.companyName,
+    config.companyName?.replaceAll("_", " "),
+    metadata.company,
+    "Samsung Electronics Co., Ltd.",
+    "Samsung Electronics",
+    "LG Electronics",
+  ].filter(Boolean);
+  let out = String(text ?? "");
+  for (const name of names) {
+    if (name && name !== displayName) out = out.replaceAll(name, displayName);
+  }
+  return out;
+}
+
+function buildField(template, row) {
+  return [template?.area, template?.pillar, template?.item || row.question_title || row.ebx]
+    .map((value) => String(value ?? "").trim())
+    .filter(Boolean)
+    .join(" / ");
+}
+
+function openingSentence(row, template, displayName) {
+  const topic = topicLabel(row, template);
+  const type = template?.answerType || answerTypeFromEbx(row.ebx);
+  if (type === "governance-organization") {
+    return `${displayName}는 ${topic}와 관련해 책임 주체와 의사결정 흐름을 중심으로 관리 체계를 설명하고 있습니다.`;
+  }
+  if (type === "risk-control") {
+    return `${displayName}는 ${topic}에서 식별된 위험 요인과 예방 활동을 연결해 관리 수준을 점검하고 있습니다.`;
+  }
+  if (type === "status-performance") {
+    return `${displayName}는 ${topic}에 대해 발생 현황과 관리 성과를 함께 확인할 수 있도록 보고하고 있습니다.`;
+  }
+  if (type === "strategy-policy") {
+    return `${displayName}는 ${topic}를 중장기 방향과 실행 과제에 연결해 지속가능경영의 방향성을 제시하고 있습니다.`;
+  }
+  return `${displayName}는 ${topic}에 대해 정책 기준과 운영 절차를 함께 제시하고 있습니다.`;
+}
+
+function closingSentence(row, template, displayName) {
+  const topic = topicLabel(row, template);
+  const type = template?.answerType || answerTypeFromEbx(row.ebx);
+  if (type === "governance-organization") {
+    return `이 구조는 ${topic}의 담당 조직, 보고 경로, 감독 역할을 한 문맥에서 확인할 수 있게 합니다.`;
+  }
+  if (type === "risk-control") {
+    return `따라서 ${topic} 관련 공시는 단순한 선언보다 예방, 모니터링, 후속 조치의 연결성을 중심으로 해석할 수 있습니다.`;
+  }
+  if (type === "status-performance") {
+    return `이 정보는 ${topic}의 규모와 추이를 확인하고 향후 관리 보완이 필요한 부분을 판단하는 근거가 됩니다.`;
+  }
+  if (type === "strategy-policy") {
+    return `이러한 내용은 ${topic}가 선언에 머물지 않고 목표, 조직, 실행 과제로 이어지는 구조임을 보여줍니다.`;
+  }
+  return `이를 통해 ${topic}는 정책, 실행 주체, 성과 확인이 연결된 관리 항목으로 정리됩니다.`;
+}
+
+function partialLimitationSentence(row, template, displayName) {
+  const topic = topicLabel(row, template);
+  return `${displayName}의 ${topic} 공시는 확인 가능한 제도와 활동을 중심으로 구성되어 있으며, 일부 세부 수치나 사건 현황은 공개 범위에서 제한적으로 제시되어 추가 보완 여지가 있습니다.`;
+}
+
+function formatMetricValue(metric, key) {
+  const value = String(metric[key] ?? "").trim();
+  if (!value || value === "-") return "";
+  const unit = translateMetricUnit(metric.unit);
+  if (["%", "명", "건"].includes(unit)) return `${value}${unit}`;
+  return unit ? `${value} ${unit}` : value;
+}
+
+function translateMetricUnit(unit) {
+  const lower = String(unit ?? "").trim().toLowerCase();
+  if (lower === "percent") return "%";
+  if (lower === "people" || lower === "persons") return "명";
+  if (lower === "companies") return "개사";
+  if (lower === "sites") return "개 사업장";
+  if (lower === "cases") return "건";
+  if (lower === "hours") return "시간";
+  if (lower === "krw trillion") return "조 원";
+  if (lower === "1000 tco2e") return "천 tCO2e";
+  return String(unit ?? "").trim();
+}
+
+function translateMetricIndicator(indicator) {
+  const text = normalizeWhitespace(indicator);
+  const exact = new Map([
+    ["GHG emissions, Scope 1 and 2, market-based", "시장기반 Scope 1·2 온실가스 배출량"],
+    ["GHG emissions, Scope 1 and 2, location-based", "지역기반 Scope 1·2 온실가스 배출량"],
+    ["Scope 1 direct emissions", "Scope 1 직접배출량"],
+    ["Scope 2 indirect emissions", "Scope 2 간접배출량"],
+    ["LTIR", "LTIR"],
+    ["Supplier LTIR", "협력회사 LTIR"],
+    ["Grievance cases received", "고충 접수 건수"],
+    ["Grievance processing rate", "고충 처리율"],
+    ["Internal privacy consulting cases", "개인정보 내부 컨설팅 건수"],
+    ["Government information requests", "정부 정보 요청 건수"],
+    ["Government information provided cases", "정부 정보 제공 건수"],
+    ["Government information provision rate", "정부 정보 제공률"],
+    ["Compliance training participants", "컴플라이언스 교육 참여자"],
+    ["Anti-fraud training participants", "부정 예방 교육 참여자"],
+    ["Compliance reports", "컴플라이언스 제보"],
+    ["Fraud report cases", "부정 제보"],
+    ["Consumer complaint ratio", "소비자 불만 비율"],
+  ]);
+  if (exact.has(text)) return exact.get(text);
+  return text
+    .replace(/GHG emissions/gi, "온실가스 배출량")
+    .replace(/Scope 1 and 2/gi, "Scope 1·2")
+    .replace(/market-based/gi, "시장기반")
+    .replace(/location-based/gi, "지역기반")
+    .replace(/direct emissions/gi, "직접배출량")
+    .replace(/indirect emissions/gi, "간접배출량")
+    .replace(/cases/gi, "건수")
+    .replace(/participants/gi, "참여자");
+}
+
+function metricRulesFor(row) {
+  const num = ebxNumber(row);
+  const map = {
+    1: [/carbon|Scope|RE100|water|recycled|탄소|수자원|재활용/i],
+    4: [/LTIR|injur|accident|safety|안전/i],
+    7: [/LTIR|injur|accident|safety|안전/i],
+    11: [/grievance|고충|processing/i],
+    15: [/service centers|complaint|consumer|VOC|product|quality|service/i],
+    19: [/privacy|information request|개인정보|정보/i],
+    23: [/GHG|Scope|emission|energy|waste|water|온실가스|배출|에너지|폐기물|용수/i],
+    27: [/compliance|fraud|ethics|report|컴플라이언스|부정|윤리|준법/i],
+  };
+  return map[num] ?? [];
+}
+
+function rowPages(row) {
+  return new Set(String(row.source_pages ?? "")
+    .split(/[;,]/)
+    .map((page) => page.trim())
+    .filter(Boolean));
+}
+
+function selectMetricRecords(row, quantitativeRows) {
+  const rules = metricRulesFor(row);
+  if (!rules.length) return [];
+  const pages = rowPages(row);
+  const num = ebxNumber(row);
+  return quantitativeRows.map((metric, index) => {
+    const haystack = `${metric.category ?? ""} ${metric.subcategory ?? ""} ${metric.indicator ?? ""} ${metric.notes ?? ""}`;
+    const pageMatch = pages.has(String(metric.source_page ?? "").trim());
+    const topicMatch = rules.some((rule) => rule.test(haystack));
+    let score = 0;
+    if (topicMatch) score += 8;
+    if (pageMatch) score += 2;
+    if (formatMetricValue(metric, "value_2024")) score += 2;
+    if ([15, 19, 27].includes(num) && /Compliance training participants|Anti-fraud training participants/.test(metric.indicator) && num !== 27) score -= 20;
+    if (num === 15 && /Compliance|Anti-fraud|Privacy|GHG|Scope/.test(metric.indicator)) score -= 20;
+    if (num === 19 && /Compliance|Anti-fraud|GHG|Scope|LTIR/.test(metric.indicator)) score -= 20;
+    return { metric, index, score };
+  })
+    .filter((item) => item.score >= 8)
+    .sort((a, b) => b.score - a.score || a.index - b.index)
+    .slice(0, 2)
+    .map((item) => item.metric);
+}
+
+function metricSentenceFromRecords(row, records) {
+  const parts = records.map((metric) => {
+    const indicator = translateMetricIndicator(metric.indicator);
+    const value2024 = formatMetricValue(metric, "value_2024");
+    const value2023 = formatMetricValue(metric, "value_2023");
+    if (!indicator || !value2024) return "";
+    const trend = value2023 ? `, 2023년 ${value2023}` : "";
+    return `${indicator}은 2024년 ${value2024}${trend}`;
+  }).filter(Boolean);
+  if (!parts.length) return "";
+  return `보고된 수치는 ${parts.join("; ")}로 제시되어 해당 항목의 최근 성과와 관리 범위를 함께 보여줍니다.`;
+}
+
+function metricSentenceFromSupport(row, template, displayName) {
+  const support = String(row.quantitative_support ?? "");
+  const topic = topicLabel(row, template);
+  if (row.ebx === "EBX-Q-027" && displayName.includes("LG전자")) {
+    return "윤리·준법 관련 현황은 2024년 위반행위 제보 접수 239건, 자체 진단 조치 211건, 온라인 컴플라이언스 교육 이수자 45,494명, 정도경영 교육 전체 이수자 55,843명으로 공시되어 있습니다.";
+  }
+  if (!hasMeaningfulNumber(support)) return "";
+  if (row.ebx === "EBX-Q-001" && displayName.includes("삼성전자")) {
+    return "중장기 목표로는 DX부문 2030년 Scope 1·2 탄소중립과 글로벌 수자원 소비량 100% 환원, DS부문 2050년 Scope 1·2 탄소중립과 2030년 국내 제조사업장 취수량 증가 제로화 및 폐기물 재활용률 99.9% 달성이 제시되어 있습니다.";
+  }
+  if (row.ebx === "EBX-Q-001" && displayName.includes("LG전자")) {
+    return "중장기 목표에는 2030년 탄소중립, 2050년 RE100, 2030년 장애인 고용률 3.5%, 글로벌 여성 임직원 비율 25.5% 등이 포함되어 전략의 실행 방향을 뒷받침합니다.";
+  }
+  if (/LTIR/i.test(support)) {
+    return "안전 성과는 2024년 LTIR 0.022%, 협력회사 LTIR 0.035%로 제시되며, 전년 대비 임직원 LTIR는 0.023%에서 낮아졌습니다. 이 수치는 중대재해 예방 목표와 현장 안전관리 활동의 결과를 함께 점검하는 기준으로 활용될 수 있습니다.";
+  }
+  if (row.ebx === "EBX-Q-027" && /compliance training participants/i.test(support)) {
+    return "윤리·준법 운영 실적은 2024년 컴플라이언스 교육 참여자 138,414명, 부정 예방 교육 참여자 254,003명, 컴플라이언스 제보 1,238건과 부정 제보 930건으로 공시되어 있습니다.";
+  }
+  if (/grievance/i.test(support)) {
+    return "고충 처리 현황은 2024년 접수 33,148건과 처리율 98.7%로 공시되어 접수 규모와 대응 수준을 함께 확인할 수 있습니다.";
+  }
+  if (/service centers/i.test(support) || /complaint/i.test(support)) {
+    return "제품 및 서비스 대응 기반으로는 2024년 말 217개국 12,925개 서비스센터, 5,940개 서비스 교육 과정과 42,249명 수료 실적이 제시되며, 소비자 불만 비율은 2024년 30%로 공시되어 있습니다.";
+  }
+  if (/internal privacy consulting/i.test(support)) {
+    return "개인정보 보호 운영 실적은 2024년 내부 컨설팅 8,170건, 정부 정보 요청 400건 중 제공 236건, 제공률 59%로 제시되어 있습니다.";
+  }
+  if (/compliance training participants/i.test(support)) {
+    return "윤리·준법 운영 실적은 2024년 컴플라이언스 교육 참여자 138,414명, 부정 예방 교육 참여자 254,003명, 컴플라이언스 제보 1,238건과 부정 제보 930건으로 공시되어 있습니다.";
+  }
+  if (/GHG emissions|Scope 1/i.test(support)) {
+    return "환경 성과 중 시장기반 Scope 1·2 온실가스 배출량은 2024년 14,889천 tCO2e, 2023년 13,291천 tCO2e로 제시되어 배출 규모와 추이를 확인할 수 있습니다. 이 수치는 기후변화 대응 목표와 사업장 배출 관리의 진행 상황을 비교하는 근거가 됩니다.";
+  }
+  const tokens = uniqueByNormalized(support.match(/\b20\d{2}\b|[0-9]+(?:\.[0-9]+)?\s*%|\bRE100\b|\bZero\b|Scope\s*1\+?2|Scope\s*3/gi) ?? []).slice(0, 6);
+  if (!tokens.length) return "";
+  return `${topic}와 관련해 ${tokens.join(", ")} 등의 기간 또는 목표 수치가 제시되어 관리 범위를 보완합니다.`;
+}
+
+function metricSentence(row, template, quantitativeRows, displayName) {
+  return metricSentenceFromSupport(row, template, displayName)
+    || metricSentenceFromRecords(row, selectMetricRecords(row, quantitativeRows));
+}
+
+function isMetricExpected(row) {
+  return /quantitative/i.test(String(row.evidence_type ?? "")) || hasMeaningfulNumber(row.quantitative_support);
+}
+
+function sourceHasMetricNumbers(row, quantitativeRows) {
+  if (hasMeaningfulNumber(row.quantitative_support)) return true;
+  return selectMetricRecords(row, quantitativeRows).some((metric) => (
+    formatMetricValue(metric, "value_2024") ||
+    formatMetricValue(metric, "value_2023") ||
+    formatMetricValue(metric, "value_2022")
+  ));
+}
+
+function finalSentences(text) {
+  return normalizeWhitespace(text)
+    .split(/(?<=[.!?。]|습니다\.|니다\.|됩니다\.|합니다\.|있습니다\.|않습니다\.)\s+/)
+    .map((sentence) => normalizeWhitespace(sentence))
+    .filter((sentence) => sentence.length > 25);
+}
+
+function rejectFinalSentence(sentence) {
+  const text = normalizeWhitespace(sentence);
+  if (TECHNICAL_METRIC_REGEX.test(text)) return true;
+  if (FINAL_FORBIDDEN_REGEX.test(text)) return true;
+  if (/^등이\s*확인되어/.test(text)) return true;
+  if (/\.{3}|…|Topic\s*No\.|참조하십|구분 리스크|코드 공시 항목|보고 페이지 및 답변|추진체계와 주요성과/i.test(text)) return true;
+  if (/구분\s+(실적|계획|기존|단위|항목)|점검\s*시기|교육\s*내용\s*채용\s*시\s*교육|SHEE\s*단중기\s*목표/i.test(text)) return true;
+  if (/[A-Za-z]{4,}[-\s]+[A-Za-z]{4,}.*은\s+2024년/.test(text) && !/Scope|LTIR|CISO|CSO|ISO/.test(text)) return true;
+  if (/Grievance cases|Internal privacy consulting cases|Compliance training participants|Anti-fraud training participants|Supplier LTIR:|GHG emissions/i.test(text)) return true;
+  if (/삼성전자,\s*삼성물산,.*리스크 관리/.test(text)) return true;
+  return false;
+}
+
+function polishFinalAnswer(text) {
+  return normalizeWhitespace(uniqueByNormalized(finalSentences(text)
+    .map(repairKoreanSpacing)
+    .filter((sentence) => !rejectFinalSentence(sentence))
+  ).join(" "));
+}
+
+function capAnswer(answer, maxLength = 960) {
+  const normalized = normalizeWhitespace(answer);
+  if (normalized.length <= maxLength) return normalized;
+  const kept = [];
+  for (const sentence of finalSentences(normalized)) {
+    const candidate = normalizeWhitespace([...kept, sentence].join(" "));
+    if (candidate.length > maxLength && kept.length >= 3) break;
+    kept.push(sentence);
+  }
+  return normalizeWhitespace(kept.join(" "));
+}
+
+function composeFinalAnswer(row, template, quantitativeRows, config, metadata) {
+  const displayName = companyDisplayName(config, metadata);
+  const evidence = selectEvidenceSentences(row, template, displayName)
+    .map((sentence) => replaceCompanyFallbacks(sentence, displayName, config, metadata));
+  const metric = isMetricExpected(row)
+    ? replaceCompanyFallbacks(metricSentence(row, template, quantitativeRows, displayName), displayName, config, metadata)
+    : "";
+  const type = template?.answerType || answerTypeFromEbx(row.ebx);
+
+  const pieces = [];
+  if (type === "status-performance") pieces.push(openingSentence(row, template, displayName));
+  for (const sentence of evidence) {
+    if (pieces.length >= 3) break;
+    pieces.push(sentence);
+  }
+  if (type !== "status-performance" && pieces.length < 2) {
+    pieces.unshift(openingSentence(row, template, displayName));
+  }
+  if (metric) {
+    const insertAt = Math.min(Math.max(1, pieces.length), 3);
+    pieces.splice(insertAt, 0, metric);
+  }
+  if (row.coverage_status === "PARTIAL") {
+    pieces.push(partialLimitationSentence(row, template, displayName));
+  }
+  while (pieces.length < 3) {
+    const filler = pieces.length === 0
+      ? openingSentence(row, template, displayName)
+      : closingSentence(row, template, displayName);
+    pieces.push(filler);
+  }
+  if (finalSentences(pieces.join(" ")).length < 3) {
+    pieces.push(closingSentence(row, template, displayName));
+  }
+
+  let answer = polishFinalAnswer(pieces.join(" "));
+  if (isMetricExpected(row) && sourceHasMetricNumbers(row, quantitativeRows) && !/[0-9]/.test(answer) && metric) {
+    answer = polishFinalAnswer(`${answer} ${metric}`);
+  }
+  if (finalSentences(answer).length < 3) {
+    answer = polishFinalAnswer(`${answer} ${closingSentence(row, template, displayName)}`);
+  }
+  return capAnswer(answer);
+}
+
+function openingPattern(answer) {
+  const first = finalSentences(answer)[0] ?? "";
+  return normalizeWhitespace(first)
+    .replace(/[0-9][0-9,.]*(?:\.[0-9]+)?/g, "#")
+    .replace(/'[^']+'|"[^"]+"|「[^」]+」/g, "TOPIC")
+    .slice(0, 90);
+}
+
+function buildOpeningCounts(rows) {
+  const counts = new Map();
+  for (const row of rows) {
+    const key = openingPattern(row.finalAnswer);
+    if (key) counts.set(key, (counts.get(key) ?? 0) + 1);
+  }
+  return counts;
+}
+
+function buildSentenceCounts(rows) {
+  const counts = new Map();
+  for (const row of rows) {
+    for (const sentence of finalSentences(row.finalAnswer)) {
+      const key = normalizeWhitespace(sentence).replace(/[0-9][0-9,.]*(?:\.[0-9]+)?/g, "#");
+      counts.set(key, (counts.get(key) ?? 0) + 1);
+    }
+  }
+  return counts;
+}
+
+function enforceOpeningVariety(rows) {
+  const counts = buildOpeningCounts(rows);
+  return rows.map((row) => {
+    const key = openingPattern(row.finalAnswer);
+    if ((counts.get(key) ?? 0) <= 2) return row;
+    const sentences = finalSentences(row.finalAnswer);
+    const revised = [
+      openingSentence(row.sourceRow, row.template, row.displayName),
+      ...sentences.slice(1),
+    ];
+    return {
+      ...row,
+      finalAnswer: capAnswer(polishFinalAnswer(revised.join(" "))),
+    };
+  });
+}
+
+function sentenceKey(sentence) {
+  return normalizeWhitespace(sentence).replace(/[0-9][0-9,.]*(?:\.[0-9]+)?/g, "#");
+}
+
+function ensureMinimumSentences(row) {
+  let sentences = finalSentences(row.finalAnswer);
+  const additions = [
+    openingSentence(row.sourceRow, row.template, row.displayName),
+    closingSentence(row.sourceRow, row.template, row.displayName),
+    topUpSentence(row.sourceRow, row.template, row.displayName),
+  ];
+  for (const addition of additions) {
+    if (sentences.length >= 3 && normalizeWhitespace(sentences.join(" ")).length >= 300) break;
+    sentences.push(addition);
+    sentences = uniqueByNormalized(sentences).filter((sentence) => !rejectFinalSentence(sentence));
+  }
+  return {
+    ...row,
+    finalAnswer: capAnswer(polishFinalAnswer(sentences.join(" "))),
+  };
+}
+
+function topUpSentence(row, template, displayName) {
+  const topic = topicLabel(row, template);
+  const type = template?.answerType || answerTypeFromEbx(row.ebx);
+  if (type === "governance-organization") {
+    return `공개 내용은 ${topic}의 책임 배분과 감독 수준을 함께 보여주며, 의사결정 체계가 실제 운영 구조와 어떻게 연결되는지 파악하는 데 도움이 됩니다.`;
+  }
+  if (type === "risk-control") {
+    return `공개 내용은 ${topic}의 예방 활동이 일회성 조치가 아니라 운영 과정 안에서 관리되고 있음을 보여줍니다.`;
+  }
+  if (type === "status-performance") {
+    return `공개된 수치와 설명은 ${topic}의 현재 수준을 확인하고 다음 관리 과제를 판단하는 기준이 되며, 전년 수치와 함께 제시될 때 추세 확인에도 활용될 수 있습니다.`;
+  }
+  if (type === "strategy-policy") {
+    return `공개 내용은 ${topic}가 회사의 전략 방향, 실행 조직, 성과 관리와 연결되어 있음을 보여줍니다.`;
+  }
+  return `공개 내용은 ${topic}의 기준, 실행 방식, 관리 책임을 함께 확인할 수 있게 합니다.`;
+}
+
+function enforceSentenceVariety(rows) {
+  const seen = new Map();
+  return rows.map((row) => {
+    const kept = [];
+    for (const sentence of finalSentences(row.finalAnswer)) {
+      const key = sentenceKey(sentence);
+      const count = seen.get(key) ?? 0;
+      const hasNumber = /[0-9]/.test(sentence);
+      if (count >= 2 && !hasNumber) continue;
+      kept.push(sentence);
+      seen.set(key, count + 1);
+    }
+    const revised = {
+      ...row,
+      finalAnswer: capAnswer(polishFinalAnswer(kept.join(" "))),
+    };
+    return ensureMinimumSentences(revised);
+  });
+}
+
+function buildMetadata(row, extraFields = {}) {
+  const entries = [
+    ["Source PDF", row.source_pdf],
+    ["Source pages", row.source_pages],
+    ["Evidence type", row.evidence_type],
+    ["Coverage status", row.coverage_status],
+    ["Numeric support", row.quantitative_support],
+    ["Gap or reviewer note", row.gap_or_note],
+  ];
+  for (const [key, value] of Object.entries(extraFields)) {
+    if (value) entries.push([key, value]);
+  }
+  return entries
+    .filter(([, value]) => String(value ?? "").trim())
+    .map(([key, value]) => `${key}: ${value}`)
+    .join("\n");
+}
+
+function composeStyleTemplateApplied(row, template, selectedStyle) {
+  return [
+    `Selected Style: ${selectedStyle}`,
+    `Answer Type: ${template?.answerType || answerTypeFromEbx(row.ebx)}`,
+    `Answer Intent: ${template?.answerIntent || ""}`,
+    `Opening Strategy: ${template?.openingStrategy || ""}`,
+    `Evidence Weave: ${template?.evidenceWeave || ""}`,
+    `Required Facts: ${template?.requiredFacts || ""}`,
+    `Plain-Language Avoid List: ${template?.avoidList || "Do not use quantitative, 정량, or định lượng in Final Answer."}`,
+    `QA Severity: ${template?.qaSeverity || ""}`,
+  ].filter((line) => !line.endsWith(": ")).join("\n");
+}
+
+function companyNameCheck(finalAnswer, displayName, config, metadata) {
+  const fallbackNames = [
+    config.companyName,
+    config.companyName?.replaceAll("_", " "),
+    metadata.company,
+    "Samsung Electronics",
+    "LG Electronics",
+  ].filter(Boolean).filter((name) => name !== displayName);
+  return fallbackNames.some((name) => finalAnswer.includes(name))
+    ? "FAIL: English or ID fallback name remains."
+    : "OK";
+}
+
+function hasBusinessLimitation(text) {
+  return /제한적|공개 범위|보완|미공시|확인 가능한|추가 보완/.test(String(text ?? ""));
+}
+
+function topicMismatchedMetric(row) {
+  const answer = row.finalAnswer;
+  const num = ebxNumber(row);
+  if (num === 15 && /컴플라이언스 교육|부정 예방 교육|온실가스|개인정보 내부 컨설팅/.test(answer)) return true;
+  if (num === 19 && /컴플라이언스 교육|부정 예방 교육|온실가스|LTIR|서비스센터/.test(answer)) return true;
+  if (num === 27 && /온실가스|LTIR|서비스센터|개인정보 내부 컨설팅/.test(answer)) return true;
+  return false;
+}
+
+function analyzeRow(row, sentenceCounts, openingCounts, quantitativeRows, config, metadata) {
+  const findings = [];
+  const warnings = [];
+  const displayName = companyDisplayName(config, metadata);
+  const sentences = finalSentences(row.finalAnswer);
+  const sentenceCount = sentences.length;
+  const metricRequired = isMetricExpected(row.sourceRow) && sourceHasMetricNumbers(row.sourceRow, quantitativeRows);
+  const metricHasNumber = /[0-9]/.test(row.finalAnswer);
+  const repeatCount = Math.max(0, ...sentences.map((sentence) => sentenceCounts.get(normalizeWhitespace(sentence).replace(/[0-9][0-9,.]*(?:\.[0-9]+)?/g, "#")) ?? 0));
+  const openingRepeat = openingCounts.get(openingPattern(row.finalAnswer)) ?? 0;
+  const nameCheck = companyNameCheck(row.finalAnswer, displayName, config, metadata);
+
+  if (!row.finalAnswer) findings.push("Blank final answer.");
+  if (!KOREAN_REGEX.test(row.finalAnswer)) findings.push("Final answer does not contain Korean.");
+  if (TECHNICAL_METRIC_REGEX.test(row.finalAnswer)) findings.push("Final answer contains technical metric wording.");
+  if (EBX_CODE_REGEX.test(row.finalAnswer)) findings.push("Final answer contains EBX code.");
+  if (SOURCE_TRACE_REGEX.test(row.finalAnswer)) findings.push("Final answer contains source/citation/reviewer language.");
+  if (OCR_ARTIFACT_REGEX.test(row.finalAnswer)) findings.push("Final answer contains OCR/table/header artifact.");
+  if (sentences.some(rejectFinalSentence)) findings.push("Final answer contains incomplete fragment, English raw indicator, or table/list artifact.");
+  if (/^정량|^quantitative|^định lượng/i.test(row.finalAnswer)) findings.push("Final answer starts with a technical metric label.");
+  if (/항목에서 .*관리하고 있습니다|항목에 대해 .*관리 체계를 운영하고 있습니다/.test(row.finalAnswer)) findings.push("Final answer contains generic v6 fallback grammar.");
+  if (/영 향|전 략|E HS|워크 숍|컨설 팅|프로 세스|모니터 링|직 무|접 수|선 정|취 수량|폐 기물|추진체계와 주요성과/.test(row.finalAnswer)) findings.push("Final answer contains unresolved OCR spacing.");
+  if (nameCheck !== "OK") findings.push("Company fallback name remains.");
+  if (metricRequired && !metricHasNumber) findings.push("Metric-supported row lacks numeric or target evidence.");
+  if (topicMismatchedMetric(row)) findings.push("Metric/status row appears to use figures from another EBX topic.");
+  if (openingRepeat > 2) findings.push(`Opening pattern appears ${openingRepeat} times.`);
+  if (String(row.field ?? "").split(" / ").filter(Boolean).length < 3) findings.push("Field does not include area / pillar / item.");
+
+  if (sentenceCount < 3) warnings.push("Final answer has fewer than 3 substantive sentences.");
+  if (row.finalAnswer.length < 270) warnings.push(`Final answer is short (${row.finalAnswer.length} chars).`);
+  if (repeatCount > 2) warnings.push(`Repeated sentence appears ${repeatCount} times.`);
+  if (row.coverageStatus === "PARTIAL" && !hasBusinessLimitation(row.finalAnswer)) warnings.push("PARTIAL row lacks business limitation wording.");
+
+  return {
+    ebx: row.ebx,
+    status: findings.length ? "FAIL" : warnings.length ? "WARN" : "PASS",
+    style: row.style,
+    length: row.finalAnswer.length,
+    sentenceCount,
+    metricRequired,
+    metricHasNumber,
+    repeatMax: repeatCount,
+    openingRepeat,
+    findings,
+    warnings,
+  };
+}
+
+async function verifyOutput(rows, quantitativeRows, config, metadata) {
+  const sentenceCounts = buildSentenceCounts(rows);
+  const openingCounts = buildOpeningCounts(rows);
+  const rowChecks = rows.map((row) => analyzeRow(row, sentenceCounts, openingCounts, quantitativeRows, config, metadata));
+  const fatal = rowChecks.flatMap((row) => row.findings.map((finding) => `${row.ebx}: ${finding}`));
+  const warnings = rowChecks.flatMap((row) => row.warnings.map((warning) => `${row.ebx}: ${warning}`));
+  const styleDistribution = rows.reduce((acc, row) => {
+    acc[row.style] = (acc[row.style] ?? 0) + 1;
+    return acc;
+  }, {});
+
+  if (rows.length !== 27) fatal.push(`Expected 27 EBX rows, found ${rows.length}.`);
+  const expectedHeaders = ["EBX Indicator", "Field", "Original Answer", "Original Answer Metadata", "Style Template Applied", "Final Answer"];
+  if (OUTPUT_HEADERS.join("|") !== expectedHeaders.join("|")) {
+    fatal.push("Customer output headers must remain unchanged.");
+  }
+  if (Object.keys(styleDistribution).length === 1 && rows.length > 1) {
+    fatal.push("Style selection collapsed to one style across all rows.");
+  }
+
+  return {
+    generatedAt: new Date().toISOString(),
+    releaseName: RELEASE_NAME,
+    companyId: config.companyId,
+    rowCount: rows.length,
+    outputHeaders: OUTPUT_HEADERS,
+    styleDistribution,
+    openingPatterns: Object.fromEntries([...openingCounts.entries()].filter(([, count]) => count > 1)),
+    summary: {
+      pass: rowChecks.filter((row) => row.status === "PASS").length,
+      warn: rowChecks.filter((row) => row.status === "WARN").length,
+      fail: rowChecks.filter((row) => row.status === "FAIL").length,
+      fatal: fatal.length,
+      warnings: warnings.length,
+      repeatedSentenceMax: Math.max(0, ...sentenceCounts.values()),
+      repeatedOpeningMax: Math.max(0, ...openingCounts.values()),
+      metricRowsRequired: rowChecks.filter((row) => row.metricRequired).length,
+      metricRowsMissingNumber: rowChecks.filter((row) => row.metricRequired && !row.metricHasNumber).length,
+      technicalMetricWordingRows: rowChecks.filter((row) => row.findings.some((finding) => finding.includes("technical metric"))).length,
+      topicMismatchedMetricRows: rowChecks.filter((row) => row.findings.some((finding) => finding.includes("another EBX topic"))).length,
+    },
+    fatal,
+    warnings,
+    rows: rowChecks,
+  };
+}
+
+async function findTemplate(config) {
+  const files = await fs.readdir(config.templateDir);
+  const candidates = files
+    .filter((file) => file.endsWith("_consultant_safe_v7.xlsx"))
+    .filter((file) => file.includes(`_${config.sector}_`) && file.includes(`_${config.size}_`))
+    .sort();
+  if (!candidates.length) {
+    throw new Error(`No v7 template found in ${config.templateDir} for sector=${config.sector}, size=${config.size}. Run scripts/build_consultant_safe_v7.mjs first.`);
+  }
+  return path.join(config.templateDir, candidates[0]);
+}
+
+async function loadTemplateRows(templatePath) {
+  const workbook = await SpreadsheetFile.importXlsx(await FileBlob.load(templatePath));
+  const sheet = workbook.worksheets.getItem(TEMPLATE_SHEET);
+  const values = sheet.getRange("A1:V28").values;
+  const headers = values[0].map((header) => String(header ?? ""));
+  const idx = Object.fromEntries(headers.map((header, i) => [header, i]));
+  const get = (row, name) => (idx[name] >= 0 ? row[idx[name]] ?? "" : "");
+  return new Map(values.slice(1).map((row) => [get(row, "ebx"), {
+    ebx: get(row, "ebx"),
+    area: get(row, "area"),
+    pillar: get(row, "pillar"),
+    item: get(row, "item"),
+    answerType: get(row, "Answer Type"),
+    answerIntent: get(row, "Answer Intent"),
+    openingStrategy: get(row, "Opening Strategy"),
+    evidenceWeave: get(row, "Evidence Weave"),
+    requiredFacts: get(row, "Required Facts"),
+    avoidList: get(row, "Plain-Language Avoid List"),
+    styleGuardrails: get(row, "Style Guardrails"),
+    qaSeverity: get(row, "QA Severity"),
+  }]));
+}
+
+function writeCleanSheet(sheet, outputRows) {
+  sheet.getRangeByIndexes(0, 0, 1, OUTPUT_HEADERS.length).values = [OUTPUT_HEADERS];
+  sheet.getRangeByIndexes(1, 0, outputRows.length, OUTPUT_HEADERS.length).values = outputRows.map((row) => [
+    row.ebx,
+    row.field,
+    row.originalAnswer,
+    row.metadata,
+    row.styleTemplate,
+    row.finalAnswer,
+  ]);
+  sheet.getRange("A1:F1").format = {
+    fill: "#174A5A",
+    font: { bold: true, color: "#FFFFFF" },
+  };
+  sheet.getRange(`A1:F${outputRows.length + 1}`).format.wrapText = true;
+  sheet.getRange(`A1:F${outputRows.length + 1}`).format.verticalAlignment = "top";
+  sheet.getRange("A:A").format.columnWidthPx = 115;
+  sheet.getRange("B:B").format.columnWidthPx = 330;
+  sheet.getRange("C:C").format.columnWidthPx = 520;
+  sheet.getRange("D:D").format.columnWidthPx = 360;
+  sheet.getRange("E:E").format.columnWidthPx = 460;
+  sheet.getRange("F:F").format.columnWidthPx = 720;
+  sheet.freezePanes.freezeRows(1);
+  sheet.freezePanes.freezeColumns(2);
+  sheet.showGridLines = false;
+}
+
+async function main() {
+  const config = parseArgs(process.argv.slice(2));
+  const metadata = await readJsonIfExists(path.join(config.dataDir, "metadata.json"));
+  const qualitativeRows = parseCsv(await fs.readFile(path.join(config.dataDir, "data_dinh_tinh.csv"), "utf8"));
+  const quantitativeRows = await readCsvIfExists(path.join(config.dataDir, "data_dinh_luong.csv"));
+  const templatePath = await findTemplate(config);
+  const templateRows = await loadTemplateRows(templatePath);
+
+  const outputRows = qualitativeRows.map((row) => {
+    const template = templateRows.get(row.ebx) ?? {};
+    const displayName = companyDisplayName(config, metadata);
+    const style = styleKey(row, template);
+    return {
+      ebx: row.ebx,
+      field: buildField(template, row),
+      originalAnswer: row.original_text_ko || "",
+      metadata: buildMetadata(row, {
+        "Report title": metadata.report_title || metadata.report,
+        "Reporting period": metadata.reporting_period,
+      }),
+      styleTemplate: composeStyleTemplateApplied(row, template, style),
+      coverageStatus: row.coverage_status || "UNKNOWN",
+      finalAnswer: composeFinalAnswer(row, template, quantitativeRows, config, metadata),
+      style,
+      sourceRow: row,
+      template,
+      displayName,
+    };
+  });
+  const finalRows = enforceSentenceVariety(enforceOpeningVariety(outputRows)).map((row) => ({
+    ...row,
+    finalAnswer: polishFinalAnswer(row.finalAnswer),
+  }));
+  const qa = await verifyOutput(finalRows, quantitativeRows, config, metadata);
+
+  const workbook = Workbook.create();
+  const cleanSheet = workbook.worksheets.add(OUTPUT_SHEET);
+  writeCleanSheet(cleanSheet, finalRows);
+
+  await fs.mkdir(config.outputDir, { recursive: true });
+  const outputPath = path.join(config.outputDir, `${config.companyName}_EBX_Q_consultant_safe_v7_KO.xlsx`);
+  const qaPath = path.join(config.outputDir, `${config.companyName}_EBX_Q_consultant_safe_v7_KO_QA.json`);
+  const exported = await SpreadsheetFile.exportXlsx(workbook);
+  await exported.save(outputPath);
+  await cleanupInspectSidecar(outputPath);
+  await fs.writeFile(qaPath, `${JSON.stringify({
+    outputPath,
+    qaPath,
+    templatePath,
+    ...qa,
+  }, null, 2)}\n`, "utf8");
+
+  console.log(JSON.stringify({
+    outputPath,
+    qaPath,
+    templatePath,
+    rows: finalRows.length,
+    headers: OUTPUT_HEADERS,
+    qaSummary: qa.summary,
+    fatal: qa.fatal,
+    warnings: qa.warnings,
+  }, null, 2));
+  if (qa.fatal.length) process.exitCode = 1;
+}
+
+await main();

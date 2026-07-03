@@ -1,0 +1,453 @@
+{
+  "outputPath": "F:\\MY_PROJECT\\template-qualitative\\final_template\\output\\samsung_electronics_2025\\Samsung_Electronics_2025_EBX_Q_consultant_safe_v6_KO.xlsx",
+  "qaPath": "F:\\MY_PROJECT\\template-qualitative\\final_template\\output\\samsung_electronics_2025\\Samsung_Electronics_2025_EBX_Q_consultant_safe_v6_KO_QA.json",
+  "templatePath": "F:\\MY_PROJECT\\template-qualitative\\consultant_safe_v6\\EBX_Q_템플릿_TC_기술·통신_대기업_consultant_safe_v6.xlsx",
+  "generatedAt": "2026-07-03T05:25:53.433Z",
+  "releaseName": "consultant_safe_v6",
+  "companyId": "samsung_electronics_2025",
+  "rows": [
+    {
+      "ebx": "EBX-Q-001",
+      "status": "PASS",
+      "style": "narrative",
+      "length": 378,
+      "sentenceCount": 4,
+      "metricRequired": true,
+      "metricHasNumber": true,
+      "forbiddenFound": false,
+      "repeatMax": 1,
+      "findings": [],
+      "warnings": []
+    },
+    {
+      "ebx": "EBX-Q-002",
+      "status": "PASS",
+      "style": "governance",
+      "length": 385,
+      "sentenceCount": 4,
+      "metricRequired": false,
+      "metricHasNumber": true,
+      "forbiddenFound": false,
+      "repeatMax": 1,
+      "findings": [],
+      "warnings": []
+    },
+    {
+      "ebx": "EBX-Q-003",
+      "status": "PASS",
+      "style": "risk-control",
+      "length": 448,
+      "sentenceCount": 4,
+      "metricRequired": false,
+      "metricHasNumber": true,
+      "forbiddenFound": false,
+      "repeatMax": 1,
+      "findings": [],
+      "warnings": []
+    },
+    {
+      "ebx": "EBX-Q-004",
+      "status": "PASS",
+      "style": "balanced-policy",
+      "length": 399,
+      "sentenceCount": 4,
+      "metricRequired": true,
+      "metricHasNumber": true,
+      "forbiddenFound": false,
+      "repeatMax": 2,
+      "findings": [],
+      "warnings": []
+    },
+    {
+      "ebx": "EBX-Q-005",
+      "status": "PASS",
+      "style": "governance",
+      "length": 416,
+      "sentenceCount": 4,
+      "metricRequired": false,
+      "metricHasNumber": true,
+      "forbiddenFound": false,
+      "repeatMax": 2,
+      "findings": [],
+      "warnings": []
+    },
+    {
+      "ebx": "EBX-Q-006",
+      "status": "PASS",
+      "style": "risk-control",
+      "length": 621,
+      "sentenceCount": 3,
+      "metricRequired": false,
+      "metricHasNumber": true,
+      "forbiddenFound": false,
+      "repeatMax": 1,
+      "findings": [],
+      "warnings": []
+    },
+    {
+      "ebx": "EBX-Q-007",
+      "status": "WARN",
+      "style": "metric-led",
+      "length": 200,
+      "sentenceCount": 2,
+      "metricRequired": true,
+      "metricHasNumber": true,
+      "forbiddenFound": false,
+      "repeatMax": 2,
+      "findings": [],
+      "warnings": [
+        "Final answer has fewer than 3 substantive sentences.",
+        "Final answer is short (200 chars)."
+      ]
+    },
+    {
+      "ebx": "EBX-Q-008",
+      "status": "PASS",
+      "style": "narrative",
+      "length": 455,
+      "sentenceCount": 4,
+      "metricRequired": false,
+      "metricHasNumber": true,
+      "forbiddenFound": false,
+      "repeatMax": 2,
+      "findings": [],
+      "warnings": []
+    },
+    {
+      "ebx": "EBX-Q-009",
+      "status": "PASS",
+      "style": "governance",
+      "length": 422,
+      "sentenceCount": 4,
+      "metricRequired": false,
+      "metricHasNumber": true,
+      "forbiddenFound": false,
+      "repeatMax": 2,
+      "findings": [],
+      "warnings": []
+    },
+    {
+      "ebx": "EBX-Q-010",
+      "status": "PASS",
+      "style": "risk-control",
+      "length": 383,
+      "sentenceCount": 4,
+      "metricRequired": false,
+      "metricHasNumber": true,
+      "forbiddenFound": false,
+      "repeatMax": 2,
+      "findings": [],
+      "warnings": []
+    },
+    {
+      "ebx": "EBX-Q-011",
+      "status": "PASS",
+      "style": "metric-led",
+      "length": 509,
+      "sentenceCount": 4,
+      "metricRequired": true,
+      "metricHasNumber": true,
+      "forbiddenFound": false,
+      "repeatMax": 2,
+      "findings": [],
+      "warnings": []
+    },
+    {
+      "ebx": "EBX-Q-012",
+      "status": "WARN",
+      "style": "balanced-policy",
+      "length": 156,
+      "sentenceCount": 2,
+      "metricRequired": false,
+      "metricHasNumber": true,
+      "forbiddenFound": false,
+      "repeatMax": 2,
+      "findings": [],
+      "warnings": [
+        "Final answer has fewer than 3 substantive sentences.",
+        "Final answer is short (156 chars)."
+      ]
+    },
+    {
+      "ebx": "EBX-Q-013",
+      "status": "WARN",
+      "style": "governance",
+      "length": 160,
+      "sentenceCount": 2,
+      "metricRequired": false,
+      "metricHasNumber": true,
+      "forbiddenFound": false,
+      "repeatMax": 2,
+      "findings": [],
+      "warnings": [
+        "Final answer has fewer than 3 substantive sentences.",
+        "Final answer is short (160 chars)."
+      ]
+    },
+    {
+      "ebx": "EBX-Q-014",
+      "status": "WARN",
+      "style": "risk-control",
+      "length": 190,
+      "sentenceCount": 2,
+      "metricRequired": false,
+      "metricHasNumber": false,
+      "forbiddenFound": false,
+      "repeatMax": 1,
+      "findings": [],
+      "warnings": [
+        "Final answer has fewer than 3 substantive sentences.",
+        "Final answer is short (190 chars)."
+      ]
+    },
+    {
+      "ebx": "EBX-Q-015",
+      "status": "WARN",
+      "style": "metric-led",
+      "length": 337,
+      "sentenceCount": 3,
+      "metricRequired": true,
+      "metricHasNumber": true,
+      "forbiddenFound": false,
+      "repeatMax": 2,
+      "findings": [],
+      "warnings": [
+        "Final answer is short (337 chars)."
+      ]
+    },
+    {
+      "ebx": "EBX-Q-016",
+      "status": "WARN",
+      "style": "narrative",
+      "length": 132,
+      "sentenceCount": 2,
+      "metricRequired": false,
+      "metricHasNumber": false,
+      "forbiddenFound": false,
+      "repeatMax": 2,
+      "findings": [],
+      "warnings": [
+        "Final answer has fewer than 3 substantive sentences.",
+        "Final answer is short (132 chars)."
+      ]
+    },
+    {
+      "ebx": "EBX-Q-017",
+      "status": "WARN",
+      "style": "governance",
+      "length": 332,
+      "sentenceCount": 4,
+      "metricRequired": false,
+      "metricHasNumber": true,
+      "forbiddenFound": false,
+      "repeatMax": 1,
+      "findings": [],
+      "warnings": [
+        "Final answer is short (332 chars)."
+      ]
+    },
+    {
+      "ebx": "EBX-Q-018",
+      "status": "WARN",
+      "style": "risk-control",
+      "length": 143,
+      "sentenceCount": 2,
+      "metricRequired": false,
+      "metricHasNumber": false,
+      "forbiddenFound": false,
+      "repeatMax": 2,
+      "findings": [],
+      "warnings": [
+        "Final answer has fewer than 3 substantive sentences.",
+        "Final answer is short (143 chars)."
+      ]
+    },
+    {
+      "ebx": "EBX-Q-019",
+      "status": "WARN",
+      "style": "metric-led",
+      "length": 356,
+      "sentenceCount": 3,
+      "metricRequired": true,
+      "metricHasNumber": true,
+      "forbiddenFound": false,
+      "repeatMax": 1,
+      "findings": [],
+      "warnings": [
+        "Final answer is short (356 chars)."
+      ]
+    },
+    {
+      "ebx": "EBX-Q-020",
+      "status": "PASS",
+      "style": "narrative",
+      "length": 481,
+      "sentenceCount": 4,
+      "metricRequired": false,
+      "metricHasNumber": true,
+      "forbiddenFound": false,
+      "repeatMax": 2,
+      "findings": [],
+      "warnings": []
+    },
+    {
+      "ebx": "EBX-Q-021",
+      "status": "PASS",
+      "style": "governance",
+      "length": 423,
+      "sentenceCount": 4,
+      "metricRequired": false,
+      "metricHasNumber": true,
+      "forbiddenFound": false,
+      "repeatMax": 2,
+      "findings": [],
+      "warnings": []
+    },
+    {
+      "ebx": "EBX-Q-022",
+      "status": "PASS",
+      "style": "risk-control",
+      "length": 653,
+      "sentenceCount": 4,
+      "metricRequired": false,
+      "metricHasNumber": true,
+      "forbiddenFound": false,
+      "repeatMax": 1,
+      "findings": [],
+      "warnings": []
+    },
+    {
+      "ebx": "EBX-Q-023",
+      "status": "WARN",
+      "style": "metric-led",
+      "length": 244,
+      "sentenceCount": 2,
+      "metricRequired": true,
+      "metricHasNumber": true,
+      "forbiddenFound": false,
+      "repeatMax": 1,
+      "findings": [],
+      "warnings": [
+        "Final answer has fewer than 3 substantive sentences.",
+        "Final answer is short (244 chars)."
+      ]
+    },
+    {
+      "ebx": "EBX-Q-024",
+      "status": "WARN",
+      "style": "narrative",
+      "length": 181,
+      "sentenceCount": 2,
+      "metricRequired": false,
+      "metricHasNumber": false,
+      "forbiddenFound": false,
+      "repeatMax": 1,
+      "findings": [],
+      "warnings": [
+        "Final answer has fewer than 3 substantive sentences.",
+        "Final answer is short (181 chars)."
+      ]
+    },
+    {
+      "ebx": "EBX-Q-025",
+      "status": "WARN",
+      "style": "governance",
+      "length": 146,
+      "sentenceCount": 2,
+      "metricRequired": false,
+      "metricHasNumber": true,
+      "forbiddenFound": false,
+      "repeatMax": 1,
+      "findings": [],
+      "warnings": [
+        "Final answer has fewer than 3 substantive sentences.",
+        "Final answer is short (146 chars)."
+      ]
+    },
+    {
+      "ebx": "EBX-Q-026",
+      "status": "WARN",
+      "style": "risk-control",
+      "length": 131,
+      "sentenceCount": 2,
+      "metricRequired": false,
+      "metricHasNumber": false,
+      "forbiddenFound": false,
+      "repeatMax": 1,
+      "findings": [],
+      "warnings": [
+        "Final answer has fewer than 3 substantive sentences.",
+        "Final answer is short (131 chars)."
+      ]
+    },
+    {
+      "ebx": "EBX-Q-027",
+      "status": "WARN",
+      "style": "metric-led",
+      "length": 337,
+      "sentenceCount": 3,
+      "metricRequired": true,
+      "metricHasNumber": true,
+      "forbiddenFound": false,
+      "repeatMax": 2,
+      "findings": [],
+      "warnings": [
+        "Final answer is short (337 chars)."
+      ]
+    }
+  ],
+  "outputHeaders": [
+    "EBX Indicator",
+    "Field",
+    "Original Answer",
+    "Original Answer Metadata",
+    "Style Template Applied",
+    "Final Answer"
+  ],
+  "styleDistribution": {
+    "narrative": 5,
+    "governance": 7,
+    "risk-control": 7,
+    "balanced-policy": 2,
+    "metric-led": 6
+  },
+  "summary": {
+    "pass": 13,
+    "warn": 14,
+    "fail": 0,
+    "fatal": 0,
+    "warnings": 24,
+    "repeatedSentenceMax": 2,
+    "metricRowsRequired": 8,
+    "metricRowsMissingNumber": 0,
+    "ebxLeaks": 0,
+    "forbiddenArtifactRows": 0
+  },
+  "fatal": [],
+  "warnings": [
+    "EBX-Q-007: Final answer has fewer than 3 substantive sentences.",
+    "EBX-Q-007: Final answer is short (200 chars).",
+    "EBX-Q-012: Final answer has fewer than 3 substantive sentences.",
+    "EBX-Q-012: Final answer is short (156 chars).",
+    "EBX-Q-013: Final answer has fewer than 3 substantive sentences.",
+    "EBX-Q-013: Final answer is short (160 chars).",
+    "EBX-Q-014: Final answer has fewer than 3 substantive sentences.",
+    "EBX-Q-014: Final answer is short (190 chars).",
+    "EBX-Q-015: Final answer is short (337 chars).",
+    "EBX-Q-016: Final answer has fewer than 3 substantive sentences.",
+    "EBX-Q-016: Final answer is short (132 chars).",
+    "EBX-Q-017: Final answer is short (332 chars).",
+    "EBX-Q-018: Final answer has fewer than 3 substantive sentences.",
+    "EBX-Q-018: Final answer is short (143 chars).",
+    "EBX-Q-019: Final answer is short (356 chars).",
+    "EBX-Q-023: Final answer has fewer than 3 substantive sentences.",
+    "EBX-Q-023: Final answer is short (244 chars).",
+    "EBX-Q-024: Final answer has fewer than 3 substantive sentences.",
+    "EBX-Q-024: Final answer is short (181 chars).",
+    "EBX-Q-025: Final answer has fewer than 3 substantive sentences.",
+    "EBX-Q-025: Final answer is short (146 chars).",
+    "EBX-Q-026: Final answer has fewer than 3 substantive sentences.",
+    "EBX-Q-026: Final answer is short (131 chars).",
+    "EBX-Q-027: Final answer is short (337 chars)."
+  ]
+}
