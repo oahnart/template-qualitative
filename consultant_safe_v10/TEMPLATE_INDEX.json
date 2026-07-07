@@ -1,0 +1,408 @@
+{
+  "generatedAt": "2026-07-07T04:33:42.451Z",
+  "releaseName": "consultant_safe_v10",
+  "sourceRelease": "consultant_safe_v9",
+  "sourceWorkbook": "source\\26.07.06 ESG-정성_v2.xlsx",
+  "rowCount": 95,
+  "oldRowCount": 27,
+  "newRowCount": 68,
+  "profileVersion": "template-profiles-v1",
+  "templates": [
+    {
+      "sector": "CG",
+      "sectorName": "소비재",
+      "size": "대기업",
+      "sourceJsonTemplate": "templates\\CG_대기업_consultant_safe_v9.json",
+      "jsonTemplate": "templates\\CG_대기업_consultant_safe_v10.json",
+      "rows": 95,
+      "operationalHash": "f7658b7729c4bdb38e4ec7904d54cce46dde8c7d686a03c2d3a270c198e3b197"
+    },
+    {
+      "sector": "CG",
+      "sectorName": "소비재",
+      "size": "비상장",
+      "sourceJsonTemplate": "templates\\CG_비상장_consultant_safe_v9.json",
+      "jsonTemplate": "templates\\CG_비상장_consultant_safe_v10.json",
+      "rows": 95,
+      "operationalHash": "6e51fddc4f03f90d7242eb07bd2aa3861ab0bb227c3612602e6a0ba69e06f900"
+    },
+    {
+      "sector": "CG",
+      "sectorName": "소비재",
+      "size": "중견",
+      "sourceJsonTemplate": "templates\\CG_중견_consultant_safe_v9.json",
+      "jsonTemplate": "templates\\CG_중견_consultant_safe_v10.json",
+      "rows": 95,
+      "operationalHash": "6285e1fa9be0eca3c46b003d24d4876e85bf4276b76329f6cedec04387244fd6"
+    },
+    {
+      "sector": "CG",
+      "sectorName": "소비재",
+      "size": "중소",
+      "sourceJsonTemplate": "templates\\CG_중소_consultant_safe_v9.json",
+      "jsonTemplate": "templates\\CG_중소_consultant_safe_v10.json",
+      "rows": 95,
+      "operationalHash": "5f9fea4bfded374baa2c0dad5c66bd1be92432015f9ba3959bc7af2680369239"
+    },
+    {
+      "sector": "EM",
+      "sectorName": "추출·광물가공",
+      "size": "대기업",
+      "sourceJsonTemplate": "templates\\EM_대기업_consultant_safe_v9.json",
+      "jsonTemplate": "templates\\EM_대기업_consultant_safe_v10.json",
+      "rows": 95,
+      "operationalHash": "7a92ecdc9975fb4abc40cd7cedcd88a95303badbfc0acf76a29bba8eb8e2d518"
+    },
+    {
+      "sector": "EM",
+      "sectorName": "추출·광물가공",
+      "size": "비상장",
+      "sourceJsonTemplate": "templates\\EM_비상장_consultant_safe_v9.json",
+      "jsonTemplate": "templates\\EM_비상장_consultant_safe_v10.json",
+      "rows": 95,
+      "operationalHash": "5775dcd8de27627b8bcd98b99da66568d0b60435b956d15f7c3815f068712780"
+    },
+    {
+      "sector": "EM",
+      "sectorName": "추출·광물가공",
+      "size": "중견",
+      "sourceJsonTemplate": "templates\\EM_중견_consultant_safe_v9.json",
+      "jsonTemplate": "templates\\EM_중견_consultant_safe_v10.json",
+      "rows": 95,
+      "operationalHash": "c873de80fa085aa82df9bd125d2c1598562af65683f8c11af185a095b409a176"
+    },
+    {
+      "sector": "EM",
+      "sectorName": "추출·광물가공",
+      "size": "중소",
+      "sourceJsonTemplate": "templates\\EM_중소_consultant_safe_v9.json",
+      "jsonTemplate": "templates\\EM_중소_consultant_safe_v10.json",
+      "rows": 95,
+      "operationalHash": "877d5c91ad03eba80d59631f3ddf3e14b9c20adab480aa16e7eada08cc060983"
+    },
+    {
+      "sector": "FB",
+      "sectorName": "식음료",
+      "size": "대기업",
+      "sourceJsonTemplate": "templates\\FB_대기업_consultant_safe_v9.json",
+      "jsonTemplate": "templates\\FB_대기업_consultant_safe_v10.json",
+      "rows": 95,
+      "operationalHash": "55f292a26073617a45c39afe14ea509d3cc311ab5aa309279e3abace271feed7"
+    },
+    {
+      "sector": "FB",
+      "sectorName": "식음료",
+      "size": "비상장",
+      "sourceJsonTemplate": "templates\\FB_비상장_consultant_safe_v9.json",
+      "jsonTemplate": "templates\\FB_비상장_consultant_safe_v10.json",
+      "rows": 95,
+      "operationalHash": "426428767af973397bc7dbe5ec46bb0c3f01611cfcb1943acac7f36a9ab4ee99"
+    },
+    {
+      "sector": "FB",
+      "sectorName": "식음료",
+      "size": "중견",
+      "sourceJsonTemplate": "templates\\FB_중견_consultant_safe_v9.json",
+      "jsonTemplate": "templates\\FB_중견_consultant_safe_v10.json",
+      "rows": 95,
+      "operationalHash": "3acfd398dbfebe99bce52fb54a9ee9f371a0804fbcb5377d7630801d5035451e"
+    },
+    {
+      "sector": "FB",
+      "sectorName": "식음료",
+      "size": "중소",
+      "sourceJsonTemplate": "templates\\FB_중소_consultant_safe_v9.json",
+      "jsonTemplate": "templates\\FB_중소_consultant_safe_v10.json",
+      "rows": 95,
+      "operationalHash": "b61ce7ea246653d3b16f505928ef044e0c81bce584edf740e4a8cf7eb4c62717"
+    },
+    {
+      "sector": "FN",
+      "sectorName": "금융",
+      "size": "대기업",
+      "sourceJsonTemplate": "templates\\FN_대기업_consultant_safe_v9.json",
+      "jsonTemplate": "templates\\FN_대기업_consultant_safe_v10.json",
+      "rows": 95,
+      "operationalHash": "5a49b546de58796b25688794a0c80c89973b8b54b12fc37ef58d33498f79ed6f"
+    },
+    {
+      "sector": "FN",
+      "sectorName": "금융",
+      "size": "비상장",
+      "sourceJsonTemplate": "templates\\FN_비상장_consultant_safe_v9.json",
+      "jsonTemplate": "templates\\FN_비상장_consultant_safe_v10.json",
+      "rows": 95,
+      "operationalHash": "8c3717169c9ba610c159efc7190e2eea4964f49771b44e7ee34cb5e8aac88ce5"
+    },
+    {
+      "sector": "FN",
+      "sectorName": "금융",
+      "size": "중견",
+      "sourceJsonTemplate": "templates\\FN_중견_consultant_safe_v9.json",
+      "jsonTemplate": "templates\\FN_중견_consultant_safe_v10.json",
+      "rows": 95,
+      "operationalHash": "b31639b40159583dedbca4d152d51481d23906956a86cd705cc67045679a8152"
+    },
+    {
+      "sector": "FN",
+      "sectorName": "금융",
+      "size": "중소",
+      "sourceJsonTemplate": "templates\\FN_중소_consultant_safe_v9.json",
+      "jsonTemplate": "templates\\FN_중소_consultant_safe_v10.json",
+      "rows": 95,
+      "operationalHash": "ecbcadbb87fc0f2b10144903dd736bb84e03260e073f6fdd6fc1b4d1eb2c0ef0"
+    },
+    {
+      "sector": "HC",
+      "sectorName": "헬스케어",
+      "size": "대기업",
+      "sourceJsonTemplate": "templates\\HC_대기업_consultant_safe_v9.json",
+      "jsonTemplate": "templates\\HC_대기업_consultant_safe_v10.json",
+      "rows": 95,
+      "operationalHash": "45c379747e74dea95f123b8356fcf5863b5e731612db69653de3eaf2f6272cf1"
+    },
+    {
+      "sector": "HC",
+      "sectorName": "헬스케어",
+      "size": "비상장",
+      "sourceJsonTemplate": "templates\\HC_비상장_consultant_safe_v9.json",
+      "jsonTemplate": "templates\\HC_비상장_consultant_safe_v10.json",
+      "rows": 95,
+      "operationalHash": "f6d7e4823905a67165a37f6fe3833ad29d9793b405657ca077ab40b331d94a8f"
+    },
+    {
+      "sector": "HC",
+      "sectorName": "헬스케어",
+      "size": "중견",
+      "sourceJsonTemplate": "templates\\HC_중견_consultant_safe_v9.json",
+      "jsonTemplate": "templates\\HC_중견_consultant_safe_v10.json",
+      "rows": 95,
+      "operationalHash": "73c184d579b00b519e92aa41421ec6efac39b2ebd8222b4fbaf3f8eb1994767c"
+    },
+    {
+      "sector": "HC",
+      "sectorName": "헬스케어",
+      "size": "중소",
+      "sourceJsonTemplate": "templates\\HC_중소_consultant_safe_v9.json",
+      "jsonTemplate": "templates\\HC_중소_consultant_safe_v10.json",
+      "rows": 95,
+      "operationalHash": "c8ca682c294b46f138549be7353ac5afa9760dfa8dec78432ae5867969665960"
+    },
+    {
+      "sector": "IF",
+      "sectorName": "인프라",
+      "size": "대기업",
+      "sourceJsonTemplate": "templates\\IF_대기업_consultant_safe_v9.json",
+      "jsonTemplate": "templates\\IF_대기업_consultant_safe_v10.json",
+      "rows": 95,
+      "operationalHash": "06d3f5b89388a681296708b9d5016687ca8a88a8b739eb6864a0c866e1ec3f90"
+    },
+    {
+      "sector": "IF",
+      "sectorName": "인프라",
+      "size": "비상장",
+      "sourceJsonTemplate": "templates\\IF_비상장_consultant_safe_v9.json",
+      "jsonTemplate": "templates\\IF_비상장_consultant_safe_v10.json",
+      "rows": 95,
+      "operationalHash": "6736708b03f6f410655b2a00d259508d7a1a799bcc9d59b8c4a8686a06b3fe3a"
+    },
+    {
+      "sector": "IF",
+      "sectorName": "인프라",
+      "size": "중견",
+      "sourceJsonTemplate": "templates\\IF_중견_consultant_safe_v9.json",
+      "jsonTemplate": "templates\\IF_중견_consultant_safe_v10.json",
+      "rows": 95,
+      "operationalHash": "b881e717ffd6156cb43be9035f35823364245ffa59b9b937cd831f0214f1ef71"
+    },
+    {
+      "sector": "IF",
+      "sectorName": "인프라",
+      "size": "중소",
+      "sourceJsonTemplate": "templates\\IF_중소_consultant_safe_v9.json",
+      "jsonTemplate": "templates\\IF_중소_consultant_safe_v10.json",
+      "rows": 95,
+      "operationalHash": "98eb2323bd3fe2d18b771951f27b1d31fcb7a6c0f94fc0c9c063e7cb10d71ec1"
+    },
+    {
+      "sector": "RR",
+      "sectorName": "재생자원·대체에너지",
+      "size": "대기업",
+      "sourceJsonTemplate": "templates\\RR_대기업_consultant_safe_v9.json",
+      "jsonTemplate": "templates\\RR_대기업_consultant_safe_v10.json",
+      "rows": 95,
+      "operationalHash": "f4bca9b4757bdb62d533034508813a550434c241513bdce7350607901106c07c"
+    },
+    {
+      "sector": "RR",
+      "sectorName": "재생자원·대체에너지",
+      "size": "비상장",
+      "sourceJsonTemplate": "templates\\RR_비상장_consultant_safe_v9.json",
+      "jsonTemplate": "templates\\RR_비상장_consultant_safe_v10.json",
+      "rows": 95,
+      "operationalHash": "5cfae968602be96570f3cb65558f7a4c326c06426468540caedf2bc903400ce8"
+    },
+    {
+      "sector": "RR",
+      "sectorName": "재생자원·대체에너지",
+      "size": "중견",
+      "sourceJsonTemplate": "templates\\RR_중견_consultant_safe_v9.json",
+      "jsonTemplate": "templates\\RR_중견_consultant_safe_v10.json",
+      "rows": 95,
+      "operationalHash": "03cc2c054d82e1293394f1183fcab872d34258824e4fd7342fe7f3a1da3c8113"
+    },
+    {
+      "sector": "RR",
+      "sectorName": "재생자원·대체에너지",
+      "size": "중소",
+      "sourceJsonTemplate": "templates\\RR_중소_consultant_safe_v9.json",
+      "jsonTemplate": "templates\\RR_중소_consultant_safe_v10.json",
+      "rows": 95,
+      "operationalHash": "b1f6024809f739d59bb4e9096a71622e2fcf7b1d871abf9561fc3d161f19d8b7"
+    },
+    {
+      "sector": "RT",
+      "sectorName": "자원가공·제조",
+      "size": "대기업",
+      "sourceJsonTemplate": "templates\\RT_대기업_consultant_safe_v9.json",
+      "jsonTemplate": "templates\\RT_대기업_consultant_safe_v10.json",
+      "rows": 95,
+      "operationalHash": "53437d96261f3c43c10a55d443a4e458c55199113349711eb8c94119132e8d84"
+    },
+    {
+      "sector": "RT",
+      "sectorName": "자원가공·제조",
+      "size": "비상장",
+      "sourceJsonTemplate": "templates\\RT_비상장_consultant_safe_v9.json",
+      "jsonTemplate": "templates\\RT_비상장_consultant_safe_v10.json",
+      "rows": 95,
+      "operationalHash": "507b30c255714872dadb1f4457016ebe083b0102db89612bc14d4075a34a9bb0"
+    },
+    {
+      "sector": "RT",
+      "sectorName": "자원가공·제조",
+      "size": "중견",
+      "sourceJsonTemplate": "templates\\RT_중견_consultant_safe_v9.json",
+      "jsonTemplate": "templates\\RT_중견_consultant_safe_v10.json",
+      "rows": 95,
+      "operationalHash": "12a1ff3f4c0d8a7534b907644eeac3b355dc9df70596bb13373e3f269e9f2c8b"
+    },
+    {
+      "sector": "RT",
+      "sectorName": "자원가공·제조",
+      "size": "중소",
+      "sourceJsonTemplate": "templates\\RT_중소_consultant_safe_v9.json",
+      "jsonTemplate": "templates\\RT_중소_consultant_safe_v10.json",
+      "rows": 95,
+      "operationalHash": "3b8e0bcf25ac24286eade3cc65b17bec8eabffbee9687b0fee9cbd238d24fa0c"
+    },
+    {
+      "sector": "SV",
+      "sectorName": "서비스",
+      "size": "대기업",
+      "sourceJsonTemplate": "templates\\SV_대기업_consultant_safe_v9.json",
+      "jsonTemplate": "templates\\SV_대기업_consultant_safe_v10.json",
+      "rows": 95,
+      "operationalHash": "240fecf7bcea56b693ac17eb2f19f7d72eeda6de3d01a24a246fcd2c7f292461"
+    },
+    {
+      "sector": "SV",
+      "sectorName": "서비스",
+      "size": "비상장",
+      "sourceJsonTemplate": "templates\\SV_비상장_consultant_safe_v9.json",
+      "jsonTemplate": "templates\\SV_비상장_consultant_safe_v10.json",
+      "rows": 95,
+      "operationalHash": "aec8756fe9cc7d6d23caf08c32e5f0453827e585e6b630d472fdddcd1c66bc6b"
+    },
+    {
+      "sector": "SV",
+      "sectorName": "서비스",
+      "size": "중견",
+      "sourceJsonTemplate": "templates\\SV_중견_consultant_safe_v9.json",
+      "jsonTemplate": "templates\\SV_중견_consultant_safe_v10.json",
+      "rows": 95,
+      "operationalHash": "b787e8a280d31e6144111a79a59ef94a95c8061cb68ff5cc4eb872d9234f8688"
+    },
+    {
+      "sector": "SV",
+      "sectorName": "서비스",
+      "size": "중소",
+      "sourceJsonTemplate": "templates\\SV_중소_consultant_safe_v9.json",
+      "jsonTemplate": "templates\\SV_중소_consultant_safe_v10.json",
+      "rows": 95,
+      "operationalHash": "f610284d59ad6643f8f4354171b655b8591d620fe0ff5008e17a4a8e3541fb47"
+    },
+    {
+      "sector": "TC",
+      "sectorName": "기술·통신",
+      "size": "대기업",
+      "sourceJsonTemplate": "templates\\TC_대기업_consultant_safe_v9.json",
+      "jsonTemplate": "templates\\TC_대기업_consultant_safe_v10.json",
+      "rows": 95,
+      "operationalHash": "d79612c7f267548a5102dc5db3438dbe5300636799a9bf206bd27761c8294bc5"
+    },
+    {
+      "sector": "TC",
+      "sectorName": "기술·통신",
+      "size": "비상장",
+      "sourceJsonTemplate": "templates\\TC_비상장_consultant_safe_v9.json",
+      "jsonTemplate": "templates\\TC_비상장_consultant_safe_v10.json",
+      "rows": 95,
+      "operationalHash": "7a3356b1c41d1a30df6346869a6547f07038e7aaa0d5fcbd40ebb5c6f54ed534"
+    },
+    {
+      "sector": "TC",
+      "sectorName": "기술·통신",
+      "size": "중견",
+      "sourceJsonTemplate": "templates\\TC_중견_consultant_safe_v9.json",
+      "jsonTemplate": "templates\\TC_중견_consultant_safe_v10.json",
+      "rows": 95,
+      "operationalHash": "c8296dc674f4c60800da1f4d3e77af6460c0111e89ff253fa00e3f1c46014353"
+    },
+    {
+      "sector": "TC",
+      "sectorName": "기술·통신",
+      "size": "중소",
+      "sourceJsonTemplate": "templates\\TC_중소_consultant_safe_v9.json",
+      "jsonTemplate": "templates\\TC_중소_consultant_safe_v10.json",
+      "rows": 95,
+      "operationalHash": "5d3590a2d5bc63921812bd15311f0c2808dd9fad6bedad4d810e56ad3874a845"
+    },
+    {
+      "sector": "TR",
+      "sectorName": "운송",
+      "size": "대기업",
+      "sourceJsonTemplate": "templates\\TR_대기업_consultant_safe_v9.json",
+      "jsonTemplate": "templates\\TR_대기업_consultant_safe_v10.json",
+      "rows": 95,
+      "operationalHash": "a1665f16abfd426bc6bc71e208b210796a4a0d6e2ccc57337bbee6a6db915480"
+    },
+    {
+      "sector": "TR",
+      "sectorName": "운송",
+      "size": "비상장",
+      "sourceJsonTemplate": "templates\\TR_비상장_consultant_safe_v9.json",
+      "jsonTemplate": "templates\\TR_비상장_consultant_safe_v10.json",
+      "rows": 95,
+      "operationalHash": "b9d61d6caf5343882db63cd194f3876f6252242b331b871cc7b5d0d63245edf3"
+    },
+    {
+      "sector": "TR",
+      "sectorName": "운송",
+      "size": "중견",
+      "sourceJsonTemplate": "templates\\TR_중견_consultant_safe_v9.json",
+      "jsonTemplate": "templates\\TR_중견_consultant_safe_v10.json",
+      "rows": 95,
+      "operationalHash": "4c23b5ba578a5adc2c392f03c45fbfcd97cdd3903022f16b75c3ad8d904cc164"
+    },
+    {
+      "sector": "TR",
+      "sectorName": "운송",
+      "size": "중소",
+      "sourceJsonTemplate": "templates\\TR_중소_consultant_safe_v9.json",
+      "jsonTemplate": "templates\\TR_중소_consultant_safe_v10.json",
+      "rows": 95,
+      "operationalHash": "8b4336096d537161d992b8bdbfc00bf7c6d480fb01396fd83c5ec5aa824d9cf0"
+    }
+  ]
+}

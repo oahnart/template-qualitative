@@ -1,0 +1,20 @@
+{
+  "metrics": [
+    {
+      "mapped_item_id": "ESG-Q-031",
+      "category": "기후행동",
+      "indicator": "GHG emissions, Scope 1 and 2, market-based",
+      "unit": "tCO2e",
+      "values": { "2023": "110", "2024": "95" },
+      "source_page": "13"
+    },
+    {
+      "mapped_item_id": "ESG-Q-039",
+      "category": "물 관리",
+      "indicator": "Water withdrawal total",
+      "unit": "thousand tons",
+      "values": { "2023": "80", "2024": "75" },
+      "source_page": "21"
+    }
+  ]
+}

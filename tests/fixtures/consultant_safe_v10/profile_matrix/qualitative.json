@@ -1,0 +1,53 @@
+{
+  "items": [
+    {
+      "item_id": "ESG-Q-028",
+      "question_title": "온실가스 감축 전략 및 탄소중립 목표",
+      "coverage_status": "SUFFICIENT",
+      "source_pages": "10",
+      "evidence_type": "qualitative",
+      "evidence_text": "프로필테스트기업은 2030년 온실가스 감축 목표와 2050년 탄소중립 방향을 수립하고 재생에너지 전환 로드맵을 운영하고 있습니다. 중장기 기후전략은 사업계획과 연계해 매년 점검합니다."
+    },
+    {
+      "item_id": "ESG-Q-029",
+      "question_title": "기후변화 대응 조직 및 관리 체계",
+      "coverage_status": "SUFFICIENT",
+      "source_pages": "11",
+      "evidence_type": "qualitative",
+      "evidence_text": "ESG위원회는 기후변화 대응 계획을 심의하며 환경담당 부서는 이행 현황을 분기별로 보고합니다. 담당 임원은 주요 성과와 개선 과제를 승인하고 경영회의에 보고합니다."
+    },
+    {
+      "item_id": "ESG-Q-030",
+      "question_title": "기후 리스크 및 기회 관리",
+      "coverage_status": "SUFFICIENT",
+      "source_pages": "12",
+      "evidence_type": "qualitative",
+      "evidence_text": "프로필테스트기업은 물리적 위험과 전환 위험을 매년 식별하고 발생 가능성과 재무 영향을 평가합니다. 평가 결과는 예방 조치와 사업장별 개선 계획에 반영하고 후속 이행 여부를 모니터링합니다."
+    },
+    {
+      "item_id": "ESG-Q-031",
+      "question_title": "온실가스 배출량 및 에너지 사용 현황",
+      "coverage_status": "SUFFICIENT",
+      "source_pages": "13",
+      "evidence_type": "qualitative+quantitative",
+      "quantitative_support": "2024년 시장기반 Scope 1·2 온실가스 배출량 95 tCO2e",
+      "evidence_text": "2024년 온실가스 배출량과 재생에너지 사용 실적을 집계하고 전년 대비 추이를 검토했습니다. 감축 성과는 연간 목표와 비교해 관리합니다."
+    },
+    {
+      "item_id": "ESG-Q-036",
+      "question_title": "수자원 관리 정책 및 목표",
+      "coverage_status": "PARTIAL",
+      "source_pages": "20",
+      "evidence_type": "qualitative",
+      "evidence_text": "대기환경연구소 주요 샘플링 및 분석 장비 구축 구분 주요 장비 샘플링 장비 입자상 샘플러 분석 장비 ICP 전처리 장비. 프로필테스트기업은 용수 사용 저감과 폐수 재이용을 포함한 수자원 관리 정책을 운영하고 있습니다."
+    },
+    {
+      "item_id": "ESG-Q-072",
+      "question_title": "이사회 내 위원회 운영 정책",
+      "coverage_status": "SUFFICIENT",
+      "source_pages": "30",
+      "evidence_type": "qualitative",
+      "evidence_text": "정보보호위원회는 개인정보와 제품 보안 정책을 검토하고 사이버 위험 대응 현황을 점검합니다."
+    }
+  ]
+}

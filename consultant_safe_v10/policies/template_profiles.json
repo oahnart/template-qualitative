@@ -1,0 +1,101 @@
+{
+  "version": "template-profiles-v1",
+  "sizeProfiles": {
+    "대기업": {
+      "description": "Large-company profile with consolidated scope, formal governance, accountable functions and KPI traceability.",
+      "evidenceSelection": { "minEvidenceSentences": 2, "maxEvidenceSentences": 8, "minScore": 2 },
+      "metricHints": { "maxRecords": 3, "minScore": 10 },
+      "lengthPolicy": {
+        "default": {
+          "sufficient": { "minSentences": 3, "minCharsWarn": 300, "targetMinChars": 300, "targetMaxChars": 1200, "maxPieces": 8, "maxLength": 1800 },
+          "partial": { "minSentences": 3, "minCharsWarn": 300, "targetMinChars": 300, "targetMaxChars": 900, "maxPieces": 7, "maxLength": 1800 },
+          "unknown": { "minSentences": 2, "minCharsWarn": 240, "targetMinChars": 240, "weakEvidenceMinChars": 220, "targetMaxChars": 760, "maxPieces": 5, "maxLength": 1800 }
+        },
+        "status-performance": {
+          "sufficient": { "minSentences": 4, "minCharsWarn": 400, "targetMinChars": 400, "targetMaxChars": 1200, "maxPieces": 9, "maxLength": 1800 }
+        }
+      },
+      "guidance": "Describe consolidated scope, formal governance, accountable functions, timeline and KPI performance with enough detail for traceability."
+    },
+    "중견": {
+      "description": "Mid-sized-company profile with function-level ownership and proportionate KPI coverage.",
+      "evidenceSelection": { "minEvidenceSentences": 2, "maxEvidenceSentences": 6, "minScore": 2 },
+      "metricHints": { "maxRecords": 2, "minScore": 10 },
+      "lengthPolicy": {
+        "default": {
+          "sufficient": { "minSentences": 3, "minCharsWarn": 260, "targetMinChars": 260, "targetMaxChars": 950, "maxPieces": 6, "maxLength": 1500 },
+          "partial": { "minSentences": 2, "minCharsWarn": 220, "targetMinChars": 220, "targetMaxChars": 720, "maxPieces": 5, "maxLength": 1500 },
+          "unknown": { "minSentences": 1, "minCharsWarn": 160, "targetMinChars": 160, "weakEvidenceMinChars": 140, "targetMaxChars": 600, "maxPieces": 4, "maxLength": 1500 }
+        },
+        "status-performance": {
+          "sufficient": { "minSentences": 3, "minCharsWarn": 340, "targetMinChars": 340, "targetMaxChars": 950, "maxPieces": 7, "maxLength": 1500 }
+        }
+      },
+      "guidance": "Use function-level ownership and practical controls; include the most material KPIs without assuming large-company committee depth."
+    },
+    "중소": {
+      "description": "SME profile with concise owner-process-control disclosure and explicit untracked-data handling.",
+      "evidenceSelection": { "minEvidenceSentences": 1, "maxEvidenceSentences": 4, "minScore": 2 },
+      "metricHints": { "maxRecords": 1, "minScore": 10 },
+      "lengthPolicy": {
+        "default": {
+          "sufficient": { "minSentences": 2, "minCharsWarn": 200, "targetMinChars": 200, "targetMaxChars": 700, "maxPieces": 4, "maxLength": 1100 },
+          "partial": { "minSentences": 2, "minCharsWarn": 180, "targetMinChars": 180, "targetMaxChars": 560, "maxPieces": 4, "maxLength": 1100 },
+          "unknown": { "minSentences": 1, "minCharsWarn": 140, "targetMinChars": 140, "weakEvidenceMinChars": 120, "targetMaxChars": 420, "maxPieces": 3, "maxLength": 1100 }
+        },
+        "status-performance": {
+          "sufficient": { "minSentences": 2, "minCharsWarn": 260, "targetMinChars": 260, "targetMaxChars": 700, "maxPieces": 5, "maxLength": 1100 }
+        }
+      },
+      "guidance": "Write concise owner-process-control disclosure, use one material metric where available and state 미집계 plainly when data is not tracked."
+    },
+    "비상장": {
+      "description": "Unlisted-company disclosure profile that does not assume exchange filings or listed-company committee structures.",
+      "evidenceSelection": { "minEvidenceSentences": 1, "maxEvidenceSentences": 5, "minScore": 2 },
+      "metricHints": { "maxRecords": 2, "minScore": 10 },
+      "lengthPolicy": {
+        "default": {
+          "sufficient": { "minSentences": 2, "minCharsWarn": 240, "targetMinChars": 240, "targetMaxChars": 820, "maxPieces": 5, "maxLength": 1300 },
+          "partial": { "minSentences": 2, "minCharsWarn": 200, "targetMinChars": 200, "targetMaxChars": 640, "maxPieces": 4, "maxLength": 1300 },
+          "unknown": { "minSentences": 1, "minCharsWarn": 150, "targetMinChars": 150, "weakEvidenceMinChars": 130, "targetMaxChars": 480, "maxPieces": 3, "maxLength": 1300 }
+        },
+        "status-performance": {
+          "sufficient": { "minSentences": 3, "minCharsWarn": 300, "targetMinChars": 300, "targetMaxChars": 820, "maxPieces": 6, "maxLength": 1300 }
+        }
+      },
+      "guidance": "Use available internal or voluntary disclosure evidence and do not assume exchange filings, listed-company committees or public-market reporting duties."
+    }
+  },
+  "sectorProfiles": {
+    "CG": { "name": "소비재", "evidenceHints": ["소비재", "제품책임", "고객", "공급망"], "metricHints": ["product", "customer", "제품", "고객"] },
+    "EM": { "name": "추출·광물가공", "evidenceHints": ["광물", "채굴", "자원", "배출", "안전"], "metricHints": ["mineral", "emission", "safety", "광물", "배출"] },
+    "FB": { "name": "식음료", "evidenceHints": ["식품안전", "포장", "용수", "원재료", "공급망"], "metricHints": ["food", "packaging", "water", "식품", "용수"] },
+    "FN": { "name": "금융", "evidenceHints": ["금융소비자", "투자", "정보보호", "윤리", "리스크"], "metricHints": ["finance", "investment", "privacy", "금융", "투자"] },
+    "HC": { "name": "헬스케어", "evidenceHints": ["환자", "임상", "품질", "안전", "공급망"], "metricHints": ["patient", "clinical", "quality", "환자", "임상"] },
+    "IF": { "name": "인프라", "evidenceHints": ["건설", "현장", "안전", "품질", "협력사"], "metricHints": ["construction", "site", "safety", "현장", "안전"] },
+    "RR": { "name": "재생자원·대체에너지", "evidenceHints": ["재생에너지", "발전", "연료전지", "자원", "공급망"], "metricHints": ["renewable", "energy", "fuel cell", "재생에너지", "발전"] },
+    "RT": { "name": "자원가공·제조", "evidenceHints": ["제조", "공정", "배출", "안전", "자원"], "metricHints": ["manufacturing", "process", "emission", "제조", "공정"] },
+    "SV": { "name": "서비스", "evidenceHints": ["서비스", "고객", "정보보호", "인적자본"], "metricHints": ["service", "customer", "privacy", "서비스", "고객"] },
+    "TC": { "name": "기술·통신", "evidenceHints": ["기술", "제품", "정보보호", "공급망", "연구개발"], "metricHints": ["technology", "product", "privacy", "기술", "제품"] },
+    "TR": { "name": "운송", "evidenceHints": ["운송", "연료", "안전", "배출", "고객"], "metricHints": ["transport", "fuel", "safety", "운송", "연료"] }
+  },
+  "topicProfiles": [
+    { "id": "climate", "from": 28, "to": 31, "evidenceHints": ["기후", "탄소", "온실가스", "에너지", "재생에너지", "RE100", "SBTi"], "negativeHints": ["폐기물", "용수", "생물다양성", "오염물질"], "metricRegexes": ["GHG", "Scope", "emission", "energy", "온실가스", "탄소", "재생에너지"], "negativeMetricRegexes": ["waste", "water", "biodiversity", "폐기물", "용수"] },
+    { "id": "circularity", "from": 32, "to": 35, "evidenceHints": ["폐기물", "재활용", "자원순환", "순환경제", "폐가전", "플라스틱"], "negativeHints": ["용수", "폐수", "생물다양성"], "metricRegexes": ["waste", "recycl", "폐기물", "재활용", "자원순환", "플라스틱"], "negativeMetricRegexes": ["water", "wastewater", "biodiversity", "용수", "폐수"] },
+    { "id": "water", "from": 36, "to": 39, "evidenceHints": ["수자원", "용수", "폐수", "수질", "취수", "방류", "재이용", "Water Positive"], "negativeHints": ["폐기물", "재활용 플라스틱", "생물다양성", "제품 품질"], "metricRegexes": ["water", "wastewater", "withdrawal", "discharge", "용수", "수자원", "폐수", "취수", "방류"], "negativeMetricRegexes": ["waste", "plastic", "biodiversity", "product", "폐기물"] },
+    { "id": "biodiversity", "from": 40, "to": 43, "evidenceHints": ["생물다양성", "서식지", "보전", "산림", "생태", "복원"], "negativeHints": ["용수", "폐수", "NOx", "SOx", "VOC"], "metricRegexes": ["biodiversity", "habitat", "forest", "생물다양성", "서식지", "보전"], "negativeMetricRegexes": ["water", "wastewater", "NOx", "SOx", "VOC"] },
+    { "id": "pollution", "from": 44, "to": 47, "evidenceHints": ["오염", "배출", "대기", "수질", "화학물질", "NOx", "SOx", "VOC"], "negativeHints": ["생물다양성", "친환경 제품", "고객 만족"], "metricRegexes": ["pollut", "emission", "NOx", "SOx", "VOC", "chemical", "오염", "배출"], "negativeMetricRegexes": ["biodiversity", "product", "customer satisfaction"] },
+    { "id": "eco_product", "from": 48, "to": 51, "evidenceHints": ["친환경", "제품", "환경성", "인증", "유해물질", "에너지효율"], "negativeHints": ["고객 만족", "개인정보", "용수", "사회공헌"], "metricRegexes": ["eco", "product", "certif", "친환경", "제품", "환경성", "인증"], "negativeMetricRegexes": ["complaint", "privacy", "water", "community"] },
+    { "id": "product_responsibility", "from": 52, "to": 55, "evidenceHints": ["제품책임", "전과정", "재활용", "플라스틱", "포장재", "환경영향"], "negativeHints": ["고객 만족", "개인정보", "용수", "사회공헌"], "metricRegexes": ["lifecycle", "product", "recycl", "plastic", "packaging", "제품책임", "전과정", "포장재"], "negativeMetricRegexes": ["complaint", "privacy", "water", "community", "chemical", "BOD", "NOx", "SOx", "VOC", "오염", "화학물질", "supplier", "field diagnosis", "협력사", "materiality", "중대성", "이해관계자", "에코 라벨링", "그린제품", "Clean Beauty"] },
+    { "id": "talent", "from": 56, "to": 59, "evidenceHints": ["인재", "교육", "훈련", "임직원", "구성원", "역량", "채용"], "negativeHints": ["공급망", "협력사", "사회공헌"], "metricRegexes": ["employee", "training", "talent", "인재", "교육", "훈련", "임직원"], "negativeMetricRegexes": ["supplier", "community", "공급망"] },
+    { "id": "diversity", "from": 60, "to": 63, "evidenceHints": ["다양성", "포용", "여성", "장애", "차별", "형평", "DEI"], "negativeHints": ["공급망", "협력사", "주주"], "metricRegexes": ["diversity", "DEI", "female", "disabil", "다양성", "포용", "여성", "장애"], "negativeMetricRegexes": ["supplier", "shareholder"] },
+    { "id": "supply_chain", "from": 64, "to": 67, "evidenceHints": ["협력사", "공급망", "동반성장", "실사", "RBA", "책임광물", "구매"], "negativeHints": ["배당", "주주", "세액공제"], "metricRegexes": ["supplier", "supply", "RBA", "협력사", "공급망", "실사", "책임광물"], "negativeMetricRegexes": ["dividend", "shareholder", "tax reduction"] },
+    { "id": "community", "from": 68, "to": 71, "evidenceHints": ["사회공헌", "지역사회", "기부", "봉사", "투자", "수혜"], "negativeHints": ["주주", "배당", "공급망"], "metricRegexes": ["community", "donation", "volunteer", "사회공헌", "지역사회", "기부", "봉사"], "negativeMetricRegexes": ["shareholder", "dividend", "supplier"] },
+    { "id": "committees", "from": 72, "to": 75, "evidenceHints": ["위원회", "이사회", "감사위원회", "개최", "회의", "심의", "의결"], "negativeHints": ["정보보호", "개인정보", "제품 보안", "사이버"], "metricRegexes": ["committee", "board", "meeting", "위원회", "이사회", "개최", "회의"], "negativeMetricRegexes": ["information security", "privacy", "cyber", "정보보호", "개인정보"] },
+    { "id": "board", "from": 76, "to": 79, "evidenceHints": ["이사회", "사외이사", "사내이사", "독립성", "전문성", "선임", "평가", "보수"], "negativeHints": ["정보보호", "개인정보", "사이버", "사회공헌"], "metricRegexes": ["board", "director", "independ", "이사회", "사외이사", "독립성", "선임"], "negativeMetricRegexes": ["information security", "privacy", "cyber", "community"] },
+    { "id": "esg_governance", "from": 80, "to": 83, "evidenceHints": ["ESG", "지속가능", "협의체", "전담 조직", "중대성", "성과", "목표"], "negativeHints": ["정보보호", "개인정보"], "metricRegexes": ["ESG", "sustain", "materiality", "지속가능", "중대성", "성과", "목표"], "negativeMetricRegexes": ["privacy", "information security"] },
+    { "id": "compliance", "from": 84, "to": 87, "evidenceHints": ["컴플라이언스", "준법", "법규", "위반", "교육", "제보", "윤리", "부패"], "negativeHints": ["원주민", "주주", "배당"], "metricRegexes": ["compliance", "legal", "violation", "ethic", "준법", "법규", "위반", "컴플라이언스"], "negativeMetricRegexes": ["indigenous", "shareholder", "dividend"] },
+    { "id": "ownership", "from": 88, "to": 91, "evidenceHints": ["소유구조", "주주", "주식", "의결권", "배당", "지분", "주주권리"], "negativeHints": ["직원", "협력사", "사회공헌"], "metricRegexes": ["shareholder", "ownership", "dividend", "소유구조", "주주", "의결권", "배당"], "negativeMetricRegexes": ["employee", "supplier", "community"] },
+    { "id": "stakeholder", "from": 92, "to": 95, "evidenceHints": ["이해관계자", "소통", "고객", "임직원", "협력사", "주주", "지역사회", "채널"], "negativeHints": ["배당", "세액공제"], "metricRegexes": ["stakeholder", "engagement", "communication", "이해관계자", "소통", "고객", "채널"], "negativeMetricRegexes": ["dividend", "tax reduction"] }
+  ]
+}

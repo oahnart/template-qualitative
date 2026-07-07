@@ -1,0 +1,8 @@
+{
+  "cases": [
+    { "id": "large", "size": "대기업", "expectedMaxEvidence": 8, "expectedMaxMetrics": 3 },
+    { "id": "mid", "size": "중견", "expectedMaxEvidence": 6, "expectedMaxMetrics": 2 },
+    { "id": "small", "size": "중소", "expectedMaxEvidence": 4, "expectedMaxMetrics": 1 },
+    { "id": "unlisted", "size": "비상장", "expectedMaxEvidence": 5, "expectedMaxMetrics": 2 }
+  ]
+}

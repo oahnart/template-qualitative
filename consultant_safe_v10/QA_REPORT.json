@@ -1,0 +1,34 @@
+{
+  "generatedAt": "2026-07-07T04:33:42.452Z",
+  "releaseName": "consultant_safe_v10",
+  "sourceRelease": "consultant_safe_v9",
+  "sourceWorkbook": "source\\26.07.06 ESG-정성_v2.xlsx",
+  "masterRows": 95,
+  "sourceTemplates": 44,
+  "jsonTemplates": 44,
+  "profileVersion": "template-profiles-v1",
+  "sizeProfiles": [
+    "대기업",
+    "중견",
+    "중소",
+    "비상장"
+  ],
+  "sectorProfiles": [
+    "CG",
+    "EM",
+    "FB",
+    "FN",
+    "HC",
+    "IF",
+    "RR",
+    "RT",
+    "SV",
+    "TC",
+    "TR"
+  ],
+  "operationalVariationValidated": true,
+  "fatal": [],
+  "warnings": [
+    "ESG 경영 has 3 pillar rows by design; no Metrics row is added so total remains 95."
+  ]
+}
